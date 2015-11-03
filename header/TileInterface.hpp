@@ -60,6 +60,14 @@ public:
 	 */
 	virtual void onExit(Bot& bot) =0;
 	
+	
+	
+	/**
+	 *	Return a copy of the tile
+	 * 
+	 * 	@return TileInterface* - A real copy of the tile
+	 */
+	virtual TileInterface* copy() const;
 }
 
 
