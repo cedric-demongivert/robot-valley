@@ -33,7 +33,7 @@ class Board : public BoardInterface
     Board(const size_t width, const size_t height);
 
     /**
-    * Create a simple empty board.
+    * Copy an existing board (deep-copy).
     *
     * @param const BoardInterface& toCopy
     */
@@ -45,16 +45,16 @@ class Board : public BoardInterface
     virtual ~Board();
 
     /**
-    * Retourne la hauteur du tableau.
+    * Return the board height.
     *
-    * @return size_t Hauteur du tableau.
+    * @return size_t
     */
     virtual std::size_t getHeight() const override;
 
     /**
-    * Retourne la largeur du tableau.
+    * Return the board width.
     *
-    * @return size_t Largeur du tableau.
+    * @return size_t
     */
     virtual std::size_t getWidth() const override;
 
