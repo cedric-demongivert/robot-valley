@@ -1,61 +1,62 @@
-#ifndef __BOARD_INTERFACE_HPP
-#define __BOARD_INTERFACE_HPP
+#ifndef __BOARD_HPP
+#define __BOARD_HPP
 
+#include "BoardInterface.hpp"
 #include "TileInterface.hpp"
-#include <iterator>
-
-/**
-* Circular inclusion.
-*/
-class TileInterface;
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>
 *
-* This class define a board that is rectangular and store tiles.
+* A basic constant implementation of BoardInterface that use a linear Array
+* for storing tiles.
 *
 * @class BoardInterface
 */
-class BoardInterface
+class Board : public BoardInterface
 {
   public:
 
-    /**
-    * Iterator for tiles.
-    *
-    * @class BoardIterator
-    */
-    class BoardIteratorInterface
-      : public std::iterator<std::input_iterator_tag, TileInterface*>
+    class BoardIterator
+      : public BoardInterface::BoardIteratorInterface
+    { }
+
+    class ConstBoardIterator
+      : public BoardInterface::ConstBoardIteratorInterface
     { }
 
     /**
-    * Iterator for const tiles.
+    * Create a simple empty board.
     *
-    * @class BoardIterator
+    * @param const size_t width
+    * @param const size_t height
     */
-    class ConstBoardIteratorInterface
-      : public std::iterator<std::input_iterator_tag, const TileInterface*>
-    { }
+    Board(const size_t width, const size_t height);
+
+    /**
+    * Create a simple empty board.
+    *
+    * @param const BoardInterface& toCopy
+    */
+    Board(const BoardInterface& toCopy);
 
     /**
     * Board destructor, the board will destroy its tiles.
     */
-    virtual ~BoardInterface() = 0;
+    virtual ~Board();
 
     /**
     * Retourne la hauteur du tableau.
     *
     * @return size_t Hauteur du tableau.
     */
-    virtual std::size_t getHeight() const = 0;
+    virtual std::size_t getHeight() const override;
 
     /**
     * Retourne la largeur du tableau.
     *
     * @return size_t Largeur du tableau.
     */
-    virtual std::size_t getWidth() const = 0;
+    virtual std::size_t getWidth() const override;
 
     /**
     * Return a tile at a specific location.
@@ -67,8 +68,8 @@ class BoardInterface
     *
     * @return TileInterface* Tile at the (x,y) location, while return nullptr if the tile do not exist.
     */
-    virtual TileInterface* getTile(const int x, const int y) = 0;
-    virtual const TileInterface* getTile(const int x, const int y) const = 0;
+    virtual TileInterface* getTile(const int x, const int y) override;
+    virtual const TileInterface* getTile(const int x, const int y) const override;
 
     /**
     * Set a tile in a specific location.
@@ -83,7 +84,7 @@ class BoardInterface
     *
     * @return void
     */
-    virtual void setTile(const int x, const int y, TileInterface* tile);
+    virtual void setTile(const int x, const int y, TileInterface* tile) override;
 
     /**
     * Check if a location is in the board.
@@ -93,7 +94,13 @@ class BoardInterface
     *
     * @return bool True if the (x,y) location is in the board.
     */
-    virtual bool isIn(const int x, const int y) const;
+    virtual bool isIn(const int x, const int y) const override;
+
+  protected:
+    TileInterface* tiles_;
+    std::size_t height_;
+    std::size_t width_;
+
 }
 
 #endif
