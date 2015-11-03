@@ -8,6 +8,8 @@
 
 
 class BoardInterface;
+class Board;
+class Bot;
 
 
 class TileInterface{
