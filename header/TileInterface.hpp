@@ -67,7 +67,7 @@ public:
 	 * 
 	 * 	@return TileInterface* - A real copy of the tile
 	 */
-	virtual TileInterface* copy() const;
+	virtual TileInterface* copy() const=0;
 }
 
 
