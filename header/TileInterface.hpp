@@ -1,5 +1,5 @@
-#ifndef _TILE_INTERFACE_HPP
-#define _TILE_INTERFACE_HPP
+#ifndef __TILE_INTERFACE_HPP
+#define __TILE_INTERFACE_HPP
 
 /**
  * @author K/OURIO Alexandre <kourio.alexandre@gmail.com>
