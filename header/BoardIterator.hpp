@@ -1,14 +1,20 @@
 #ifndef __BOARD_ITERATOR_HPP
 #define __BOARD_ITERATOR_HPP
 
-#include "BoardIteratorInterface.hpp"
+#include "BoardInterface.hpp"
+
+/**
+* Circular inclusion.
+*/
+class BoardInterface;
 
 /**
 * Iterator over tiles.
 *
 * @class BoardIterator
 */
-class BoardIterator : public BoardIteratorInterface
+class BoardIterator :
+  public std::iterator<std::input_iterator_tag, TileInterface*>
 {
   public:
     /**
@@ -39,9 +45,9 @@ class BoardIterator : public BoardIteratorInterface
     /**
     * Create a new copy of another BoardIterator.
     *
-    * @param BoardIteratorInterface& toCopy Iterator to copy.
+    * @param BoardIterator& toCopy Iterator to copy.
     */
-    BoardIterator(const BoardIteratorInterface& toCopy);
+    BoardIterator(const BoardIterator& toCopy);
 
     /**
     * Destructor
@@ -53,21 +59,21 @@ class BoardIterator : public BoardIteratorInterface
     *
     * @return int
     */
-    virtual int getX() const override;
+    virtual int getX() const;
 
     /**
     * Get actual iterator y location.
     *
     * @return int
     */
-    virtual int getY() const override;
+    virtual int getY() const;
 
     /**
     * Return the itered board.
     *
-    * @return BoardIteratorInterface*
+    * @return BoardInterface*
     */
-    virtual BoardIteratorInterface* getBoard() const override;
+    virtual BoardInterface* getBoard() const;
 
     /**
     * @TODO operators
@@ -88,7 +94,8 @@ class BoardIterator : public BoardIteratorInterface
 *
 * @class BoardIterator
 */
-class ConstBoardIterator : public ConstBoardIteratorInterface
+class ConstBoardIterator
+  : public std::iterator<std::input_iterator_tag, const TileInterface*>
 {
   public:
     /**
@@ -118,16 +125,16 @@ class ConstBoardIterator : public ConstBoardIteratorInterface
     /**
     * Create a new copy of another BoardIterator.
     *
-    * @param const BoardIteratorInterface& toCopy Iterator to copy.
+    * @param const BoardIterator& toCopy Iterator to copy.
     */
-    ConstBoardIterator(const BoardIteratorInterface& toCopy);
+    ConstBoardIterator(const BoardIterator& toCopy);
 
     /**
     * Create a new copy of another ConstBoardIterator.
     *
-    * @param const ConstBoardIteratorInterface& toCopy Iterator to copy.
+    * @param const ConstBoardIterator& toCopy Iterator to copy.
     */
-    ConstBoardIterator(const ConstBoardIteratorInterface& toCopy);
+    ConstBoardIterator(const ConstBoardIterator& toCopy);
 
     /**
     * Destructor
@@ -138,21 +145,21 @@ class ConstBoardIterator : public ConstBoardIteratorInterface
     *
     * @return int
     */
-    virtual int getX() const override;
+    virtual int getX() const;
 
     /**
     * Get actual iterator y location.
     *
     * @return int
     */
-    virtual int getY() const override;
+    virtual int getY() const;
 
     /**
     * Return the itered board.
     *
-    * @return BoardIteratorInterface*
+    * @return BoardInterface*
     */
-    virtual const BoardIteratorInterface* getBoard() const override;
+    virtual const BoardInterface* getBoard() const;
 
     /**
     * @TODO operators

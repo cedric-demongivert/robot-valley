@@ -73,14 +73,14 @@ std::size_t Board::getWidth() const
 /**
 * Return a begin iterator over this board.
 *
-* @return BoardInterface::BoardIteratorInterface
+* @return BoardIterator
 */
-BoardIteratorInterface Board::begin()
+BoardIterator Board::begin()
 {
   return BoardIterator(this);
 }
 
-ConstBoardIteratorInterface Board::begin() const
+ConstBoardIterator Board::begin() const
 {
   return ConstBoardIterator(this);
 }
@@ -88,14 +88,14 @@ ConstBoardIteratorInterface Board::begin() const
 /**
 * Return an end iterator over this board.
 *
-* @return BoardInterface::ConstBoardIteratorInterface
+* @return BoardIterator
 */
-BoardIteratorInterface Board::end()
+BoardIterator Board::end()
 {
   return BoardIterator(this, width_*height_ + 1);
 }
 
-ConstBoardIteratorInterface Board::end() const
+ConstBoardIterator Board::end() const
 {
   return ConstBoardIterator(this, width_*height_ + 1);
 }

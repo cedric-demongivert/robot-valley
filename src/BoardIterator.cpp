@@ -39,9 +39,9 @@ BoardIterator::BoardIterator(BoardInterface* board, const int i)
 /**
 * Create a new copy of another BoardIterator.
 *
-* @param BoardIteratorInterface& toCopy Iterator to copy.
+* @param BoardIterator& toCopy Iterator to copy.
 */
-BoardIterator::BoardIterator(const BoardIteratorInterface& toCopy)
+BoardIterator::BoardIterator(const BoardIterator& toCopy)
 {
   board_ = toCopy.board_;
   i_ = toCopy.i_
@@ -76,9 +76,9 @@ int BoardIterator::getY() const
 /**
 * Return the itered board.
 *
-* @return BoardIteratorInterface*
+* @return BoardInterface*
 */
-BoardIteratorInterface* BoardIterator::getBoard() const
+BoardInterface* BoardIterator::getBoard() const
 {
   return board_
 }
@@ -132,9 +132,9 @@ ConstBoardIterator::ConstBoardIterator(const BoardInterface* board, const int i)
 /**
 * Create a new copy of another BoardIterator.
 *
-* @param const BoardIteratorInterface& toCopy Iterator to copy.
+* @param const BoardIterator& toCopy Iterator to copy.
 */
-ConstBoardIterator::ConstBoardIterator(const BoardIteratorInterface& toCopy)
+ConstBoardIterator::ConstBoardIterator(const BoardIterator& toCopy)
 {
   board_ = toCopy.board_;
   i_ = toCopy.i_;
@@ -143,10 +143,10 @@ ConstBoardIterator::ConstBoardIterator(const BoardIteratorInterface& toCopy)
 /**
 * Create a new copy of another ConstBoardIterator.
 *
-* @param const ConstBoardIteratorInterface& toCopy Iterator to copy.
+* @param const ConstBoardIterator& toCopy Iterator to copy.
 */
 ConstBoardIterator::ConstBoardIterator(
-  const ConstBoardIteratorInterface& toCopy
+  const ConstBoardIterator& toCopy
 )
 {
   board_ = toCopy.board_;
@@ -182,9 +182,9 @@ int ConstBoardIterator::getY() const
 /**
 * Return the itered board.
 *
-* @return BoardIteratorInterface*
+* @return BoardInterface*
 */
-const ConstBoardIterator::BoardIteratorInterface* getBoard() const
+const BoardInterface* ConstBoardIterator::getBoard() const
 {
   return board_;
 }

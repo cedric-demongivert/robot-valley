@@ -2,14 +2,14 @@
 #define __BOARD_INTERFACE_HPP
 
 #include "TileInterface.hpp"
-#include "BoardIteratorInterface.hpp"
+#include "BoardIterator.hpp"
 
 /**
 * Circular inclusion.
 */
 class TileInterface;
-class BoardIteratorInterface;
-class ConstBoardIteratorInterface;
+class BoardIterator;
+class ConstBoardIterator;
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>
@@ -43,18 +43,18 @@ class BoardInterface
     /**
     * Return a begin iterator over this board.
     *
-    * @return BoardInterface::BoardIteratorInterface
+    * @return BoardIterator
     */
-    virtual BoardIteratorInterface begin() = 0;
-    virtual ConstBoardIteratorInterface begin() const = 0;
+    virtual BoardIterator begin() = 0;
+    virtual ConstBoardIterator begin() const = 0;
 
     /**
     * Return an end iterator over this board.
     *
-    * @return BoardInterface::ConstBoardIteratorInterface
+    * @return ConstBoardIterator
     */
-    virtual BoardIteratorInterface end() = 0;
-    virtual ConstBoardIteratorInterface end() const = 0;
+    virtual BoardIterator end() = 0;
+    virtual ConstBoardIterator end() const = 0;
 
     /**
     * Return a tile at a specific location.

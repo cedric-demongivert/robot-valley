@@ -54,18 +54,18 @@ class Board : public BoardInterface
     /**
     * Return a begin iterator over this board.
     *
-    * @return BoardInterface::BoardIteratorInterface
+    * @return BoardIterator
     */
-    virtual BoardIteratorInterface begin() override;
-    virtual ConstBoardIteratorInterface begin() const override;
+    virtual BoardIterator begin() override;
+    virtual ConstBoardIterator begin() const override;
 
     /**
     * Return an end iterator over this board.
     *
-    * @return BoardInterface::ConstBoardIteratorInterface
+    * @return BoardIterator
     */
-    virtual BoardIteratorInterface end() override;
-    virtual ConstBoardIteratorInterface end() const override;
+    virtual BoardIterator end() override;
+    virtual ConstBoardIterator end() const override;
 
     /**
     * Return a tile at a specific location.
