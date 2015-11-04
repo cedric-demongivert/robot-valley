@@ -2,12 +2,14 @@
 #define __BOARD_INTERFACE_HPP
 
 #include "TileInterface.hpp"
-#include <iterator>
+#include "BoardIteratorInterface.hpp"
 
 /**
 * Circular inclusion.
 */
 class TileInterface;
+class BoardIteratorInterface;
+class ConstBoardIteratorInterface;
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>
@@ -19,25 +21,6 @@ class TileInterface;
 class BoardInterface
 {
   public:
-
-    /**
-    * Iterator for tiles.
-    *
-    * @class BoardIterator
-    */
-    class BoardIteratorInterface
-      : public std::iterator<std::input_iterator_tag, TileInterface*>
-    { }
-
-    /**
-    * Iterator for const tiles.
-    *
-    * @class BoardIterator
-    */
-    class ConstBoardIteratorInterface
-      : public std::iterator<std::input_iterator_tag, const TileInterface*>
-    { }
-
     /**
     * Board destructor, the board will destroy its tiles.
     */
@@ -58,6 +41,22 @@ class BoardInterface
     virtual std::size_t getWidth() const = 0;
 
     /**
+    * Return a begin iterator over this board.
+    *
+    * @return BoardInterface::BoardIteratorInterface
+    */
+    virtual BoardIteratorInterface begin() = 0;
+    virtual ConstBoardIteratorInterface begin() const = 0;
+
+    /**
+    * Return an end iterator over this board.
+    *
+    * @return BoardInterface::ConstBoardIteratorInterface
+    */
+    virtual BoardIteratorInterface end() = 0;
+    virtual ConstBoardIteratorInterface end() const = 0;
+
+    /**
     * Return a tile at a specific location.
     *
     * @param const int x
@@ -65,7 +64,8 @@ class BoardInterface
     *
     * @throws BoardOutOfBoundsException If the location (x,y) do not exist.
     *
-    * @return TileInterface* Tile at the (x,y) location, while return nullptr if the tile do not exist.
+    * @return TileInterface* Tile at the (x,y) location, while return nullptr if
+    *                        the tile do not exist.
     */
     virtual TileInterface* getTile(const int x, const int y) = 0;
     virtual const TileInterface* getTile(const int x, const int y) const = 0;

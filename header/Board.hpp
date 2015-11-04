@@ -2,6 +2,8 @@
 #define __BOARD_HPP
 
 #include "BoardInterface.hpp"
+#include "BoardIteratorInterface.hpp"
+#include "BoardIterator.hpp"
 #include "TileInterface.hpp"
 
 /**
@@ -15,15 +17,6 @@
 class Board : public BoardInterface
 {
   public:
-
-    class BoardIterator
-      : public BoardInterface::BoardIteratorInterface
-    { }
-
-    class ConstBoardIterator
-      : public BoardInterface::ConstBoardIteratorInterface
-    { }
-
     /**
     * Create a simple empty board.
     *
@@ -59,6 +52,22 @@ class Board : public BoardInterface
     virtual std::size_t getWidth() const override;
 
     /**
+    * Return a begin iterator over this board.
+    *
+    * @return BoardInterface::BoardIteratorInterface
+    */
+    virtual BoardIteratorInterface begin() override;
+    virtual ConstBoardIteratorInterface begin() const override;
+
+    /**
+    * Return an end iterator over this board.
+    *
+    * @return BoardInterface::ConstBoardIteratorInterface
+    */
+    virtual BoardIteratorInterface end() override;
+    virtual ConstBoardIteratorInterface end() const override;
+
+    /**
     * Return a tile at a specific location.
     *
     * @param const int x
@@ -69,7 +78,9 @@ class Board : public BoardInterface
     * @return TileInterface* Tile at the (x,y) location, while return nullptr if the tile do not exist.
     */
     virtual TileInterface* getTile(const int x, const int y) override;
-    virtual const TileInterface* getTile(const int x, const int y) const override;
+    virtual const TileInterface* getTile(
+      const int x, const int y
+    ) const override;
 
     /**
     * Set a tile in a specific location.
@@ -84,7 +95,9 @@ class Board : public BoardInterface
     *
     * @return void
     */
-    virtual void setTile(const int x, const int y, TileInterface* tile) override;
+    virtual void setTile(
+      const int x, const int y, TileInterface* tile
+    ) override;
 
     /**
     * Check if a location is in the board.
