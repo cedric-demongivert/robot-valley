@@ -7,6 +7,15 @@ class Board;
 class Bot;
 
 
+
+/**
+ *	@author K/OURIO Alexandre <kourio.alexandre@gmail.com>
+ * 
+ * 	A basic Tile that implement TileInterface.
+ * 
+ * 	@class TileInterface
+ */
+ 
 class Tile: public TileInterface{
 
 public:

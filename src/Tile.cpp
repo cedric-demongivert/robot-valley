@@ -2,7 +2,7 @@
 
 
 Tile::Tile(const Board& board){
-	board_ = board*;
+	board_ = board;
 	bot_= nullptr;
 }
 
@@ -15,21 +15,21 @@ Tile::Tile(const TileInterface& toCopy){
 
 
 const Tile::Board* getBoard() const{
-	return const *board_;
+	return const board_;
 }
 
 Board* Tile::getBoard(){
-	return *board_;
+	return board_;
 }
 
 
 const Bot* Tile::getBot() const{
-	return const *bot_;
+	return const bot_;
 }
 	
 	
 Bot* Tile::getBot(){
-	return *bot_;
+	return bot_;
 }
 
 
@@ -37,10 +37,13 @@ bool Tile::isFree() const{
 	return (bot_ == nullptr);
 }
 	
-void onEnter(Bot& bot){
+void Tile::onEnter(Bot& bot){
 	
 }
 
-void onExit(Bot& bot) override;
+void Tile::onExit(Bot& bot) override{
+}
 
-Tile* copy() override;
+Tile* Tile::copy(){
+	return Tile(*this);
+}
