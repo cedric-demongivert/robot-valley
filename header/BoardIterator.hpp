@@ -76,8 +76,45 @@ class BoardIterator :
     virtual BoardInterface* getBoard() const;
 
     /**
-    * @TODO operators
+    * Left increment operator.
     */
+    virtual BoardIterator& operator++();
+
+    /**
+    * Right increment operator
+    */
+    virtual BoardIterator operator++(const int other);
+
+    /**
+    * Dereferencement operator
+    */
+    virtual TileInterface* operator*() const;
+
+    /**
+    * Dereferencement operator
+    */
+    virtual TileInterface* operator->() const;
+
+    /**
+    * Copy assignable
+    */
+    virtual BoardIterator& operator=(const BoardIterator& other);
+
+    /**
+    * Equality operator
+    */
+    friend bool operator==(
+      const BoardIterator& first,
+      const BoardIterator& last
+    );
+
+    /**
+    * Inequality operator
+    */
+    friend bool operator!=(
+      const BoardIterator& first,
+      const BoardIterator& last
+    );
 
   protected:
     int i_;
@@ -87,6 +124,11 @@ class BoardIterator :
     * Linearize a 2D location.
     */
     int linearize(const int x, const int y) const;
+
+    /**
+    * Return the maximum position of this iterator.
+    */
+    int max() const;
 };
 
 /**
@@ -162,8 +204,45 @@ class ConstBoardIterator
     virtual const BoardInterface* getBoard() const;
 
     /**
-    * @TODO operators
+    * Left increment operator.
     */
+    virtual ConstBoardIterator& operator++();
+
+    /**
+    * Right increment operator
+    */
+    virtual ConstBoardIterator operator++(const int other);
+
+    /**
+    * Dereferencement operator
+    */
+    virtual const TileInterface* operator*() const;
+
+    /**
+    * Dereferencement operator
+    */
+    virtual const TileInterface* operator->() const;
+
+    /**
+    * Copy assignable
+    */
+    virtual ConstBoardIterator& operator=(const ConstBoardIterator& other);
+
+    /**
+    * Equality operator
+    */
+    friend bool operator==(
+      const ConstBoardIterator& first,
+      const ConstBoardIterator& last
+    );
+
+    /**
+    * Inequality operator
+    */
+    friend bool operator!=(
+      const ConstBoardIterator& first,
+      const ConstBoardIterator& last
+    );
 
   protected:
     int i_;
@@ -173,6 +252,11 @@ class ConstBoardIterator
     * Linearize a 2D location.
     */
     int linearize(const int x, const int y) const;
+
+    /**
+    * Return the maximum position of this iterator.
+    */
+    int max() const;
 };
 
 #endif

@@ -70,16 +70,20 @@ class Board : public BoardInterface
     /**
     * Return a tile at a specific location.
     *
-    * @param const int x
-    * @param const int y
+    * @param const std::size_t x
+    * @param const std::size_t y
     *
     * @throws BoardOutOfBoundsException If the location (x,y) do not exist.
     *
-    * @return TileInterface* Tile at the (x,y) location, while return nullptr if the tile do not exist.
+    * @return TileInterface* Tile at the (x,y) location, while return nullptr
+    *                        if the tile do not exist.
     */
-    virtual TileInterface* getTile(const int x, const int y) override;
+    virtual TileInterface* getTile(
+      const std::size_t x,
+      const std::size_t y
+    ) override;
     virtual const TileInterface* getTile(
-      const int x, const int y
+      const std::size_t x, const std::size_t y
     ) const override;
 
     /**
@@ -87,8 +91,8 @@ class Board : public BoardInterface
     *
     * If a tile already exist at the location, this object will destroy it.
     *
-    * @param const int x
-    * @param const int y
+    * @param const std::size_t x
+    * @param const std::size_t y
     * @param TileInterface* tile Tile to set.
     *
     * @throws BoardOutOfBoundsException If the location (x,y) do not exist.
@@ -96,18 +100,23 @@ class Board : public BoardInterface
     * @return void
     */
     virtual void setTile(
-      const int x, const int y, TileInterface* tile
+      const std::size_t x,
+      const std::size_t y,
+      TileInterface* tile
     ) override;
 
     /**
     * Check if a location is in the board.
     *
-    * @param const int x
-    * @param const int y
+    * @param const std::size_t x
+    * @param const std::size_t y
     *
     * @return bool True if the (x,y) location is in the board.
     */
-    virtual bool isIn(const int x, const int y) const override;
+    virtual bool isIn(
+      const std::size_t x,
+      const std::size_t y
+    ) const override;
 
   protected:
     TileInterface* tiles_;

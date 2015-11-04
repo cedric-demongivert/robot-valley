@@ -43,7 +43,7 @@ Board::~Board()
   for(auto boardIterator = begin(); boardIterator != end(); boardIterator ++) {
     if((*boardIterator) != nullptr) {
       delete *boardIterator;
-	  *boardIterator = nullptr;
+	    *boardIterator = nullptr;
     }
   }
 
@@ -103,19 +103,26 @@ ConstBoardIterator Board::end() const
 /**
 * Return a tile at a specific location.
 *
-* @param const int x
-* @param const int y
+* @param const std::size_t x
+* @param const std::size_t y
 *
 * @throws BoardOutOfBoundsException If the location (x,y) do not exist.
 *
-* @return TileInterface* Tile at the (x,y) location, while return nullptr if the tile do not exist.
+* @return TileInterface* Tile at the (x,y) location, while return nullptr if
+*                        the tile do not exist.
 */
-TileInterface* Board::getTile(const int x, const int y)
+TileInterface* Board::getTile(
+  const std::size_t x,
+  const std::size_t y
+)
 {
   return tiles_[x*width_ + y];
 }
 
-const TileInterface* Board::getTile(const int x, const int y) const
+const TileInterface* Board::getTile(
+  const std::size_t x,
+  const std::size_t y
+) const
 {
   return tiles_[x*width_ + y];
 }
@@ -125,15 +132,19 @@ const TileInterface* Board::getTile(const int x, const int y) const
 *
 * If a tile already exist at the location, this object will destroy it.
 *
-* @param const int x
-* @param const int y
+* @param const std::size_t x
+* @param const std::size_t y
 * @param TileInterface* tile Tile to set.
 *
 * @throws BoardOutOfBoundsException If the location (x,y) do not exist.
 *
 * @return void
 */
-void Board::setTile(const int x, const int y, TileInterface* tile)
+void Board::setTile(
+  const std::size_t x,
+  const std::size_t y,
+  TileInterface* tile
+)
 {
   TileInterface* oldTile = tiles_[x*width_ + y];
   tiles[x*width_ + y] = tile;
@@ -147,12 +158,12 @@ void Board::setTile(const int x, const int y, TileInterface* tile)
 /**
 * Check if a location is in the board.
 *
-* @param const int x
-* @param const int y
+* @param const std::size_t x
+* @param const std::size_t y
 *
 * @return bool True if the (x,y) location is in the board.
 */
-bool Board::isIn(const int x, const int y) const
+bool Board::isIn(const std::size_t x, const std::size_t y) const
 {
   return x >= 0 && y >= 0 && x < width_ && y < height_;
 }

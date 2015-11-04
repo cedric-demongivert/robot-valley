@@ -84,11 +84,98 @@ BoardInterface* BoardIterator::getBoard() const
 }
 
 /**
+* Left increment operator.
+*/
+BoardIterator& BoardIterator::operator++()
+{
+  if(i + 1 < max()) {
+    i_ += 1;
+  }
+
+  return *this;
+}
+
+/**
+* Right increment operator.
+*/
+BoardIterator BoardIterator::operator++(const int other)
+{
+  BoardIterator notModified (*this);
+
+  if(i + 1 < max()) {
+    i_ += 1;
+  }
+
+  return notModified;
+}
+
+/**
+* Dereferencement operator
+*/
+TileInterface* BoardIterator::operator*() const
+{
+  return board_->getTile(getX(), getY());
+}
+
+/**
+* Dereferencement operator
+*/
+TileInterface* BoardIterator::operator->() const
+{
+  return board_->getTile(getX(), getY());
+}
+
+/**
+* Copy assignable
+*/
+BoardIterator& BoardIterator::operator=(const BoardIterator& other)
+{
+  if(&other == this) return *this;
+
+  board_ = other.board_;
+  i_ = other.i_;
+
+  return *this;
+}
+
+/**
+* Equality operator
+*/
+friend bool operator==(
+  const BoardIterator& first,
+  const BoardIterator& last
+)
+{
+  return first.board_ == last.board_ &&
+         first.i_ == last.i_;
+}
+
+/**
+* Inequality operator
+*/
+friend bool operator!=(
+  const BoardIterator& first,
+  const BoardIterator& last
+)
+{
+  return first.board_ != last.board_ ||
+         first.i_ != last.i_;
+}
+
+/**
 * Linearize a 2D location.
 */
 int BoardIterator::linearize(const int x, const int y) const
 {
   return x * board_->getWidth() + y;
+}
+
+/**
+* Return the maximum position of this iterator.
+*/
+int BoardIterator::max() const
+{
+  return board_->getWidth() * board_->getHeight() + 1;
 }
 
 /**
@@ -195,4 +282,91 @@ const BoardInterface* ConstBoardIterator::getBoard() const
 int ConstBoardIterator::linearize(const int x, const int y) const
 {
   return x * board->getWidth() + y;
+}
+
+/**
+* Left increment operator.
+*/
+ConstBoardIterator& ConstBoardIterator::operator++()
+{
+  if(i + 1 < max()) {
+    i_ += 1;
+  }
+
+  return notModified;
+}
+
+/**
+* Right increment operator
+*/
+ConstBoardIterator ConstBoardIterator::operator++(const int other)
+{
+  ConstBoardIterator notModified (*this);
+
+  if(i + 1 < max()) {
+    i_ += 1;
+  }
+
+  return notModified;
+}
+
+/**
+* Dereferencement operator
+*/
+const TileInterface* ConstBoardIterator::operator*() const
+{
+  return board_->getTile(getX(), getY());
+}
+
+/**
+* Dereferencement operator
+*/
+const TileInterface* ConstBoardIterator::operator->() const
+{
+  return board_->getTile(getX(), getY());
+}
+
+/**
+* Copy assignable
+*/
+ConstBoardIterator& operator=(const ConstBoardIterator& other)
+{
+  if(&other == this) return *this;
+
+  board_ = other.board_;
+  i_ = other.i_;
+
+  return *this;
+}
+
+/**
+* Equality operator
+*/
+friend bool operator==(
+  const ConstBoardIterator& first,
+  const ConstBoardIterator& last
+)
+{
+  return first.board_ == last.board_ &&
+         first.i_ == last.i_;
+}
+
+/**
+* Inequality operator
+*/
+friend bool operator!=(
+  const ConstBoardIterator& first,
+  const ConstBoardIterator& last
+)
+{
+  return first.board_ != last.board_ ||
+         first.i_ == last.i_;
+}
+
+/**
+* Return the maximum position of this iterator.
+*/
+int ConstBoardIterator::max() const
+{
+  return board_->getWidth() * board_->getHeight() + 1;
 }
