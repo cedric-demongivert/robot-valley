@@ -94,6 +94,6 @@ class BoardInterface
     * @return bool True if the (x,y) location is in the board.
     */
     virtual bool isIn(const int x, const int y) const;
-}
+};
 
 #endif

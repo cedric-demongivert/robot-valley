@@ -1,6 +1,6 @@
 BINARIES_DIR = ./bin
 SOURCES_DIR = ./src
-HEADERS_DIR = ./src/headers
+HEADERS_DIR = ./header
 LIBS_DIR = ./libs
 OBJS_DIR = ./bin/obj
 
@@ -12,7 +12,7 @@ LIBS =
 SRCS = $(shell find -name "*.cpp" -type f -printf " %h/%f") #! -name "$(MAIN)"
 HEADERS = $(SRCS:.cpp=.hpp)
 
-EXE_NAME = tp.exe
+EXE_NAME = robotValley.exe
 
 OBJS_TMP = $(SRCS:.cpp=.o)
 OBJS = $(subst $(SOURCES_DIR), ., $(OBJS_TMP))

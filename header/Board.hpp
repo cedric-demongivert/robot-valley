@@ -113,7 +113,6 @@ class Board : public BoardInterface
     TileInterface* tiles_;
     std::size_t height_;
     std::size_t width_;
-
-}
+};
 
 #endif

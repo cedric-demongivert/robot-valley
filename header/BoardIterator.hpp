@@ -81,7 +81,7 @@ class BoardIterator : public BoardIteratorInterface
     * Linearize a 2D location.
     */
     int linearize(const int x, const int y) const;
-}
+};
 
 /**
 * Iterator over const tiles.
@@ -166,6 +166,6 @@ class ConstBoardIterator : public ConstBoardIteratorInterface
     * Linearize a 2D location.
     */
     int linearize(const int x, const int y) const;
-}
+};
 
 #endif

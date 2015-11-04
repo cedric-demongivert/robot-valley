@@ -68,6 +68,6 @@ class ConstBoardIteratorInterface
   * @return BoardIteratorInterface*
   */
   virtual const BoardIteratorInterface* getBoard() const = 0;
-}
+};
 
 #endif
