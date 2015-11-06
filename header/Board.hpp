@@ -1,8 +1,8 @@
 #ifndef __BOARD_HPP
 #define __BOARD_HPP
 
+#include <cstdlib>
 #include "BoardInterface.hpp"
-#include "BoardIteratorInterface.hpp"
 #include "BoardIterator.hpp"
 #include "TileInterface.hpp"
 

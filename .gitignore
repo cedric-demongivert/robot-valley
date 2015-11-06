@@ -1,7 +1,11 @@
 bin
+build
 CMakeFiles
 *.vcxproj
 *.vcxproj.filters
 *.cmake
 CMakeCache.txt
 *.sln
+*.sdf
+*.suo
+*.opensdf

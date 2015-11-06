@@ -1,6 +1,7 @@
 #ifndef __BOARD_ITERATOR_HPP
 #define __BOARD_ITERATOR_HPP
 
+#include <iterator>
 #include "BoardInterface.hpp"
 
 /**
