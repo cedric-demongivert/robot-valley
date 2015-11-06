@@ -1,63 +1,84 @@
-#ifndef __BOARD_INTERFACE_HPP
-#define __BOARD_INTERFACE_HPP
+#ifndef __BOARD_HPP
+#define __BOARD_HPP
 
-#include "GSL/gsl.h"
+#include <cstdlib>
 #include <stdexcept>
-#include "Linearizer2D.hpp"
-#include "TileInterface.hpp"
-#include "BoardIterator.hpp"
-
-/**
-* Circular inclusion.
-*/
-class TileInterface;
-class BoardIterator;
-class ConstBoardIterator;
+#include "Board.hpp"
+#include "HorizontalLinearizer2D.hpp"
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>
 *
-* This class define a board that is a rectangular array of tiles.
+* A basic constant implementation of Board that use a linear Array
+* for storing tiles.
 *
-* @class Board
+* @class FixedBoard
 */
-class Board
+class FixedBoard : public Board
 {
   public:
     /**
+    * Create a simple empty board.
+    *
+    * @param const size_t width
+    * @param const size_t height
+    */
+    FixedBoard(const size_t width, const size_t height);
+
+    /**
+    * Create a simple empty board with a specific storing way.
+    *
+    * @param const size_t width
+    * @param const size_t height
+    * @param gsl::owner<Linearizer2D*> linearizer
+    */
+    FixedBoard(
+      const size_t width,
+      const size_t height,
+      gsl::owner<Linearizer2D*> linearizer
+    );
+
+    /**
+    * Copy an existing board (deep-copy).
+    *
+    * @param const BoardInterface& toCopy
+    */
+    FixedBoard(const Board& toCopy);
+
+    /**
     * Board destructor.
     */
-    virtual ~Board() = 0;
+    virtual ~FixedBoard();
 
     /**
     * Return the board height
     *
     * @return std::size_t
     */
-    virtual std::size_t getHeight() const = 0;
+    virtual std::size_t getHeight() const override;
 
     /**
     * Return the board width.
     *
     * @return std::size_t
     */
-    virtual std::size_t getWidth() const = 0;
+    virtual std::size_t getWidth() const override;
 
     /**
     * Return a begin iterator over this board.
     *
     * @return BoardIterator
     */
-    virtual BoardIterator begin() = 0;
-    virtual ConstBoardIterator begin() const = 0;
+    virtual BoardIterator begin() override;
+    virtual ConstBoardIterator begin() const override;
 
     /**
     * Return an end iterator over this board.
     *
-    * @return ConstBoardIterator
+    * @return BoardIterator
     */
-    virtual BoardIterator end() = 0;
-    virtual ConstBoardIterator end() const = 0;
+    virtual BoardIterator end() override;
+    virtual ConstBoardIterator end() const override;
 
     /**
     * Return a tile at a specific location.
@@ -67,18 +88,17 @@ class Board
     *
     * @throws std::out_of_range If the location (x,y) do not exist.
     *
-    * @return TileInterface* Tile at the (x,y) location, while return nullptr if
-    *                        the tile do not exist.
+    * @return TileInterface* Tile at the (x,y) location, while return nullptr
+    *                        if the tile do not exist.
     */
     virtual TileInterface* getTile(
       const std::size_t x,
       const std::size_t y
-    ) = 0;
+    ) override;
 
     virtual const TileInterface* getTile(
-      const std::size_t x,
-      const std::size_t y
-    ) const = 0;
+      const std::size_t x, const std::size_t y
+    ) const override;
 
     /**
     * Set a tile in a specific location.
@@ -97,7 +117,7 @@ class Board
       const std::size_t x,
       const std::size_t y,
       gsl::owner<TileInterface*> tile
-    ) = 0;
+    ) override;
 
     /**
     * Check if a location is in the board.
@@ -111,6 +131,10 @@ class Board
       const std::size_t x,
       const std::size_t y
     ) const = 0;
+
+  protected:
+    gsl::owner<TileInterface*>* tiles_;
+    gsl::owner<Linearizer2D*> linearizer_;
 };
 
 #endif

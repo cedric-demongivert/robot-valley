@@ -9,6 +9,38 @@
 */
 class BoardInterface;
 
+class BoardIteratorCommon
+{
+  public:
+	  /**
+	  * Get actual iterator x location.
+	  *
+	  * @return int
+	  */
+	  virtual int getX() const;
+
+	  /**
+	  * Get actual iterator y location.
+	  *
+	  * @return int
+	  */
+	  virtual int getY() const;
+
+  protected:
+    int i_;
+
+    /**
+    * Linearize a 2D location.
+    */
+    int linearize(const int x, const int y) const;
+
+    /**
+    * Return the maximum position of this iterator.
+    */
+    int max(const BoardInterface* board) const;
+
+};
+
 /**
 * Iterator over tiles.
 *
@@ -54,20 +86,6 @@ class BoardIterator :
     * Destructor
     */
     virtual ~BoardIterator();
-
-    /**
-    * Get actual iterator x location.
-    *
-    * @return int
-    */
-    virtual int getX() const;
-
-    /**
-    * Get actual iterator y location.
-    *
-    * @return int
-    */
-    virtual int getY() const;
 
     /**
     * Return the itered board.
@@ -118,18 +136,8 @@ class BoardIterator :
     );
 
   protected:
-    int i_;
     BoardInterface* board_;
 
-    /**
-    * Linearize a 2D location.
-    */
-    int linearize(const int x, const int y) const;
-
-    /**
-    * Return the maximum position of this iterator.
-    */
-    int max() const;
 };
 
 /**
@@ -183,19 +191,6 @@ class ConstBoardIterator
     * Destructor
     */
     virtual ~ConstBoardIterator();
-    /**
-    * Get actual iterator x location.
-    *
-    * @return int
-    */
-    virtual int getX() const;
-
-    /**
-    * Get actual iterator y location.
-    *
-    * @return int
-    */
-    virtual int getY() const;
 
     /**
     * Return the itered board.
@@ -246,18 +241,7 @@ class ConstBoardIterator
     );
 
   protected:
-    int i_;
     const BoardInterface* board_;
-
-    /**
-    * Linearize a 2D location.
-    */
-    int linearize(const int x, const int y) const;
-
-    /**
-    * Return the maximum position of this iterator.
-    */
-    int max() const;
 };
 
 #endif

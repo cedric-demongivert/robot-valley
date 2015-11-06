@@ -58,9 +58,9 @@ BoardIterator::~BoardIterator()
 *
 * @return int
 */
-int BoardIterator::getX() const
+int BoardIteratorCommon::getX() const
 {
-  return (int)(i / board->getWidth());
+  return (int)(i_ / board->getWidth());
 }
 
 /**
