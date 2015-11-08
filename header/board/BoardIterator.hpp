@@ -2,8 +2,8 @@
 #define __BOARD_ITERATOR_HPP
 
 #include <iterator>
-#include "HorizontalLinearizer2D.hpp"
-#include "Board.hpp"
+#include "utils/HorizontalLinearizer2D.hpp"
+#include "board/Board.hpp"
 
 /**
 * Circular inclusion.
@@ -256,7 +256,7 @@ class ConstBoardIterator
     * Copy assignable
     */
     virtual ConstBoardIterator& operator=(const ConstBoardIterator& other);
-    
+
     /**
     * Copy assignable
     */

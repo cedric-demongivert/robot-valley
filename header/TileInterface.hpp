@@ -11,7 +11,8 @@ class Bot;
 
 class TileInterface{
 public:
-	virtual ~TileInterface();
+  virtual ~TileInterface()
+  { };
 
 	/**
 	 *	Get the Board the tile is in

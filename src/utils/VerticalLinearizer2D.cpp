@@ -1,4 +1,4 @@
-#include "HorizontalLinearizer2D.hpp"
+#include "utils/VerticalLinearizer2D.hpp"
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>
@@ -7,7 +7,7 @@
 /**
 * Simple empty constructor.
 */
-HorizontalLinearizer2D::HorizontalLinearizer2D() : Linearizer2D()
+VerticalLinearizer2D::VerticalLinearizer2D() : Linearizer2D()
 { }
 
 /**
@@ -16,7 +16,7 @@ HorizontalLinearizer2D::HorizontalLinearizer2D() : Linearizer2D()
 * @param const std::size_t width
 * @param const std::size_t height
 */
-HorizontalLinearizer2D::HorizontalLinearizer2D(
+VerticalLinearizer2D::VerticalLinearizer2D(
   const std::size_t width,
   const std::size_t height
 ) : Linearizer2D(width, height)
@@ -27,14 +27,14 @@ HorizontalLinearizer2D::HorizontalLinearizer2D(
 *
 * @param const Linearizer2D& toCopy
 */
-HorizontalLinearizer2D::HorizontalLinearizer2D(const Linearizer2D& toCopy)
+VerticalLinearizer2D::VerticalLinearizer2D(const Linearizer2D& toCopy)
   : Linearizer2D(toCopy)
 { }
 
 /**
 * Simple empty destructor.
 */
-HorizontalLinearizer2D::~HorizontalLinearizer2D()
+VerticalLinearizer2D::~VerticalLinearizer2D()
 { }
 
 /**
@@ -47,7 +47,7 @@ HorizontalLinearizer2D::~HorizontalLinearizer2D()
 *
 * @return std::size_t linearized point
 */
-std::size_t HorizontalLinearizer2D::linearize(
+std::size_t VerticalLinearizer2D::linearize(
   const std::size_t x,
   const std::size_t y
 ) const
@@ -59,7 +59,7 @@ std::size_t HorizontalLinearizer2D::linearize(
     );
   }
 
-  return getWidth() * x + y;
+  return getHeight() * y + x;
 }
 
 /**
@@ -71,7 +71,7 @@ std::size_t HorizontalLinearizer2D::linearize(
 *
 * @return std::size_t X coordinate of the linearized point.
 */
-std::size_t HorizontalLinearizer2D::getX(
+std::size_t VerticalLinearizer2D::getX(
   const std::size_t linearized
 ) const
 {
@@ -81,7 +81,7 @@ std::size_t HorizontalLinearizer2D::getX(
     );
   }
 
-  return linearized / getWidth();
+  return linearized % getHeight();
 }
 
 /**
@@ -93,7 +93,7 @@ std::size_t HorizontalLinearizer2D::getX(
 *
 * @return std::size_t Y coordinate of the point.
 */
-std::size_t HorizontalLinearizer2D::getY(
+std::size_t VerticalLinearizer2D::getY(
   const std::size_t linearized
 ) const
 {
@@ -102,8 +102,8 @@ std::size_t HorizontalLinearizer2D::getY(
       "The linearized point " + std::to_string(linearized) + " can't be reversed."
     );
   }
-  
-  return linearized % getWidth();
+
+  return linearized / getHeight();
 }
 
 /**
@@ -111,7 +111,7 @@ std::size_t HorizontalLinearizer2D::getY(
 *
 * @return std::size_t
 */
-std::size_t HorizontalLinearizer2D::getMaxLinearizedValue() const
+std::size_t VerticalLinearizer2D::getMaxLinearizedValue() const
 {
   return getWidth() * getHeight();
 }

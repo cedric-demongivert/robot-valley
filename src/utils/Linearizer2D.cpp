@@ -1,4 +1,4 @@
-#include "Linearizer2D.hpp"
+#include "utils/Linearizer2D.hpp"
 
 /**
 * @author C�dric DEMONGIVERT <cedric.demongivert@gmail.com>

@@ -3,9 +3,9 @@
 
 #include "GSL/gsl.h"
 #include <stdexcept>
-#include "Linearizer2D.hpp"
+#include "utils/Linearizer2D.hpp"
 #include "TileInterface.hpp"
-#include "BoardIterator.hpp"
+#include "board/BoardIterator.hpp"
 
 /**
 * Circular inclusion.
@@ -27,7 +27,8 @@ class Board
     /**
     * Board destructor.
     */
-    virtual ~Board() = 0;
+    virtual ~Board()
+    { };
 
     /**
     * Return the board height

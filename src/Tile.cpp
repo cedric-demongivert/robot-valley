@@ -12,6 +12,9 @@ Tile::Tile(const TileInterface& toCopy, Board* newBoard){
 	bot_ = nullptr;
 }
 
+Tile::~Tile()
+{ }
+
 const Board* Tile::getBoard() const
 {
 	return board_;

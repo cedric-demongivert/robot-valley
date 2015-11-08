@@ -3,8 +3,8 @@
 
 #include <cstdlib>
 #include <stdexcept>
-#include "Board.hpp"
-#include "HorizontalLinearizer2D.hpp"
+#include "board/Board.hpp"
+#include "utils/HorizontalLinearizer2D.hpp"
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>

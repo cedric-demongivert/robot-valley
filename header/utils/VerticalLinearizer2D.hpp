@@ -1,24 +1,24 @@
-#ifndef __HORIZONTAL_LINEARIZER_2D_HPP
-#define __HORIZONTAL_LINEARIZER_2D_HPP
+#ifndef __VERTICAL_LINEARIZER_2D_HPP
+#define __VERTICAL_LINEARIZER_2D_HPP
 
-#include "Linearizer2D.hpp"
+#include "utils/Linearizer2D.hpp"
 #include <string>
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>
 *
-* Linearize 2D array, row by row.
+* Linearize 2D array, column by column.
 *
-* @class HorizontalLinearizer2D
+* @class VerticalLinearizer2D
 */
-class HorizontalLinearizer2D :
+class VerticalLinearizer2D :
   public Linearizer2D
 {
   public:
     /**
     * Simple empty constructor.
     */
-    HorizontalLinearizer2D();
+    VerticalLinearizer2D();
 
     /**
     * Constructor with width and height.
@@ -26,7 +26,7 @@ class HorizontalLinearizer2D :
     * @param const std::size_t width
     * @param const std::size_t height
     */
-    HorizontalLinearizer2D(
+    VerticalLinearizer2D(
       const std::size_t width,
       const std::size_t height
     );
@@ -36,12 +36,12 @@ class HorizontalLinearizer2D :
     *
     * @param const Linearizer2D& toCopy
     */
-    HorizontalLinearizer2D(const Linearizer2D& toCopy);
+    VerticalLinearizer2D(const Linearizer2D& toCopy);
 
     /**
     * Simple empty destructor.
     */
-    virtual ~HorizontalLinearizer2D();
+    virtual ~VerticalLinearizer2D();
 
     /**
     * Transform a 2D Point into a unique ID of an array.

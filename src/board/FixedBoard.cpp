@@ -1,4 +1,4 @@
-#include "FixedBoard.hpp"
+#include "board/FixedBoard.hpp"
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>

@@ -1,4 +1,4 @@
-#include "BoardIterator.hpp"
+#include "board/BoardIterator.hpp"
 
 /**
 * Create a new BoardIterator at the begining of a board.
@@ -86,7 +86,7 @@ Board* BoardIterator::getBoard() const
 /**
 * Left increment operator.
 */
-BoardIterator& BoardIterator::operator++()
+BoardIterator& BoardIterator::operator++(void)
 {
   if(i_ + 1 < linearizer_.getMaxLinearizedValue()) {
     i_ += 1;
@@ -265,6 +265,18 @@ std::size_t ConstBoardIterator::getY() const
 const Board* ConstBoardIterator::getBoard() const
 {
   return board_;
+}
+
+/**
+* Left increment operator.
+*/
+ConstBoardIterator& ConstBoardIterator::operator++()
+{
+  if (i_ + 1 < linearizer_.getMaxLinearizedValue()) {
+    i_ += 1;
+  }
+
+  return *this;
 }
 
 /**
