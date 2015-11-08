@@ -5,7 +5,7 @@
 #include <stdexcept>
 
 /**
-* @author C�dric DEMONGIVERT <cedric.demongivert@gmail.com>
+* @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>
 *
 * This class is an abstract base class for other linearizer.
 * A 2D Linearizer will assign a unique ID of a linear array to

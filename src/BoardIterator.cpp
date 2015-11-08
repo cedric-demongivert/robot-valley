@@ -3,38 +3,38 @@
 /**
 * Create a new BoardIterator at the begining of a board.
 *
-* @param BoardInterface* board Board to iterate.
+* @param Board* board Board to iterate.
 */
-BoardIterator::BoardIterator(BoardInterface* board)
-{
-  board_ = board;
-  i_ = linearize(0, 0);
-}
+BoardIterator::BoardIterator(Board* board)
+  : board_(board),
+    linearizer_(board->getWidth(), board->getHeight()),
+    i_(linearizer_.linearize(0,0))
+{ }
 
 /**
 * Create a new BoardIterator at a specific location of a board.
 *
-* @param BoardInterface* board Board to iterate.
-* @param const int x
-* @param const int y
+* @param Board* board Board to iterate.
+* @param const std::size_t x
+* @param const std::size_t y
 */
-BoardIterator::BoardIterator(BoardInterface* board, const int x, const int y)
-{
-  board_ = board;
-  i_ = linearize(x, y);
-}
+BoardIterator::BoardIterator(Board* board, const std::size_t x, const std::size_t y)
+  : board_(board),
+    linearizer_(board->getWidth(), board->getHeight()),
+    i_(linearizer_.linearize(x, y))
+{ }
 
 /**
 * Create a new BoardIterator at a specific linearized location of a board.
 *
-* @param BoardInterface* board Board to iterate.
-* @param const int i
+* @param Board* board Board to iterate.
+* @param const std::size_t i
 */
-BoardIterator::BoardIterator(BoardInterface* board, const int i)
-{
-  board_ = board;
-  i_ = i;
-}
+BoardIterator::BoardIterator(Board* board, const std::size_t i)
+  : board_(board),
+    linearizer_(board->getWidth(), board->getHeight()),
+    i_(i)
+{ }
 
 /**
 * Create a new copy of another BoardIterator.
@@ -42,10 +42,10 @@ BoardIterator::BoardIterator(BoardInterface* board, const int i)
 * @param BoardIterator& toCopy Iterator to copy.
 */
 BoardIterator::BoardIterator(const BoardIterator& toCopy)
-{
-  board_ = toCopy.board_;
-  i_ = toCopy.i_
-}
+  : board_(toCopy.board_),
+    linearizer_(board_->getWidth(), board_->getHeight()),
+    i_(toCopy.i_)
+{ }
 
 /**
 * Destructor
@@ -54,33 +54,33 @@ BoardIterator::~BoardIterator()
 { }
 
 /**
-* Get actual iterator x location.
+* Return the X coordinate of the current position.
 *
-* @return int
+* @return std::size_t
 */
-int BoardIteratorCommon::getX() const
+std::size_t BoardIterator::getX() const
 {
-  return (int)(i_ / board->getWidth());
+  return linearizer_.getX(i_);
 }
 
 /**
-* Get actual iterator y location.
+* Return the Y coordinate of the current position.
 *
-* @return int
+* @return std::size_t
 */
-int BoardIterator::getY() const
+std::size_t BoardIterator::getY() const
 {
-  return i_ % board_->getWidth();
+  return linearizer_.getY(i_);
 }
 
 /**
 * Return the itered board.
 *
-* @return BoardInterface*
+* @return Board*
 */
-BoardInterface* BoardIterator::getBoard() const
+Board* BoardIterator::getBoard() const
 {
-  return board_
+  return board_;
 }
 
 /**
@@ -88,7 +88,7 @@ BoardInterface* BoardIterator::getBoard() const
 */
 BoardIterator& BoardIterator::operator++()
 {
-  if(i + 1 < max()) {
+  if(i_ + 1 < linearizer_.getMaxLinearizedValue()) {
     i_ += 1;
   }
 
@@ -102,7 +102,7 @@ BoardIterator BoardIterator::operator++(const int other)
 {
   BoardIterator notModified (*this);
 
-  if(i + 1 < max()) {
+  if (i_ + 1 < linearizer_.getMaxLinearizedValue()) {
     i_ += 1;
   }
 
@@ -133,6 +133,9 @@ BoardIterator& BoardIterator::operator=(const BoardIterator& other)
   if(&other == this) return *this;
 
   board_ = other.board_;
+  linearizer_ = HorizontalLinearizer2D(
+    board_->getWidth(), board_->getHeight()
+  );
   i_ = other.i_;
 
   return *this;
@@ -141,76 +144,64 @@ BoardIterator& BoardIterator::operator=(const BoardIterator& other)
 /**
 * Equality operator
 */
-friend bool operator==(
+bool operator==(
   const BoardIterator& first,
   const BoardIterator& last
 )
 {
   return first.board_ == last.board_ &&
-         first.i_ == last.i_;
+         first.getX() == last.getX() &&
+         first.getY() == last.getY();
 }
 
 /**
 * Inequality operator
 */
-friend bool operator!=(
+bool operator!=(
   const BoardIterator& first,
   const BoardIterator& last
 )
 {
   return first.board_ != last.board_ ||
-         first.i_ != last.i_;
+         first.getX() != last.getX() ||
+         first.getY() != last.getY();
 }
 
 /**
-* Linearize a 2D location.
-*/
-int BoardIterator::linearize(const int x, const int y) const
-{
-  return x * board_->getWidth() + y;
-}
-
-/**
-* Return the maximum position of this iterator.
-*/
-int BoardIterator::max() const
-{
-  return board_->getWidth() * board_->getHeight() + 1;
-}
-
-/**
-* Create a new BoardIterator at the begining of a board.
+* Create a new ConstBoardIterator at the begining of a board.
 *
-* @param const BoardInterface* board Board to iterate.
+* @param const Board* board Board to iterate.
 */
-ConstBoardIterator::ConstBoardIterator(const BoardInterface* board)
-{
-  board_ = board;
-  i_ = linearize(0,0);
-}
+ConstBoardIterator::ConstBoardIterator(const Board* board)
+  : board_(board),
+    linearizer_(board->getWidth(), board->getHeight()),
+    i_(linearizer_.linearize(0, 0))
+{ }
 
 /**
-* Create a new BoardIterator at a specific location of a board.
+* Create a new ConstBoardIterator at a specific location of a board.
 *
-* @param const BoardInterface* board Board to iterate.
-* @param const int x
-* @param const int y
+* @param const Board* board Board to iterate.
+* @param const std::size_t x
+* @param const std::size_t y
 */
 ConstBoardIterator::ConstBoardIterator(
-  const BoardInterface* board, const int x, const int y
+  const Board* board, const std::size_t x, const std::size_t y
 )
-{
-  board_ = board;
-  i_ = linearize(x,y);
-}
+  : board_(board),
+    linearizer_(board->getWidth(), board->getHeight()),
+    i_(linearizer_.linearize(x, y))
+{ }
 
 /**
-* Create a new BoardIterator at a specific linearized location of a board.
+* Create a new ConstBoardIterator at a specific linearized location of a board.
 *
-* @param const BoardInterface* board Board to iterate.
-* @param const int i
+* @param const Board* board Board to iterate.
+* @param const std::size_t i
 */
-ConstBoardIterator::ConstBoardIterator(const BoardInterface* board, const int i)
+ConstBoardIterator::ConstBoardIterator(
+  const Board* board, const std::size_t i
+)
 {
   board_ = board;
   i_ = i;
@@ -222,10 +213,10 @@ ConstBoardIterator::ConstBoardIterator(const BoardInterface* board, const int i)
 * @param const BoardIterator& toCopy Iterator to copy.
 */
 ConstBoardIterator::ConstBoardIterator(const BoardIterator& toCopy)
-{
-  board_ = toCopy.board_;
-  i_ = toCopy.i_;
-}
+  : board_(toCopy.getBoard()),
+    linearizer_(board_->getWidth(), board_->getHeight()),
+    i_(linearizer_.linearize(toCopy.getX(), toCopy.getY()))
+{ }
 
 /**
 * Create a new copy of another ConstBoardIterator.
@@ -235,10 +226,10 @@ ConstBoardIterator::ConstBoardIterator(const BoardIterator& toCopy)
 ConstBoardIterator::ConstBoardIterator(
   const ConstBoardIterator& toCopy
 )
-{
-  board_ = toCopy.board_;
-  i_ = toCopy.i_;
-}
+  : board_(toCopy.board_),
+    linearizer_(board_->getWidth(), board_->getHeight()),
+    i_(toCopy.i_)
+{ }
 
 /**
 * Destructor
@@ -247,53 +238,33 @@ ConstBoardIterator::~ConstBoardIterator()
 { }
 
 /**
-* Get actual iterator x location.
+* Return the X coordinate of the current position.
 *
-* @return int
+* @return std::size_t
 */
-int ConstBoardIterator::getX() const
+std::size_t BoardIterator::getX() const
 {
-  return (int) (i_ / board_->getWidth());
+  return linearizer_.getX(i_);
 }
 
 /**
-* Get actual iterator y location.
+* Return the Y coordinate of the current position.
 *
-* @return int
+* @return std::size_t
 */
-int ConstBoardIterator::getY() const
+std::size_t BoardIterator::getY() const
 {
-  return i_ % board->getWidth();
+  return linearizer_.getY(i_);
 }
 
 /**
 * Return the itered board.
 *
-* @return BoardInterface*
+* @return const Board*
 */
-const BoardInterface* ConstBoardIterator::getBoard() const
+const Board* ConstBoardIterator::getBoard() const
 {
   return board_;
-}
-
-/**
-* Linearize a 2D location.
-*/
-int ConstBoardIterator::linearize(const int x, const int y) const
-{
-  return x * board->getWidth() + y;
-}
-
-/**
-* Left increment operator.
-*/
-ConstBoardIterator& ConstBoardIterator::operator++()
-{
-  if(i + 1 < max()) {
-    i_ += 1;
-  }
-
-  return notModified;
 }
 
 /**
@@ -303,7 +274,7 @@ ConstBoardIterator ConstBoardIterator::operator++(const int other)
 {
   ConstBoardIterator notModified (*this);
 
-  if(i + 1 < max()) {
+  if(i_ + 1 < linearizer_.getMaxLinearizedValue()) {
     i_ += 1;
   }
 
@@ -329,12 +300,25 @@ const TileInterface* ConstBoardIterator::operator->() const
 /**
 * Copy assignable
 */
-ConstBoardIterator& operator=(const ConstBoardIterator& other)
+ConstBoardIterator& ConstBoardIterator::operator=(const ConstBoardIterator& other)
 {
   if(&other == this) return *this;
 
   board_ = other.board_;
+  linearizer_ = HorizontalLinearizer2D(board_->getWidth(), board_->getHeight());
   i_ = other.i_;
+
+  return *this;
+}
+
+/**
+* Copy assignable
+*/
+ConstBoardIterator& ConstBoardIterator::operator=(const BoardIterator& other)
+{
+  board_ = other.getBoard();
+  linearizer_ = HorizontalLinearizer2D(board_->getWidth(), board_->getHeight());
+  i_ = linearizer_.linearize(other.getX(), other.getY());
 
   return *this;
 }
@@ -342,31 +326,77 @@ ConstBoardIterator& operator=(const ConstBoardIterator& other)
 /**
 * Equality operator
 */
-friend bool operator==(
+bool operator==(
   const ConstBoardIterator& first,
   const ConstBoardIterator& last
 )
 {
   return first.board_ == last.board_ &&
-         first.i_ == last.i_;
+         first.getX() == last.getX() &&
+         first.getY() == last.getY();
 }
 
 /**
 * Inequality operator
 */
-friend bool operator!=(
+bool operator!=(
   const ConstBoardIterator& first,
   const ConstBoardIterator& last
 )
 {
   return first.board_ != last.board_ ||
-         first.i_ == last.i_;
+         first.getX() != last.getX() ||
+         first.getY() != last.getY();
 }
 
 /**
-* Return the maximum position of this iterator.
+* Equality operator
 */
-int ConstBoardIterator::max() const
+bool operator==(
+  const ConstBoardIterator& first,
+  const BoardIterator& last
+  )
 {
-  return board_->getWidth() * board_->getHeight() + 1;
+  return first.board_ == last.board_ &&
+    first.getX() == last.getX() &&
+    first.getY() == last.getY();
+}
+
+/**
+* Inequality operator
+*/
+bool operator!=(
+  const ConstBoardIterator& first,
+  const BoardIterator& last
+  )
+{
+  return first.board_ != last.board_ ||
+    first.getX() != last.getX() ||
+    first.getY() != last.getY();
+}
+
+/**
+* Equality operator
+*/
+bool operator==(
+  const BoardIterator& first,
+  const ConstBoardIterator& last
+  )
+{
+  return first.board_ == last.board_ &&
+    first.getX() == last.getX() &&
+    first.getY() == last.getY();
+}
+
+/**
+* Inequality operator
+*/
+bool operator!=(
+  const BoardIterator& first,
+  const ConstBoardIterator& last
+  )
+{
+  return first.board_ != last.board_ ||
+    first.getX() != last.getX() ||
+    first.getY() != last.getY();
 }

@@ -2,44 +2,13 @@
 #define __BOARD_ITERATOR_HPP
 
 #include <iterator>
-#include "BoardInterface.hpp"
+#include "HorizontalLinearizer2D.hpp"
+#include "Board.hpp"
 
 /**
 * Circular inclusion.
 */
-class BoardInterface;
-
-class BoardIteratorCommon
-{
-  public:
-	  /**
-	  * Get actual iterator x location.
-	  *
-	  * @return int
-	  */
-	  virtual int getX() const;
-
-	  /**
-	  * Get actual iterator y location.
-	  *
-	  * @return int
-	  */
-	  virtual int getY() const;
-
-  protected:
-    int i_;
-
-    /**
-    * Linearize a 2D location.
-    */
-    int linearize(const int x, const int y) const;
-
-    /**
-    * Return the maximum position of this iterator.
-    */
-    int max(const BoardInterface* board) const;
-
-};
+class Board;
 
 /**
 * Iterator over tiles.
@@ -53,27 +22,27 @@ class BoardIterator :
     /**
     * Create a new BoardIterator at the begining of a board.
     *
-    * @param BoardInterface* board Board to iterate.
+    * @param Board* board Board to iterate.
     */
-    BoardIterator(BoardInterface* board);
+    BoardIterator(Board* board);
 
     /**
     * Create a new BoardIterator at a specific location of a board.
     *
-    * @param BoardInterface* board Board to iterate.
-    * @param const int x
-    * @param const int y
+    * @param Board* board Board to iterate.
+    * @param const std::size_t x
+    * @param const std::size_t y
     */
-    BoardIterator(BoardInterface* board, const int x, const int y);
+    BoardIterator(Board* board, const std::size_t x, const std::size_t y);
 
     /**
     * Create a new BoardIterator at a specific linearized location of a
     * board.
     *
-    * @param BoardInterface* board Board to iterate.
-    * @param const int i
+    * @param Board* board Board to iterate.
+    * @param const std::size_t i
     */
-    BoardIterator(BoardInterface* board, const int i);
+    BoardIterator(Board* board, const std::size_t i);
 
     /**
     * Create a new copy of another BoardIterator.
@@ -88,11 +57,25 @@ class BoardIterator :
     virtual ~BoardIterator();
 
     /**
+    * Return the X coordinate of the current position.
+    *
+    * @return std::size_t
+    */
+    virtual std::size_t getX() const;
+
+    /**
+    * Return the Y coordinate of the current position.
+    *
+    * @return std::size_t
+    */
+    virtual std::size_t getY() const;
+
+    /**
     * Return the itered board.
     *
-    * @return BoardInterface*
+    * @return Board*
     */
-    virtual BoardInterface* getBoard() const;
+    virtual Board* getBoard() const;
 
     /**
     * Left increment operator.
@@ -135,8 +118,42 @@ class BoardIterator :
       const BoardIterator& last
     );
 
+    /**
+    * Equality operator
+    */
+    friend bool operator==(
+      const ConstBoardIterator& first,
+      const BoardIterator& last
+    );
+
+    /**
+    * Inequality operator
+    */
+    friend bool operator!=(
+      const ConstBoardIterator& first,
+      const BoardIterator& last
+    );
+
+    /**
+    * Equality operator
+    */
+    friend bool operator==(
+      const BoardIterator& first,
+      const ConstBoardIterator& last
+    );
+
+    /**
+    * Inequality operator
+    */
+    friend bool operator!=(
+      const BoardIterator& first,
+      const ConstBoardIterator& last
+    );
+
   protected:
-    BoardInterface* board_;
+    Board* board_;
+    HorizontalLinearizer2D linearizer_;
+    std::size_t i_;
 
 };
 
@@ -150,28 +167,28 @@ class ConstBoardIterator
 {
   public:
     /**
-    * Create a new BoardIterator at the begining of a board.
+    * Create a new ConstBoardIterator at the begining of a board.
     *
-    * @param const BoardInterface* board Board to iterate.
+    * @param const Board* board Board to iterate.
     */
-    ConstBoardIterator(const BoardInterface* board);
+    ConstBoardIterator(const Board* board);
 
     /**
     * Create a new BoardIterator at a specific location of a board.
     *
     * @param const BoardInterface* board Board to iterate.
-    * @param const int x
-    * @param const int y
+    * @param const std::size_t x
+    * @param const std::size_t y
     */
-    ConstBoardIterator(const BoardInterface* board, const int x, const int y);
+    ConstBoardIterator(const Board* board, const std::size_t x, const std::size_t y);
 
     /**
     * Create a new BoardIterator at a specific linearized location of a board.
     *
-    * @param const BoardInterface* board Board to iterate.
-    * @param const int i
+    * @param const Board* board Board to iterate.
+    * @param const std::size_t i
     */
-    ConstBoardIterator(const BoardInterface* board, const int i);
+    ConstBoardIterator(const Board* board, const std::size_t i);
 
     /**
     * Create a new copy of another BoardIterator.
@@ -193,11 +210,25 @@ class ConstBoardIterator
     virtual ~ConstBoardIterator();
 
     /**
+    * Return the X coordinate of the current position.
+    *
+    * @return std::size_t
+    */
+    virtual std::size_t getX() const;
+
+    /**
+    * Return the Y coordinate of the current position.
+    *
+    * @return std::size_t
+    */
+    virtual std::size_t getY() const;
+
+    /**
     * Return the itered board.
     *
-    * @return BoardInterface*
+    * @return const Board*
     */
-    virtual const BoardInterface* getBoard() const;
+    virtual const Board* getBoard() const;
 
     /**
     * Left increment operator.
@@ -223,6 +254,11 @@ class ConstBoardIterator
     * Copy assignable
     */
     virtual ConstBoardIterator& operator=(const ConstBoardIterator& other);
+    
+    /**
+    * Copy assignable
+    */
+    virtual ConstBoardIterator& operator=(const BoardIterator& other);
 
     /**
     * Equality operator
@@ -240,8 +276,42 @@ class ConstBoardIterator
       const ConstBoardIterator& last
     );
 
+    /**
+    * Equality operator
+    */
+    friend bool operator==(
+      const ConstBoardIterator& first,
+      const BoardIterator& last
+    );
+
+    /**
+    * Inequality operator
+    */
+    friend bool operator!=(
+      const ConstBoardIterator& first,
+      const BoardIterator& last
+    );
+
+    /**
+    * Equality operator
+    */
+    friend bool operator==(
+      const BoardIterator& first,
+      const ConstBoardIterator& last
+    );
+
+    /**
+    * Inequality operator
+    */
+    friend bool operator!=(
+      const BoardIterator& first,
+      const ConstBoardIterator& last
+    );
+
   protected:
-    const BoardInterface* board_;
+    const Board* board_;
+    HorizontalLinearizer2D linearizer_;
+    std::size_t i_;
 };
 
 #endif
