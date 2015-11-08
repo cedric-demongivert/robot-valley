@@ -137,7 +137,7 @@ class Linearizer2D
     *
     * @return bool
     */
-    virtual bool contains(const std::size_t linearized);
+    virtual bool contains(const std::size_t linearized) const;
 
   protected:
     std::size_t width_;

@@ -111,6 +111,7 @@ class Board
       const std::size_t x,
       const std::size_t y
     ) const = 0;
+
 };
 
 #endif

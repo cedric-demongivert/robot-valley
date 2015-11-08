@@ -83,7 +83,7 @@ void Linearizer2D::setHeight(const std::size_t newHeight)
 *
 * @return bool
 */
-virtual bool contains(const std::size_t x, const std::size_t y) const
+bool Linearizer2D::contains(const std::size_t x, const std::size_t y) const
 {
   return x >= 0 && y >= 0 && x < getWidth() && y < getHeight();
 }
@@ -96,7 +96,7 @@ virtual bool contains(const std::size_t x, const std::size_t y) const
 *
 * @return bool
 */
-virtual bool contains(const std::size_t linearized);
+bool Linearizer2D::contains(const std::size_t linearized) const
 {
   return linearized >= 0 && linearized < getMaxLinearizedValue();
 }

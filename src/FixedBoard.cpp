@@ -42,7 +42,7 @@ FixedBoard::FixedBoard(const Board& toCopy)
 : linearizer_(
     new HorizontalLinearizer2D(toCopy.getWidth(), toCopy.getHeight())
   ),
-  tiles_ = (new TileInterface*[toCopy.getWidth()*toCopy.getHeight()])
+  tiles_(new TileInterface*[toCopy.getWidth()*toCopy.getHeight()])
 {
   for(
     auto tileIterator = toCopy.begin();
@@ -53,7 +53,7 @@ FixedBoard::FixedBoard(const Board& toCopy)
       setTile(
         tileIterator.getX(),
         tileIterator.getY(),
-        (*tileIterator)->copy()
+        (*tileIterator)->copy(this)
       );
     }
   }
@@ -64,14 +64,14 @@ FixedBoard::FixedBoard(const Board& toCopy)
 */
 FixedBoard::~FixedBoard()
 {
-  for(
-    auto tileIterator = begin();
-    tileIterator != end();
-    ++tileIterator
+  for (
+    std::size_t index = 0;
+    index < linearizer_->getMaxLinearizedValue();
+    ++index
   ) {
-    if((*tileIterator) != nullptr) {
-      delete *boardIterator;
-	    *boardIterator = nullptr;
+    if(tiles_[index] != nullptr) {
+      delete tiles_[index];
+      tiles_[index] = nullptr;
     }
   }
 
@@ -180,7 +180,7 @@ void FixedBoard::setTile(
   const std::size_t location = linearizer_->linearize(x,y);
 
   gsl::owner<TileInterface*> oldTile = tiles_[location];
-  tiles[location] = tile;
+  tiles_[location] = tile;
 
   if(oldTile != nullptr) {
     delete oldTile;

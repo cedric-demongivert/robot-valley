@@ -3,9 +3,8 @@
 #include <sstream>
 #include <string>
 
-
-static Board* BoardLoader::LoadTxtBoard(String filename){
-	
+Board* BoardLoader::loadTxtBoard(const std::string& filename)
+{
 	
 	std::ifstream infile(filename.c_str());
 	//~ if(!infile)
@@ -15,4 +14,6 @@ static Board* BoardLoader::LoadTxtBoard(String filename){
 	while (std::getline(infile, line)){
 		
 	}
+
+  return nullptr;
 }

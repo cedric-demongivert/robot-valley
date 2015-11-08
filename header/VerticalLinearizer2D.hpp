@@ -2,6 +2,7 @@
 #define __VERTICAL_LINEARIZER_2D_HPP
 
 #include "Linearizer2D.hpp"
+#include <string>
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>
@@ -87,7 +88,7 @@ class VerticalLinearizer2D :
     *
     * @return std::size_t
     */
-    virtual std::size_t getMaxLinearizedValue() const override
+    virtual std::size_t getMaxLinearizedValue() const override;
 };
 
 #endif

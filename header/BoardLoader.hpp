@@ -22,7 +22,7 @@ public:
 	 * 
 	 * 	@return	Board* - the created board.
 	 * 
-	 * 	@throws NoFileException - if no existing file match this filename.
+	 * 	@throws NoFileException - if no existing file match this filename. // Voir common exception, ptete qu'elle existe déjà
 	 * 	@throws BoardLoadingErrorException - if the board couldn't be load correctly.
 	 */
 	static Board* loadTxtBoard(const std::string& filename);

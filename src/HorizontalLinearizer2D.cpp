@@ -77,7 +77,7 @@ std::size_t HorizontalLinearizer2D::getX(
 {
   if(!contains(linearized)) {
     throw std::out_of_range(
-      "The linearized point " + std::to_string(linearized) " can't be reversed."
+      "The linearized point " + std::to_string(linearized) + " can't be reversed."
     );
   }
 
@@ -99,7 +99,7 @@ std::size_t HorizontalLinearizer2D::getY(
 {
   if(!contains(linearized)) {
     throw std::out_of_range(
-      "The linearized point " + std::to_string(linearized) " can't be reversed."
+      "The linearized point " + std::to_string(linearized) + " can't be reversed."
     );
   }
   

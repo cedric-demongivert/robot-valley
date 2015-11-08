@@ -13,7 +13,6 @@ class TileInterface{
 public:
 	virtual ~TileInterface();
 
-
 	/**
 	 *	Get the Board the tile is in
 	 *
@@ -55,14 +54,12 @@ public:
 	 */
 	virtual void onExit(Bot& bot) =0;
 
-
-
 	/**
 	 *	Return a copy of the tile
 	 *
 	 * 	@return TileInterface* - A real copy of the tile
 	 */
-	virtual TileInterface* copy() const=0;
+  virtual TileInterface* copy(Board* newBoard) const = 0;
 };
 
 #endif

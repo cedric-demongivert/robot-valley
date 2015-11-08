@@ -9,6 +9,8 @@
 * Circular inclusion.
 */
 class Board;
+class ConstBoardIterator;
+class BoardIterator;
 
 /**
 * Iterator over tiles.

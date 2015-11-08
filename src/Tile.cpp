@@ -1,21 +1,20 @@
 #include "Tile.hpp"
 
 
-Tile::Tile(const Board& board){
+Tile::Tile(Board* board){
 	board_ = board;
 	bot_= nullptr;
 }
 
 
-Tile::Tile(const TileInterface& toCopy){
-	board_ = toCopy.getBoard();
-	bot_ = toCopy.getBot();
+Tile::Tile(const TileInterface& toCopy, Board* newBoard){
+  board_ = newBoard;
+	bot_ = nullptr;
 }
 
-
-
-const Tile::Board* getBoard() const{
-	return const board_;
+const Board* Tile::getBoard() const
+{
+	return board_;
 }
 
 Board* Tile::getBoard(){
@@ -24,7 +23,7 @@ Board* Tile::getBoard(){
 
 
 const Bot* Tile::getBot() const{
-	return const bot_;
+	return bot_;
 }
 	
 	
@@ -37,13 +36,13 @@ bool Tile::isFree() const{
 	return (bot_ == nullptr);
 }
 	
-void Tile::onEnter(Bot& bot){
+void Tile::onEnter(Bot& bot) {
 	
 }
 
-void Tile::onExit(Bot& bot) override{
+void Tile::onExit(Bot& bot) {
 }
 
-Tile* Tile::copy(){
-	return Tile(*this);
+Tile* Tile::copy(Board* newBoard) const {
+	return new Tile(*this, newBoard);
 }

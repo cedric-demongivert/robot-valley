@@ -242,7 +242,7 @@ ConstBoardIterator::~ConstBoardIterator()
 *
 * @return std::size_t
 */
-std::size_t BoardIterator::getX() const
+std::size_t ConstBoardIterator::getX() const
 {
   return linearizer_.getX(i_);
 }
@@ -252,7 +252,7 @@ std::size_t BoardIterator::getX() const
 *
 * @return std::size_t
 */
-std::size_t BoardIterator::getY() const
+std::size_t ConstBoardIterator::getY() const
 {
   return linearizer_.getY(i_);
 }

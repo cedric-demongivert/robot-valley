@@ -20,24 +20,23 @@ class Tile: public TileInterface{
 
 public:
 
-	Tile(const Board& board);
-	Tile(const TileInterface& toCopy);
+	Tile(Board* board);
+	Tile(const TileInterface& toCopy, Board* board);
 
-	~Tile() override;
+  virtual ~Tile() override;
 
-	const Board* getBoard() const override;
-	Board* getBoard() override;
+  virtual const Board* getBoard() const override;
+  virtual Board* getBoard() override;
 
-	const Bot* getBot() const override;
-	Bot* getBot() override;
+  virtual const Bot* getBot() const override;
+  virtual Bot* getBot() override;
 
-	bool isFree() const override;
+  virtual bool isFree() const override;
 
-	void onEnter(Bot& bot) override;
-	void onExit(Bot& bot) override;
+  virtual void onEnter(Bot& bot) override;
+  virtual void onExit(Bot& bot) override;
 
-	Tile* copy() override;
-
+  virtual Tile* copy(Board* newBoard) const override;
 
 private:
 	Board* board_;

@@ -2,6 +2,7 @@
 #define __HORIZONTAL_LINEARIZER_2D_HPP
 
 #include "Linearizer2D.hpp"
+#include <string>
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>
