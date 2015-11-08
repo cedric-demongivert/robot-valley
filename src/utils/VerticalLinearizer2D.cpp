@@ -59,7 +59,7 @@ std::size_t VerticalLinearizer2D::linearize(
     );
   }
 
-  return getHeight() * y + x;
+  return getWidth() * y + x;
 }
 
 /**
@@ -81,7 +81,7 @@ std::size_t VerticalLinearizer2D::getX(
     );
   }
 
-  return linearized % getHeight();
+  return linearized % getWidth();
 }
 
 /**
@@ -103,7 +103,7 @@ std::size_t VerticalLinearizer2D::getY(
     );
   }
 
-  return linearized / getHeight();
+  return linearized / getWidth();
 }
 
 /**
