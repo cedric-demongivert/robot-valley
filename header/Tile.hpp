@@ -2,8 +2,8 @@
 #define __TILE_HPP
 
 #include "TileInterface.hpp"
+#include "board/Board.hpp"
 
-class Board;
 class Bot;
 
 
@@ -23,20 +23,20 @@ public:
 	Tile(Board* board);
 	Tile(const TileInterface& toCopy, Board* board);
 
-  virtual ~Tile() override;
+	virtual ~Tile();
 
-  virtual const Board* getBoard() const override;
-  virtual Board* getBoard() override;
+	virtual const Board* getBoard() const;
+	virtual Board* getBoard() ;
 
-  virtual const Bot* getBot() const override;
-  virtual Bot* getBot() override;
+	virtual const Bot* getBot() const ;
+	virtual Bot* getBot();
 
-  virtual bool isFree() const override;
+	virtual bool isFree() const;
 
-  virtual void onEnter(Bot& bot) override;
-  virtual void onExit(Bot& bot) override;
+	virtual void onEnter(Bot& bot);
+	virtual void onExit(Bot& bot);
 
-  virtual Tile* copy(Board* newBoard) const override;
+	virtual Tile* copy(Board* newBoard) const;
 
 private:
 	Board* board_;

@@ -4,6 +4,7 @@
 #include "board/Board.hpp"
 #include <stdio.h>
 #include <string.h>
+#include "GSL/gsl.h"
 
 
 /**
@@ -20,12 +21,12 @@ public:
 	 *
 	 * 	@param const std::string& filename - the path to the setting file of a board.
 	 *
-	 * 	@return	Board* - the created board.
+	 * 	@return	gsl::owner<Board*> - the created board.
 	 *
-	 * 	@throws NoFileException - if no existing file match this filename. // Voir common exception, ptete qu'elle existe d�j�
+	 * 	@throws std::ios_base::failure - if no existing file match this filename. 
 	 * 	@throws BoardLoadingErrorException - if the board couldn't be load correctly.
 	 */
-	static Board* loadTxtBoard(const std::string& filename);
+	static gsl::owner<Board*> loadTxtBoard(const std::string& filename);
 
 
 private:

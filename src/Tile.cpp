@@ -15,8 +15,7 @@ Tile::Tile(const TileInterface& toCopy, Board* newBoard){
 Tile::~Tile()
 { }
 
-const Board* Tile::getBoard() const
-{
+const Board* Tile::getBoard() const{
 	return board_;
 }
 
@@ -40,12 +39,22 @@ bool Tile::isFree() const{
 }
 	
 void Tile::onEnter(Bot& bot) {
-	
+	bot_ = &bot;
 }
 
 void Tile::onExit(Bot& bot) {
+	bot_= nullptr;
 }
 
 Tile* Tile::copy(Board* newBoard) const {
 	return new Tile(*this, newBoard);
+}
+
+
+int Tile::getX() const{
+	return X_;
+}
+
+int Tile::getY() const{
+	return Y_;
 }
