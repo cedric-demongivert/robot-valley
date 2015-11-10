@@ -28,3 +28,9 @@ add_executable(
   ${template_files}
   ${test_files}
 )
+
+set_property(TARGET robot-valley PROPERTY CXX_STANDARD 14)
+set_property(TARGET robot-valley PROPERTY CXX_STANDARD_REQUIRED ON)
+
+set_property(TARGET robot-valley-tests PROPERTY CXX_STANDARD 14)
+set_property(TARGET robot-valley-tests PROPERTY CXX_STANDARD_REQUIRED ON)
