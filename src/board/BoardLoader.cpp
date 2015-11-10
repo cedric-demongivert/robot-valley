@@ -1,19 +1,44 @@
 #include "board/BoardLoader.hpp"
+#include "board/FixedBoard.hpp"
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <string>
 
-Board* BoardLoader::loadTxtBoard(const std::string& filename)
-{
 
+
+
+static gsl::owner<Board*> BoardLoader::LoadTxtBoard(String filename){
+	
+	
 	std::ifstream infile(filename.c_str());
-	//~ if(!infile)
-		//~ throw NoFileException
+	infile.exceptions ( ifstream::failbit );
 
+	
 	std::string line;
-	while (std::getline(infile, line)){
+	int nbLines=0, nbColumns=0;
+	
 
+	while (std::getline(infile, line)){
+		
+		nbLines++;
+		bColumns=0;
+				
+		std::stringstream ss(line);
+		std::string tileDesc;
+		char delim = ';';
+		
+		while (std::getline(ss, tileDesc, delim)) {
+			nbColumns++;
+		}
+		
 	}
 
-  return nullptr;
+
+	infile.close();
+	
+	
+	gsl::owner<Board*> fb (new FixedBoard(nbColumns, nbLines));
+	
+	return fb;
 }

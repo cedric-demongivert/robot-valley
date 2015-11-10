@@ -1,6 +1,9 @@
 #ifndef __TILE_INTERFACE_HPP
 #define __TILE_INTERFACE_HPP
 
+#include <cstdlib>
+#include "mixins/Localizable2D.hpp"
+
 /**
  * @author K/OURIO Alexandre <kourio.alexandre@gmail.com>
  * */
@@ -9,7 +12,7 @@ class Board;
 class Bot;
 
 
-class TileInterface{
+class TileInterface : public Localizable2D{
 public:
   virtual ~TileInterface()
   { };
@@ -60,7 +63,22 @@ public:
 	 *
 	 * 	@return TileInterface* - A real copy of the tile
 	 */
-  virtual TileInterface* copy(Board* newBoard) const = 0;
+	virtual TileInterface* copy(Board* newBoard) const = 0;
+  
+  
+  
+	virtual int getX() const = 0;
+	virtual int getY() const = 0;
+
+  
+  
+private:
+	int X_;
+	int Y_;
+	
+	friend Board;
+	
+	
 };
 
 #endif
