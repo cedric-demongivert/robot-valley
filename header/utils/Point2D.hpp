@@ -5,6 +5,8 @@
 #include "mixins/Movable2D.hpp"
 #include "mixins/Copiable.hpp"
 
+#include "GSL/gsl.h"
+
 class Point2D
   : public Localizable2D,
     public Movable2D,
@@ -101,13 +103,13 @@ class Point2D
     }
     
     /**
-     * Create a copy of the point.
+     * Allocate a copy of this point.
      * 
-     * @return Point2D
+     * @return gsl::owner<Point2D*>
      */
-    inline Point2D copy()
+    inline gsl::owner<Point2D*> copy() 
     {
-      return Point2D(*this);
+      return gsl::owner<Point2D*> (new Point2D(*this));
     }
     
   protected:

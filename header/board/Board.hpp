@@ -50,6 +50,12 @@ class Board
     * @return BoardIterator
     */
     virtual BoardIterator begin() = 0;
+    
+    /**
+    * Return a begin iterator over this board.
+    *
+    * @return ConstBoardIterator
+    */
     virtual ConstBoardIterator begin() const = 0;
 
     /**
@@ -58,6 +64,12 @@ class Board
     * @return ConstBoardIterator
     */
     virtual BoardIterator end() = 0;
+    
+    /**
+    * Return an end iterator over this board.
+    *
+    * @return ConstBoardIterator
+    */
     virtual ConstBoardIterator end() const = 0;
 
     /**
@@ -76,6 +88,17 @@ class Board
       const std::size_t y
     ) = 0;
 
+    /**
+    * Return a tile at a specific location.
+    *
+    * @param const std::size_t x
+    * @param const std::size_t y
+    *
+    * @throws std::out_of_range If the location (x,y) do not exist.
+    *
+    * @return const TileInterface* Tile at the (x,y) location, while return nullptr if
+    *                        the tile do not exist.
+    */
     virtual const TileInterface* getTile(
       const std::size_t x,
       const std::size_t y
@@ -99,6 +122,25 @@ class Board
       const std::size_t y,
       gsl::owner<TileInterface*> tile
     ) = 0;
+    
+    /**
+    * Copy a tile in a specific location.
+    *
+    * If a tile already exist at the location, the board will destroy it.
+    *
+    * @param const std::size_t x
+    * @param const std::size_t y
+    * @param const TileInterface& tile Tile to set.
+    *
+    * @throws std::out_of_range If the location (x,y) do not exist.
+    *
+    * @return void
+    */
+    virtual void setTile(
+      const std::size_t x,
+      const std::size_t y,
+      const TileInterface& tile
+    ) = 0;
 
     /**
     * Check if a location is in the board.
@@ -113,6 +155,10 @@ class Board
       const std::size_t y
     ) const = 0;
 
+    /**
+     * Pass a turn.
+     */
+    virtual void nextTurn();
 };
 
 #endif

@@ -1,6 +1,8 @@
 #ifndef __COPIABLE_HPP
 #define __COPIABLE_HPP
 
+#include "GSL/gsl.h"
+
 /**
  * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>
  * 
@@ -17,9 +19,11 @@ class Copiable
     /**
      * Copy the object.
      * 
-     * @return T
+     * Allocate a new copy of this object.
+     * 
+     * @return gsl::owner<T*>
      */
-    virtual T copy() const = 0;
+    virtual gsl::owner<T*> copy() const = 0;
 };
 
 

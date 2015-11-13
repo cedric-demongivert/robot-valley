@@ -3,6 +3,11 @@
 
 #include <cstdlib>
 #include <stdexcept>
+#include "mixins/Copiable.hpp"
+#include "mixins/Localizable2D.hpp"
+#include "mixins/Movable2D.hpp"
+#include "utils/Point2D.hpp"
+#include "GSL/gsl.h"
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>
@@ -14,6 +19,7 @@
 * @class Linearizer2D
 */
 class Linearizer2D
+  : public Copiable<Linearizer2D>
 {
   public:
     /**
@@ -31,6 +37,22 @@ class Linearizer2D
       const std::size_t width,
       const std::size_t height
     );
+    
+    /**
+    * Constructor with width, height and offset.
+    *
+    * @param const std::size_t width
+    * @param const std::size_t height
+    * 
+    * @param const int offsetX
+    * @param const int offsetY
+    */
+    Linearizer2D(
+      const std::size_t width,
+      const std::size_t height,
+      const int offsetX,
+      const int offsetY
+    );
 
     /**
     * Copy constructor.
@@ -47,15 +69,15 @@ class Linearizer2D
     /**
     * Transform a 2D Point into a unique ID of an array.
     *
-    * @param const std::size_t x
-    * @param const std::size_t y
+    * @param const int x
+    * @param const int y
     *
     * @throw std::out_of_range If the 2D point can't be linearized.
     *
     * @return std::size_t linearized point
     */
     virtual std::size_t linearize(
-      const std::size_t x, const std::size_t y
+      const int x, const int y
     ) const = 0;
 
     /**
@@ -65,9 +87,9 @@ class Linearizer2D
     *
     * @throw std::out_of_range If the linearized point is out of range.
     *
-    * @return std::size_t X coordinate of the linearized point.
+    * @return int coordinate of the linearized point.
     */
-    virtual std::size_t getX(
+    virtual int getX(
       const std::size_t linearized
     ) const = 0;
 
@@ -80,7 +102,7 @@ class Linearizer2D
     *
     * @return std::size_t Y coordinate of the point.
     */
-    virtual std::size_t getY(
+    virtual int getY(
       const std::size_t linearized
     ) const = 0;
 
@@ -97,6 +119,20 @@ class Linearizer2D
     * @return std::size_t Height.
     */
     virtual std::size_t getHeight() const;
+    
+    /**
+    * Return the linearizer x offset.
+    *
+    * @return int
+    */
+    virtual int getOffsetX() const;
+    
+    /**
+    * Return the linearizer y offset.
+    *
+    * @return int
+    */
+    virtual int getOffsetY() const;
 
     /**
     * Change the linearizer preferred width.
@@ -111,6 +147,20 @@ class Linearizer2D
     * @param const std::size_t newHeight
     */
     virtual void setHeight(const std::size_t newHeight);
+    
+    /**
+    * Set the linearizer x offset.
+    *
+    * @param const int offsetX.
+    */
+    virtual void setOffsetX(const int offsetX);
+    
+    /**
+    * Set the linearizer y offset.
+    *
+    * @param const int offsetY.
+    */
+    virtual void setOffsetY(const int offsetY);
 
     /**
     * Return the maximum value that can be computed with that linearization.
@@ -122,12 +172,12 @@ class Linearizer2D
     /**
     * Return true if this linearizer can linearize a specified 2D point.
     *
-    * @param const std::size_t x
-    * @param const std::size_t y
+    * @param const int x
+    * @param const int y
     *
     * @return bool
     */
-    virtual bool contains(const std::size_t x, const std::size_t y) const;
+    virtual bool contains(const int x, const int y) const;
 
     /**
     * Return true if this linearizer can convert a linearized point to
@@ -138,10 +188,14 @@ class Linearizer2D
     * @return bool
     */
     virtual bool contains(const std::size_t linearized) const;
+    
+    virtual gsl::owner<Linearizer2D*> copy() const = 0;
 
   protected:
     std::size_t width_;
     std::size_t height_;
+    int offsetX_;
+    int offsetY_;
 };
 
 #endif

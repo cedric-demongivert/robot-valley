@@ -2,6 +2,7 @@
 #define __SIMPLE_BOT_HPP
 
 #include "bot/Bot.hpp"
+#include "utils/Point2D.hpp"
 #include "TileInterface.hpp"
 #include "GSL/gsl.h"
 #include <cstdlib>
@@ -25,17 +26,17 @@ class SimpleBot
     /**
      * Create a simple bot with a specific position.
      * 
-     * @param const std::size_t x
-     * @param const std::size_t y
+     * @param const int x
+     * @param const int y
      */
-    SimpleBot(const std::size_t x, const std::size_t y);
+    SimpleBot(const int x, const int y);
     
     /**
-     * Create a bot on a tile.
+     * Create a simple bot with a specific position.
      * 
-     * @param TileInterface* tile
+     * @param const Localizable2D&
      */
-    SimpleBot(const gsl::not_null<TileInterface*> tile);
+    SimpleBot(const Localizable2D& position);
     
     /**
      * Copy a generic bot.
@@ -54,28 +55,28 @@ class SimpleBot
      * 
      * @return std::size_t x
      */
-    std::size_t getX() const;
+    int getX() const;
     
     /**
      * Return the y coordinate of that bot on a board.
      * 
      * @return std::size_t y
      */
-    std::size_t getY() const;
+    int getY() const;
     
     /**
      * Change the location of that bot on the board.
      * 
      * Call that function only if you are a kind of BotManager.
      * 
-     * @param const std::size_t x New x coordinate of the bot.
-     * @param const std::size_t y New y coordinate of the bot.
+     * @param const int x New x coordinate of the bot.
+     * @param const int y New y coordinate of the bot.
      * 
      * @return void
      */
     virtual void setLocation(
-      const std::size_t x,
-      const std::size_t y
+      const int x,
+      const int y
     );
     
     /**
@@ -96,8 +97,7 @@ class SimpleBot
     virtual void setTile(TileInterface* const newTile);
     
   protected:
-    std::size_t x_;
-    std::size_t y_;
+    Point2D location_;
     TileInterface* tile_;
 };
 

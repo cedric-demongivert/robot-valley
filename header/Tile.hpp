@@ -6,41 +6,38 @@
 
 class Bot;
 
-
-
 /**
- *	@author K/OURIO Alexandre <kourio.alexandre@gmail.com>
+ *  @author K/OURIO Alexandre <kourio.alexandre@gmail.com>
  * 
- * 	A basic Tile that implement TileInterface.
+ *  A basic Tile that implement TileInterface.
  * 
- * 	@class TileInterface
+ *  @class TileInterface
  */
  
 class Tile: public TileInterface{
 
 public:
+  Tile();
+  Tile(Board* board);
+  Tile(const TileInterface& toCopy);
 
-	Tile(Board* board);
-	Tile(const TileInterface& toCopy, Board* board);
+  virtual ~Tile();
 
-	virtual ~Tile();
+  const Board* getBoard() const;
+  Board* getBoard() ;
 
-	virtual const Board* getBoard() const;
-	virtual Board* getBoard() ;
+  const Bot* getBot() const ;
+  Bot* getBot();
 
-	virtual const Bot* getBot() const ;
-	virtual Bot* getBot();
+  bool isFree() const;
 
-	virtual bool isFree() const;
+  virtual void onEnter(Bot& bot);
+  virtual void onExit(Bot& bot);
 
-	virtual void onEnter(Bot& bot);
-	virtual void onExit(Bot& bot);
-
-	virtual Tile* copy(Board* newBoard) const;
+  virtual Tile* copy() const;
 
 private:
-	Board* board_;
-	Bot* bot_;
+  Board* board_;
 };
 
 #endif

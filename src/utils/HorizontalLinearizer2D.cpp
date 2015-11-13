@@ -23,12 +23,30 @@ HorizontalLinearizer2D::HorizontalLinearizer2D(
 { }
 
 /**
+* Constructor with width, height and offset.
+*
+* @param const std::size_t width
+* @param const std::size_t height
+* 
+* @param const int offsetX
+* @param const int offsetY
+*/
+HorizontalLinearizer2D(
+  const std::size_t width,
+  const std::size_t height,
+  const int offsetX,
+  const int offsetY
+) : Linearizer2D(width, height, offsetX, offsetY)
+{ }
+
+/**
 * Copy constructor.
 *
 * @param const Linearizer2D& toCopy
 */
-HorizontalLinearizer2D::HorizontalLinearizer2D(const Linearizer2D& toCopy)
-  : Linearizer2D(toCopy)
+HorizontalLinearizer2D::HorizontalLinearizer2D(
+      const Linearizer2D& toCopy
+) : Linearizer2D(toCopy)
 { }
 
 /**
@@ -40,16 +58,16 @@ HorizontalLinearizer2D::~HorizontalLinearizer2D()
 /**
 * Transform a 2D Point into a unique ID of an array.
 *
-* @param const std::size_t x
-* @param const std::size_t y
+* @param const int x
+* @param const int y
 *
 * @throw std::out_of_range If the 2D point can't be linearized.
 *
 * @return std::size_t linearized point
 */
 std::size_t HorizontalLinearizer2D::linearize(
-  const std::size_t x,
-  const std::size_t y
+  const int x,
+  const int y
 ) const
 {
   if(!contains(x,y)) {
@@ -59,7 +77,7 @@ std::size_t HorizontalLinearizer2D::linearize(
     );
   }
 
-  return getHeight() * x + y;
+  return getHeight() * (x - getOffsetX()) + (y - getOffsetY());
 }
 
 /**
@@ -69,9 +87,9 @@ std::size_t HorizontalLinearizer2D::linearize(
 *
 * @throw std::out_of_range If the linearized point is out of range.
 *
-* @return std::size_t X coordinate of the linearized point.
+* @return int X coordinate of the linearized point.
 */
-std::size_t HorizontalLinearizer2D::getX(
+int HorizontalLinearizer2D::getX(
   const std::size_t linearized
 ) const
 {
@@ -81,7 +99,7 @@ std::size_t HorizontalLinearizer2D::getX(
     );
   }
 
-  return linearized / getHeight();
+  return (linearized / getHeight()) + getOffsetX();
 }
 
 /**
@@ -91,9 +109,9 @@ std::size_t HorizontalLinearizer2D::getX(
 *
 * @throw std::out_of_range If the linearized point is out of range.
 *
-* @return std::size_t Y coordinate of the point.
+* @return int Y coordinate of the point.
 */
-std::size_t HorizontalLinearizer2D::getY(
+int HorizontalLinearizer2D::getY(
   const std::size_t linearized
 ) const
 {
@@ -103,7 +121,7 @@ std::size_t HorizontalLinearizer2D::getY(
     );
   }
 
-  return linearized % getHeight();
+  return (linearized % getHeight()) + getOffsetY();
 }
 
 /**
