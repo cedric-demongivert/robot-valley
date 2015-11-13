@@ -6,12 +6,12 @@
 
 void horizontalLinearizer2D_test_array(const std::size_t width, const std::size_t height)
 {
-  HorizontalLinearizer2D linearizer (width, height);
+  HorizontalLinearizer2D linearizer (width, height, -10, -20);
 
   std::size_t linearized = 0;
 
-  for(std::size_t x = 0; x < width; ++x) {
-    for(std::size_t y = 0; y < height; ++y) {
+  for(int x = -10; x < width; ++x) {
+    for(int y = -20; y < height; ++y) {
       BOOST_TEST(linearizer.getX(linearized) == x);
       BOOST_TEST(linearizer.getY(linearized) == y);
       BOOST_TEST(linearizer.linearize(x, y) == linearized);
