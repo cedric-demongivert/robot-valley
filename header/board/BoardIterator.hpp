@@ -32,10 +32,10 @@ class BoardIterator :
     * Create a new BoardIterator at a specific location of a board.
     *
     * @param Board* board Board to iterate.
-    * @param const std::size_t x
-    * @param const std::size_t y
+    * @param const int x
+    * @param const int y
     */
-    BoardIterator(Board* board, const std::size_t x, const std::size_t y);
+    BoardIterator(Board* board, const int x, const int y);
 
     /**
     * Create a new BoardIterator at a specific linearized location of a
@@ -61,16 +61,16 @@ class BoardIterator :
     /**
     * Return the X coordinate of the current position.
     *
-    * @return std::size_t
+    * @return int
     */
-    virtual std::size_t getX() const;
+    virtual int getX() const;
 
     /**
     * Return the Y coordinate of the current position.
     *
-    * @return std::size_t
+    * @return int
     */
-    virtual std::size_t getY() const;
+    virtual int getY() const;
 
     /**
     * Return the itered board.
@@ -154,7 +154,7 @@ class BoardIterator :
 
   protected:
     Board* board_;
-    HorizontalLinearizer2D linearizer_;
+    HorizontalLinearizer2D linearizer_; 
     std::size_t i_;
 
 };
@@ -179,10 +179,10 @@ class ConstBoardIterator
     * Create a new BoardIterator at a specific location of a board.
     *
     * @param const BoardInterface* board Board to iterate.
-    * @param const std::size_t x
-    * @param const std::size_t y
+    * @param const int x
+    * @param const int y
     */
-    ConstBoardIterator(const Board* board, const std::size_t x, const std::size_t y);
+    ConstBoardIterator(const Board* board, const int x, const int y);
 
     /**
     * Create a new BoardIterator at a specific linearized location of a board.
@@ -214,16 +214,16 @@ class ConstBoardIterator
     /**
     * Return the X coordinate of the current position.
     *
-    * @return std::size_t
+    * @return int
     */
-    virtual std::size_t getX() const;
+    virtual int getX() const;
 
     /**
     * Return the Y coordinate of the current position.
     *
-    * @return std::size_t
+    * @return int
     */
-    virtual std::size_t getY() const;
+    virtual int getY() const;
 
     /**
     * Return the itered board.

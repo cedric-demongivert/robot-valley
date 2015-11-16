@@ -141,12 +141,12 @@ void Linearizer2D::setHeight(const std::size_t newHeight)
 /**
 * Return true if this linearizer can linearize a specified 2D point.
 *
-* @param const std::size_t x
-* @param const std::size_t y
+* @param const int x
+* @param const int y
 *
 * @return bool
 */
-bool Linearizer2D::contains(const std::size_t x, const std::size_t y) const
+bool Linearizer2D::contains(const int x, const int y) const
 {
   return x >= getOffsetX() 
          && y >= getOffsetY()

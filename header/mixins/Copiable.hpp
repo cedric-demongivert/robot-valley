@@ -14,7 +14,7 @@ template<class T>
 class Copiable 
 {
   public:
-    ~Copiable() {};
+    virtual ~Copiable() {};
     
     /**
      * Copy the object.

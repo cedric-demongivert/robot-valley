@@ -31,7 +31,7 @@ HorizontalLinearizer2D::HorizontalLinearizer2D(
 * @param const int offsetX
 * @param const int offsetY
 */
-HorizontalLinearizer2D(
+HorizontalLinearizer2D::HorizontalLinearizer2D(
   const std::size_t width,
   const std::size_t height,
   const int offsetX,
@@ -132,4 +132,14 @@ int HorizontalLinearizer2D::getY(
 std::size_t HorizontalLinearizer2D::getMaxLinearizedValue() const
 {
   return getWidth() * getHeight();
+}
+
+/**
+* Allocate a new copy of this Linearizer.
+*
+* @return gsl::owner<Linearizer2D*>
+*/
+gsl::owner<Linearizer2D*> HorizontalLinearizer2D::copy() const
+{
+  return gsl::owner<Linearizer2D*>(new HorizontalLinearizer2D(*this));
 }

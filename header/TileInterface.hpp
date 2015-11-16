@@ -110,6 +110,8 @@ public:
   
   virtual int getX() const = 0;
   virtual int getY() const = 0;
+
+  virtual void nextTurn() = 0;
 };
 
 #endif

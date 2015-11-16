@@ -3,9 +3,15 @@
 
 #include <iterator>
 #include "bot/Bot.hpp"
-#include "GSL/gsl.hpp"
+#include "GSL/gsl.h"
 #include "mixins/Copiable.hpp"
+#include "game/Game.hpp"
 
+/**
+* Circular inclusion
+*/
+class Bot;
+class Game;
 
 typedef std::iterator<std::input_iterator_tag, Bot*> 
         BotIterator;
@@ -21,14 +27,13 @@ typedef std::iterator<std::input_iterator_tag, const Bot*>
  * @class BotManager
  */
 class BotManager 
-  : public Copiable<BotManager*>
+  : public Copiable<BotManager>
 {
   public:
     /**
      * Destructor.
      */
-    virtual ~BotManager()
-    { };
+    virtual ~BotManager() { };
     
     /**
      * Return a bot of the BotManager.
@@ -72,9 +77,29 @@ class BotManager
      * @throw std::out_of_range If index is out of range.
      * 
      * @param const std::size_t index
+     *
+     * @return gsl::owner<Bot*> The removed bot, if a bot was removed.
      */
-    virtual void removeBot(const std::size_t index) = 0;
+    virtual gsl::owner<Bot*> removeBot(const std::size_t index) = 0;
+
+    /**
+    * Delete a bot of the BotManager.
+    *
+    * @param Bot* bot Bot to remove.
+    *
+    * @return gsl::owner<Bot*> The removed bot, if a bot was removed.
+    */
+    virtual gsl::owner<Bot*> removeBot(Bot* bot) = 0;
     
+    /**
+    * Return true if this manager already contains that bot.
+    *
+    * @param const Bot* bot Bot to test.
+    *
+    * @return bool True if this manager already hold that bot.
+    */
+    virtual bool contains(const Bot* bot) const = 0;
+
     /**
      * Return an iterator at the begining of the bot collection.
      * 
@@ -95,6 +120,20 @@ class BotManager
      * @return BotIterator
      */
     virtual BotIterator end() = 0;
+
+    /**
+    * Get the game that hold this BotManager.
+    *
+    * @return Game*
+    */
+    virtual Game* getGame() = 0;
+
+    /**
+    * Get the game that hold this BotManager.
+    *
+    * @return const Game*
+    */
+    virtual const Game* getGame() const = 0;
     
     /**
      * Return an iterator at the end of the bot collection.
@@ -108,12 +147,12 @@ class BotManager
      * 
      * @return gsl::owner<BotManager*>
      */
-    virtual gsl::owner<BotManager*> copy() const = 0;
+    virtual gsl::owner<BotManager*> copy() const override = 0;
     
     /**
      * Pass a turn.
      */
     virtual void nextTurn() = 0;
-}
+};
 
 #endif

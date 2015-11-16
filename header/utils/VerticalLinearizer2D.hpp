@@ -71,7 +71,7 @@ class VerticalLinearizer2D :
     */
     std::size_t linearize(
       const int x, const int y
-    ) const;
+    ) const override;
 
     /**
     * Get the X coordinate of a unique ID.
@@ -84,7 +84,7 @@ class VerticalLinearizer2D :
     */
     int getX(
       const std::size_t linearized
-    ) const;
+    ) const override;
 
     /**
     * Get the Y coordinate of a unique ID.
@@ -97,14 +97,21 @@ class VerticalLinearizer2D :
     */
     virtual int getY(
       const std::size_t linearized
-    ) const;
+    ) const override;
 
     /**
     * Return the maximum value that can be computed with that linearization.
     *
     * @return std::size_t
     */
-    virtual std::size_t getMaxLinearizedValue() const;
+    virtual std::size_t getMaxLinearizedValue() const override;
+
+    /**
+    * Allocate a new copy of this Linearizer.
+    *
+    * @return gsl::owner<Linearizer2D*>
+    */
+    virtual gsl::owner<Linearizer2D*> VerticalLinearizer2D::copy() const override;
 };
 
 #endif

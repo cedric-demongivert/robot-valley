@@ -15,10 +15,10 @@ BoardIterator::BoardIterator(Board* board)
 * Create a new BoardIterator at a specific location of a board.
 *
 * @param Board* board Board to iterate.
-* @param const std::size_t x
-* @param const std::size_t y
+* @param const int x
+* @param const int y
 */
-BoardIterator::BoardIterator(Board* board, const std::size_t x, const std::size_t y)
+BoardIterator::BoardIterator(Board* board, const int x, const int y)
   : board_(board),
     linearizer_(board->getWidth(), board->getHeight()),
     i_(linearizer_.linearize(x, y))
@@ -56,9 +56,9 @@ BoardIterator::~BoardIterator()
 /**
 * Return the X coordinate of the current position.
 *
-* @return std::size_t
+* @return int
 */
-std::size_t BoardIterator::getX() const
+int BoardIterator::getX() const
 {
   return linearizer_.getX(i_);
 }
@@ -66,9 +66,9 @@ std::size_t BoardIterator::getX() const
 /**
 * Return the Y coordinate of the current position.
 *
-* @return std::size_t
+* @return int
 */
-std::size_t BoardIterator::getY() const
+int BoardIterator::getY() const
 {
   return linearizer_.getY(i_);
 }
@@ -186,7 +186,7 @@ ConstBoardIterator::ConstBoardIterator(const Board* board)
 * @param const std::size_t y
 */
 ConstBoardIterator::ConstBoardIterator(
-  const Board* board, const std::size_t x, const std::size_t y
+  const Board* board, const int x, const int y
 )
   : board_(board),
     linearizer_(board->getWidth(), board->getHeight()),
@@ -240,9 +240,9 @@ ConstBoardIterator::~ConstBoardIterator()
 /**
 * Return the X coordinate of the current position.
 *
-* @return std::size_t
+* @return int
 */
-std::size_t ConstBoardIterator::getX() const
+int ConstBoardIterator::getX() const
 {
   return linearizer_.getX(i_);
 }
@@ -250,9 +250,9 @@ std::size_t ConstBoardIterator::getX() const
 /**
 * Return the Y coordinate of the current position.
 *
-* @return std::size_t
+* @return int
 */
-std::size_t ConstBoardIterator::getY() const
+int ConstBoardIterator::getY() const
 {
   return linearizer_.getY(i_);
 }

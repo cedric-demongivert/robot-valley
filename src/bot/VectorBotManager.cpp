@@ -7,6 +7,7 @@
  * Create an empty BotManager.
  */
 VectorBotManager::VectorBotManager()
+  : game_(nullptr)
 { }
 
 /**
@@ -15,6 +16,7 @@ VectorBotManager::VectorBotManager()
  * @param const BotManager& manager
  */
 VectorBotManager::VectorBotManager(const BotManager& manager)
+  : game_(nullptr)
 {
   for(Bot* bot : manager)
   {
@@ -27,12 +29,10 @@ VectorBotManager::VectorBotManager(const BotManager& manager)
  */
 VectorBotManager::~VectorBotManager()
 { 
-  while(!bots_.empty())
-  {
-    gsl::owner<Bot*> bot = bots_.pop_back();
+  for (gsl::owner<Bot*> bot : bots_) {
     delete bot;
   }
-};
+}
 
 /**
  * Return a bot of the BotManager.
@@ -79,7 +79,10 @@ std::size_t VectorBotManager::size() const
  */
 void VectorBotManager::addBot(gsl::owner<Bot*> bot)
 {
-  bots_.push_back(bot);
+  if (!this->contains(bot)) {
+    bots_.push_back(bot);
+    bot->setGame(game_);
+  }
 }
 
 /**
@@ -89,14 +92,63 @@ void VectorBotManager::addBot(gsl::owner<Bot*> bot)
  * 
  * @param const std::size_t index
  */
-void VectorBotManager::removeBot(const std::size_t index)
+gsl::owner<Bot*> VectorBotManager::removeBot(const std::size_t index)
 {
   gsl::owner<Bot*> bot = bots_[index];
   bots_[index] = bots_[bots_.size() -1];
   bots_[bots_.size() -1] = bot;
   
-  bot = bots_.pop_back();
-  delete bot;
+  bot = bots_[bots_.size() - 1]; 
+  bots_.pop_back();
+
+  bot->setGame(nullptr);
+
+  return bot;
+}
+
+/**
+* Delete a bot of the BotManager.
+*
+* @param Bot* bot Bot to remove.
+*/
+gsl::owner<Bot*> VectorBotManager::removeBot(Bot* bot) 
+{
+  gsl::owner<Bot*> removed = nullptr;
+  auto it = std::find(std::begin(bots_), std::end(bots_), bot);
+
+  if (it != std::end(bots_)) {
+    removed = *it;
+    bots_.erase(it);
+    removed->setGame(nullptr);
+  }
+
+  return removed;
+}
+
+bool VectorBotManager::contains(const Bot* bot) const
+{
+  auto it = std::find(std::begin(bots_), std::end(bots_), bot);
+  return it != std::end(bots_);
+}
+
+/**
+* Get the game that hold this BotManager.
+*
+* @return Game*
+*/
+Game* VectorBotManager::getGame()
+{
+  return game_;
+}
+
+/**
+* Get the game that hold this BotManager.
+*
+* @return const Game*
+*/
+const Game* VectorBotManager::getGame() const
+{
+  return game_;
 }
 
 /**

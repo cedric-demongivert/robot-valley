@@ -1,5 +1,5 @@
-#ifndef __BOARD_INTERFACE_HPP
-#define __BOARD_INTERFACE_HPP
+#ifndef __BOARD_HPP
+#define __BOARD_HPP
 
 #include "GSL/gsl.h"
 #include <stdexcept>
@@ -45,6 +45,20 @@ class Board
     virtual std::size_t getWidth() const = 0;
 
     /**
+    * Return the x coordinate of the first tile in that board.
+    *
+    * @return int
+    */
+    virtual int getX() const = 0;
+
+    /**
+    * Return the y coordinate of the first tile in that board.
+    *
+    * @return int
+    */
+    virtual int getY() const = 0;
+
+    /**
     * Return a begin iterator over this board.
     *
     * @return BoardIterator
@@ -75,8 +89,8 @@ class Board
     /**
     * Return a tile at a specific location.
     *
-    * @param const std::size_t x
-    * @param const std::size_t y
+    * @param const int x
+    * @param const int y
     *
     * @throws std::out_of_range If the location (x,y) do not exist.
     *
@@ -84,15 +98,15 @@ class Board
     *                        the tile do not exist.
     */
     virtual TileInterface* getTile(
-      const std::size_t x,
-      const std::size_t y
+      const int x,
+      const int y
     ) = 0;
 
     /**
     * Return a tile at a specific location.
     *
-    * @param const std::size_t x
-    * @param const std::size_t y
+    * @param const int x
+    * @param const int y
     *
     * @throws std::out_of_range If the location (x,y) do not exist.
     *
@@ -100,17 +114,50 @@ class Board
     *                        the tile do not exist.
     */
     virtual const TileInterface* getTile(
-      const std::size_t x,
-      const std::size_t y
+      const int x,
+      const int y
     ) const = 0;
+
+    /**
+    * Return a tile at a specific location.
+    *
+    * @param const Localizable2D& location
+    *
+    * @throws std::out_of_range If the location (x,y) do not exist.
+    *
+    * @return TileInterface* Tile at the (x,y) location, while return nullptr if
+    *                        the tile do not exist.
+    */
+    inline TileInterface* getTile(
+      const Localizable2D& location
+    ) {
+      return getTile(location.getX(), location.getY());
+    };
+
+    /**
+    * Return a tile at a specific location.
+    *
+    * @param const Localizable2D& location
+    *
+    * @throws std::out_of_range If the location (x,y) do not exist.
+    *
+    * @return TileInterface* Tile at the (x,y) location, while return nullptr if
+    *                        the tile do not exist.
+    */
+    inline const TileInterface* getTile(
+      const Localizable2D& location
+    ) const
+    {
+      return getTile(location.getX(), location.getY());
+    }
 
     /**
     * Set a tile in a specific location.
     *
     * If a tile already exist at the location, this object will destroy it.
     *
-    * @param const std::size_t x
-    * @param const std::size_t y
+    * @param const int x
+    * @param const int y
     * @param gsl::owner<TileInterface*> tile Tile to set.
     *
     * @throws std::out_of_range If the location (x,y) do not exist.
@@ -118,8 +165,8 @@ class Board
     * @return void
     */
     virtual void setTile(
-      const std::size_t x,
-      const std::size_t y,
+      const int x,
+      const int y,
       gsl::owner<TileInterface*> tile
     ) = 0;
     
@@ -128,8 +175,8 @@ class Board
     *
     * If a tile already exist at the location, the board will destroy it.
     *
-    * @param const std::size_t x
-    * @param const std::size_t y
+    * @param const int x
+    * @param const int y
     * @param const TileInterface& tile Tile to set.
     *
     * @throws std::out_of_range If the location (x,y) do not exist.
@@ -137,23 +184,75 @@ class Board
     * @return void
     */
     virtual void setTile(
-      const std::size_t x,
-      const std::size_t y,
+      const int x,
+      const int y,
       const TileInterface& tile
     ) = 0;
 
     /**
+    * Set a tile in a specific location.
+    *
+    * If a tile already exist at the location, this object will destroy it.
+    *
+    * @param const Localizable2D& location
+    * @param gsl::owner<TileInterface*> tile Tile to set.
+    *
+    * @throws std::out_of_range If the location (x,y) do not exist.
+    *
+    * @return void
+    */
+    inline void setTile(
+      const Localizable2D& location,
+      gsl::owner<TileInterface*> tile
+    ) {
+      setTile(location.getX(), location.getY(), tile);
+    }
+
+    /**
+    * Copy a tile in a specific location.
+    *
+    * If a tile already exist at the location, the board will destroy it.
+    *
+    * @param const Localizable2D& location
+    * @param const TileInterface& tile Tile to set.
+    *
+    * @throws std::out_of_range If the location (x,y) do not exist.
+    *
+    * @return void
+    */
+    inline void setTile(
+      const Localizable2D& location,
+      const TileInterface& tile
+    ) {
+      setTile(location.getX(), location.getY(), tile);
+    }
+
+    /**
     * Check if a location is in the board.
     *
-    * @param const std::size_t x
-    * @param const std::size_t y
+    * @param const int x
+    * @param const int y
     *
     * @return bool True if the (x,y) location is in the board.
     */
     virtual bool contains(
-      const std::size_t x,
-      const std::size_t y
+      const int x,
+      const int y
     ) const = 0;
+
+    /**
+    * Check if a location is in the board.
+    *
+    * @param const Localizable2D& location
+    *
+    * @return bool True if the (x,y) location is in the board.
+    */
+    inline bool contains(
+      const Localizable2D& location
+    ) const
+    {
+      return contains(location.getX(), location.getY());
+    }
 
     /**
      * Pass a turn.

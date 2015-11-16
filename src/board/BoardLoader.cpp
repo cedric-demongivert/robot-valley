@@ -5,14 +5,11 @@
 #include <sstream>
 #include <string>
 
-
-
-
-static gsl::owner<Board*> BoardLoader::LoadTxtBoard(String filename){
+gsl::owner<Board*> BoardLoader::loadTxtBoard(const std::string& filename){
 	
 	
 	std::ifstream infile(filename.c_str());
-	infile.exceptions ( ifstream::failbit );
+	infile.exceptions(std::ifstream::failbit);
 
 	
 	std::string line;
@@ -22,7 +19,7 @@ static gsl::owner<Board*> BoardLoader::LoadTxtBoard(String filename){
 	while (std::getline(infile, line)){
 		
 		nbLines++;
-		bColumns=0;
+		nbColumns=0;
 				
 		std::stringstream ss(line);
 		std::string tileDesc;
@@ -34,9 +31,7 @@ static gsl::owner<Board*> BoardLoader::LoadTxtBoard(String filename){
 		
 	}
 
-
 	infile.close();
-	
 	
 	gsl::owner<Board*> fb (new FixedBoard(nbColumns, nbLines));
 	

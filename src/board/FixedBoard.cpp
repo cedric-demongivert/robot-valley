@@ -16,6 +16,43 @@ FixedBoard::FixedBoard(const size_t width, const size_t height)
 { }
 
 /**
+* Create a simple empty board with location.
+*
+* @param const size_t width
+* @param const size_t height
+* @param const int x
+* @param const int y
+*/
+FixedBoard::FixedBoard(const size_t width, const size_t height, const int x, const int y)
+  : tiles_(new gsl::owner<TileInterface*>[width*height]),
+    linearizer_(new HorizontalLinearizer2D(width, height, x, y))
+{}
+
+/**
+* Create a simple empty board with a specific storing way and a location.
+*
+* @param const size_t width
+* @param const size_t height
+* @param const int x
+* @param const int y
+* @param gsl::owner<Linearizer2D*> linearizer
+*/
+FixedBoard::FixedBoard(
+  const size_t width,
+  const size_t height,
+  const int x,
+  const int y,
+  gsl::owner<Linearizer2D*> linearizer
+) : tiles_(new gsl::owner<TileInterface*>[width*height]),
+  linearizer_(linearizer)
+{
+  linearizer_->setHeight(height);
+  linearizer_->setWidth(width);
+  linearizer_->setOffsetX(x);
+  linearizer_->setOffsetY(y);
+}
+
+/**
  * Create a simple empty board with a specific storing way.
  *
  * @param const size_t width
@@ -39,12 +76,10 @@ FixedBoard::FixedBoard(
  * @param const BoardInterface& toCopy
  */
 FixedBoard::FixedBoard(const Board& toCopy)
-: linearizer_(
-    new HorizontalLinearizer2D(toCopy.getWidth(), toCopy.getHeight())
-  ),
-  tiles_(new TileInterface*[toCopy.getWidth()*toCopy.getHeight()])
+  : linearizer_(new HorizontalLinearizer2D(toCopy.getWidth(), toCopy.getHeight())),
+    tiles_(new TileInterface*[toCopy.getWidth()*toCopy.getHeight()])
 {
-  for(TileInterface* tile : toCopy) {
+  for(const TileInterface* tile : toCopy) {
     if(tile != nullptr) {
       tile->copy(this);
     }
@@ -86,6 +121,26 @@ std::size_t FixedBoard::getHeight() const
 std::size_t FixedBoard::getWidth() const
 {
   return linearizer_->getWidth();
+}
+
+/**
+* Return the x coordinate of the first tile in that board.
+*
+* @return int
+*/
+int FixedBoard::getX() const
+{
+  return linearizer_->getOffsetX();
+}
+
+/**
+* Return the y coordinate of the first tile in that board.
+*
+* @return int
+*/
+int FixedBoard::getY() const
+{
+  return linearizer_->getOffsetY();
 }
 
 /**
@@ -140,48 +195,48 @@ ConstBoardIterator FixedBoard::end() const
  *                        if the tile do not exist.
  */
 TileInterface* FixedBoard::getTile(
-  const std::size_t x,
-  const std::size_t y
+  const int x,
+  const int y
 )
 {
   return tiles_[linearizer_->linearize(x,y)];
 }
 
 /**
- * Return a tile at a specific location.
- *
- * @param const std::size_t x
- * @param const std::size_t y
- *
- * @throws std::out_of_range If the location (x,y) do not exist.
- *
- * @return const TileInterface* Tile at the (x,y) location, while return nullptr
- *                        if the tile do not exist.
- */
+* Return a tile at a specific location.
+*
+* @param const int x
+* @param const int y
+*
+* @throws std::out_of_range If the location (x,y) do not exist.
+*
+* @return const TileInterface* Tile at the (x,y) location, while return nullptr if
+*                        the tile do not exist.
+*/
 const TileInterface* FixedBoard::getTile(
-  const std::size_t x,
-  const std::size_t y
+  const int x,
+  const int y
 ) const
 {
   return tiles_[linearizer_->linearize(x,y)];
 }
 
 /**
- * Set a tile in a specific location.
- *
- * If a tile already exist at the location, this object will destroy it.
- *
- * @param const std::size_t x
- * @param const std::size_t y
- * @param gsl::owner<TileInterface*> tile Tile to set.
- *
- * @throws std::out_of_range If the location (x,y) do not exist.
- *
- * @return void
- */
+* Set a tile in a specific location.
+*
+* If a tile already exist at the location, this object will destroy it.
+*
+* @param const int x
+* @param const int y
+* @param gsl::owner<TileInterface*> tile Tile to set.
+*
+* @throws std::out_of_range If the location (x,y) do not exist.
+*
+* @return void
+*/
 void FixedBoard::setTile(
-  const std::size_t x,
-  const std::size_t y,
+  const int x,
+  const int y,
   gsl::owner<TileInterface*> tile
 )
 {
@@ -197,21 +252,21 @@ void FixedBoard::setTile(
 }
 
 /**
- * Copy a tile in a specific location.
- *
- * If a tile already exist at the location, the board will destroy it.
- *
- * @param const std::size_t x
- * @param const std::size_t y
- * @param const TileInterface& tile Tile to set.
- *
- * @throws std::out_of_range If the location (x,y) do not exist.
- *
- * @return void
- */
+* Copy a tile in a specific location.
+*
+* If a tile already exist at the location, the board will destroy it.
+*
+* @param const int x
+* @param const int y
+* @param const TileInterface& tile Tile to set.
+*
+* @throws std::out_of_range If the location (x,y) do not exist.
+*
+* @return void
+*/
 void FixedBoard::setTile(
-  const std::size_t x,
-  const std::size_t y,
+  const int x,
+  const int y,
   const TileInterface& tile
 )
 {
@@ -219,14 +274,26 @@ void FixedBoard::setTile(
 }
 
 /**
- * Check if a location is in the board.
- *
- * @param const std::size_t x
- * @param const std::size_t y
- *
- * @return bool True if the (x,y) location is in the board.
- */
-bool FixedBoard::contains(const std::size_t x, const std::size_t y) const
+* Check if a location is in the board.
+*
+* @param const int x
+* @param const int y
+*
+* @return bool True if the (x,y) location is in the board.
+*/
+bool FixedBoard::contains(const int x, const int y) const
 {
   return linearizer_->contains(x,y);
+}
+
+/**
+* Pass a turn.
+*/
+void FixedBoard::nextTurn()
+{
+  for (TileInterface* tile : *this) {
+    if (tile != nullptr) {
+      tile->nextTurn();
+    }
+  }
 }

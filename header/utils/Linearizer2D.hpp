@@ -189,7 +189,12 @@ class Linearizer2D
     */
     virtual bool contains(const std::size_t linearized) const;
     
-    virtual gsl::owner<Linearizer2D*> copy() const = 0;
+    /**
+    * Allocate a new copy of this Linearizer.
+    *
+    * @return gsl::owner<Linearizer2D*>
+    */
+    virtual gsl::owner<Linearizer2D*> copy() const override = 0;
 
   protected:
     std::size_t width_;

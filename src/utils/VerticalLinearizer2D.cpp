@@ -132,3 +132,13 @@ std::size_t VerticalLinearizer2D::getMaxLinearizedValue() const
 {
   return getWidth() * getHeight();
 }
+
+/**
+* Allocate a new copy of this Linearizer.
+*
+* @return gsl::owner<Linearizer2D*>
+*/
+gsl::owner<Linearizer2D*> VerticalLinearizer2D::copy() const
+{
+  return gsl::owner<Linearizer2D*>(new VerticalLinearizer2D(*this));
+}

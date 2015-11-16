@@ -1,5 +1,5 @@
-#ifndef __BOARD_HPP
-#define __BOARD_HPP
+#ifndef __FIXED_BOARD_HPP
+#define __FIXED_BOARD_HPP
 
 #include <cstdlib>
 #include <stdexcept>
@@ -26,6 +26,16 @@ class FixedBoard : public Board
     FixedBoard(const size_t width, const size_t height);
 
     /**
+    * Create a simple empty board with location.
+    *
+    * @param const size_t width
+    * @param const size_t height
+    * @param const int x
+    * @param const int y
+    */
+    FixedBoard(const size_t width, const size_t height, const int x, const int y);
+
+    /**
     * Create a simple empty board with a specific storing way.
     *
     * @param const size_t width
@@ -35,6 +45,23 @@ class FixedBoard : public Board
     FixedBoard(
       const size_t width,
       const size_t height,
+      gsl::owner<Linearizer2D*> linearizer
+    );
+
+    /**
+    * Create a simple empty board with a specific storing way and a location.
+    *
+    * @param const size_t width
+    * @param const size_t height
+    * @param const int x
+    * @param const int y
+    * @param gsl::owner<Linearizer2D*> linearizer
+    */
+    FixedBoard(
+      const size_t width,
+      const size_t height,
+      const int x, 
+      const int y,
       gsl::owner<Linearizer2D*> linearizer
     );
 
@@ -55,129 +82,144 @@ class FixedBoard : public Board
     *
     * @return std::size_t
     */
-    std::size_t getHeight() const;
+    std::size_t getHeight() const override;
 
     /**
     * Return the board width.
     *
     * @return std::size_t
     */
-    std::size_t getWidth() const;
+    std::size_t getWidth() const override;
+
+    /**
+    * Return the x coordinate of the first tile in that board.
+    *
+    * @return int
+    */
+    int getX() const override;
+
+    /**
+    * Return the y coordinate of the first tile in that board.
+    *
+    * @return int
+    */
+    int getY() const override;
 
     /**
     * Return a begin iterator over this board.
     *
     * @return BoardIterator
     */
-    BoardIterator begin();
+    BoardIterator begin() override;
     
     /**
     * Return a begin iterator over this board.
     *
     * @return ConstBoardIterator
     */
-    ConstBoardIterator begin() const;
+    ConstBoardIterator begin() const override;
 
     /**
     * Return an end iterator over this board.
     *
     * @return BoardIterator
     */
-    BoardIterator end();
+    BoardIterator end() override;
     
     /**
     * Return an end iterator over this board.
     *
     * @return ConstBoardIterator
     */
-    ConstBoardIterator end() const;
+    ConstBoardIterator end() const override;
 
     /**
     * Return a tile at a specific location.
     *
-    * @param const std::size_t x
-    * @param const std::size_t y
+    * @param const int x
+    * @param const int y
     *
     * @throws std::out_of_range If the location (x,y) do not exist.
     *
-    * @return TileInterface* Tile at the (x,y) location, while return nullptr
-    *                        if the tile do not exist.
+    * @return TileInterface* Tile at the (x,y) location, while return nullptr if
+    *                        the tile do not exist.
     */
-    TileInterface* getTile(
-      const std::size_t x,
-      const std::size_t y
-    );
+    virtual TileInterface* getTile(
+      const int x,
+      const int y
+    ) override;
 
     /**
     * Return a tile at a specific location.
     *
-    * @param const std::size_t x
-    * @param const std::size_t y
+    * @param const int x
+    * @param const int y
     *
     * @throws std::out_of_range If the location (x,y) do not exist.
     *
-    * @return const TileInterface* Tile at the (x,y) location, while return nullptr
-    *                        if the tile do not exist.
+    * @return const TileInterface* Tile at the (x,y) location, while return nullptr if
+    *                        the tile do not exist.
     */
-    const TileInterface* getTile(
-      const std::size_t x, const std::size_t y
-    ) const;
+    virtual const TileInterface* getTile(
+      const int x,
+      const int y
+    ) const override;
 
     /**
     * Set a tile in a specific location.
     *
     * If a tile already exist at the location, this object will destroy it.
     *
-    * @param const std::size_t x
-    * @param const std::size_t y
+    * @param const int x
+    * @param const int y
     * @param gsl::owner<TileInterface*> tile Tile to set.
     *
     * @throws std::out_of_range If the location (x,y) do not exist.
     *
     * @return void
     */
-    void setTile(
-      const std::size_t x,
-      const std::size_t y,
+    virtual void setTile(
+      const int x,
+      const int y,
       gsl::owner<TileInterface*> tile
-    );
-    
+    ) override;
+
     /**
     * Copy a tile in a specific location.
     *
     * If a tile already exist at the location, the board will destroy it.
     *
-    * @param const std::size_t x
-    * @param const std::size_t y
+    * @param const int x
+    * @param const int y
     * @param const TileInterface& tile Tile to set.
     *
     * @throws std::out_of_range If the location (x,y) do not exist.
     *
     * @return void
     */
-    void setTile(
-      const std::size_t x,
-      const std::size_t y,
+    virtual void setTile(
+      const int x,
+      const int y,
       const TileInterface& tile
-    );
+    ) override;
 
     /**
     * Check if a location is in the board.
     *
-    * @param const std::size_t x
-    * @param const std::size_t y
+    * @param const int x
+    * @param const int y
     *
     * @return bool True if the (x,y) location is in the board.
     */
-    bool contains(
-      const std::size_t x,
-      const std::size_t y
-    ) const;
+    virtual bool contains(
+      const int x,
+      const int y
+    ) const override;
     
     /**
      * Pass a turn.
      */
-    virtual void nextTurn();
+    virtual void nextTurn() override;
   protected:
     gsl::owner<TileInterface*>* tiles_;
     gsl::owner<Linearizer2D*> linearizer_;

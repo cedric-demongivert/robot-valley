@@ -1,4 +1,4 @@
-#include "Board.hpp"
+#include "board/Board.hpp"
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>

@@ -48,21 +48,42 @@ class SimpleBot
     /**
      * Bot destructor.
      */
-    virtual ~SimpleBot();
+    virtual ~SimpleBot() override;
     
     /**
      * Return the x coordinate of that bot on a board.
      * 
      * @return std::size_t x
      */
-    int getX() const;
+    int getX() const override;
     
     /**
      * Return the y coordinate of that bot on a board.
      * 
      * @return std::size_t y
      */
-    int getY() const;
+    int getY() const override;
+
+    /**
+    * Return the BotManager that manage this robot.
+    *
+    * @return BotManager*
+    */
+    virtual BotManager* getBotManager() override;
+
+    /**
+    * Return the BotManager that manage this robot.
+    *
+    * @return const BotManager*
+    */
+    virtual const BotManager* getBotManager() const override;
+
+    /**
+    * Change the BotManager that manage this robot
+    *
+    * @param BotManager* botManager New robot manager.
+    */
+    virtual void setBotManager(BotManager* botManager) override;
     
     /**
      * Change the location of that bot on the board.
@@ -77,28 +98,25 @@ class SimpleBot
     virtual void setLocation(
       const int x,
       const int y
-    );
+    ) override;
     
     /**
      * Get the tile under the bot.
      * 
      * @return TileInterface*
      */
-    TileInterface* getTile();
-    const TileInterface* getTile() const;
-    
+    TileInterface* getTile() override;
+
     /**
-     * Change the tile under the bot.
-     * 
-     * @param TileInterface* const newTile
-     * 
-     * @return void
-     */
-    virtual void setTile(TileInterface* const newTile);
+    * Get the tile under the bot.
+    *
+    * @return const TileInterface*
+    */
+    const TileInterface* getTile() const override;
     
   protected:
     Point2D location_;
-    TileInterface* tile_;
+    BotManager* manager_;
 };
 
 #endif

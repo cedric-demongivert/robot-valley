@@ -14,30 +14,30 @@ class Bot;
  *  @class TileInterface
  */
  
-class Tile: public TileInterface{
+class Tile: public TileInterface
+{
+  public:
+    Tile();
+    Tile(Board* board);
+    Tile(const TileInterface& toCopy);
 
-public:
-  Tile();
-  Tile(Board* board);
-  Tile(const TileInterface& toCopy);
+    virtual ~Tile();
 
-  virtual ~Tile();
+    const Board* getBoard() const;
+    Board* getBoard() ;
 
-  const Board* getBoard() const;
-  Board* getBoard() ;
+    const Bot* getBot() const ;
+    Bot* getBot();
 
-  const Bot* getBot() const ;
-  Bot* getBot();
+    bool isFree() const;
 
-  bool isFree() const;
+    virtual void onEnter(Bot& bot);
+    virtual void onExit(Bot& bot);
 
-  virtual void onEnter(Bot& bot);
-  virtual void onExit(Bot& bot);
+    virtual Tile* copy() const;
 
-  virtual Tile* copy() const;
-
-private:
-  Board* board_;
+  private:
+    Board* board_;
 };
 
 #endif

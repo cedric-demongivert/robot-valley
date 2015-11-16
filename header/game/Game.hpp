@@ -1,12 +1,14 @@
 #ifndef __GAME_HPP
 #define __GAME_HPP
 
-#include <cstdlib>
-#include <iterator>
 #include "GSL/gsl.h"
 #include "board/Board.hpp"
-#include "bot/Bot.hpp"
 #include "bot/BotManager.hpp"
+
+/**
+* Circular inclusion.
+*/
+class BotManager;
 
 /**
  * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>
@@ -74,6 +76,6 @@ class Game
      * Pass a turn.
      */
     virtual void nextTurn() = 0;
-}
+};
 
 #endif

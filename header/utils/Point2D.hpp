@@ -43,7 +43,7 @@ class Point2D
      * 
      * @return int
      */
-    inline int getX() const
+    inline int getX() const override
     {
       return x_;
     }
@@ -53,7 +53,7 @@ class Point2D
      * 
      * @return int
      */
-    inline int getY() const
+    inline int getY() const override
     {
       return y_;
     }
@@ -63,7 +63,7 @@ class Point2D
      * 
      * @param const int x
      */
-    inline void setX(const int x)
+    inline void setX(const int x) override
     {
       x_ = x;
     }
@@ -73,7 +73,7 @@ class Point2D
      * 
      * @param const int y
      */
-    inline void setY(const int y)
+    inline void setY(const int y) override
     {
       y_ = y;
     }
@@ -84,7 +84,7 @@ class Point2D
      * @param const int x
      * @param const int y
      */
-    inline void setLocation(const int x, const int y)
+    inline void setLocation(const int x, const int y) override
     {
       x_ = x;
       y_ = y;
@@ -96,7 +96,7 @@ class Point2D
      * 
      * @param const Localizable2D& other
      */
-    inline void setLocation(const Localizable2D& other)
+    inline void setLocation(const Localizable2D& other) override
     {
       x_ = other.getX();
       y_ = other.getY();
@@ -107,7 +107,7 @@ class Point2D
      * 
      * @return gsl::owner<Point2D*>
      */
-    inline gsl::owner<Point2D*> copy() 
+    inline gsl::owner<Point2D*> copy() const override
     {
       return gsl::owner<Point2D*> (new Point2D(*this));
     }
