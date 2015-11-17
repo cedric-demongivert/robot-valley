@@ -14,7 +14,7 @@ class Board;
 class Bot;
 
 
-class TileInterface : public Localizable2D{
+class TileInterface : public Localizable2D, public Copiable<TileInterface>{
 public:
   /**
    * Destructor.
@@ -80,7 +80,7 @@ public:
    *
    *  @return TileInterface* - A real copy of the tile
    */
-  virtual gsl::owner<TileInterface*> copy() const = 0;
+  virtual gsl::owner<TileInterface*> copy() const override =0;
   
   /**
    * Return a copy of this tile on another board.
@@ -112,6 +112,8 @@ public:
   virtual int getY() const = 0;
 
   virtual void nextTurn() = 0;
+  	
+  	  
 };
 
 #endif
