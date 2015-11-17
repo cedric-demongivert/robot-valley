@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include "utils/Linearizer2D.hpp"
 #include "TileInterface.hpp"
+#include "game/Game.hpp"
 #include "board/BoardIterator.hpp"
 
 /**
@@ -13,6 +14,7 @@
 class TileInterface;
 class BoardIterator;
 class ConstBoardIterator;
+class Game;
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>
@@ -239,6 +241,27 @@ class Board
       const int x,
       const int y
     ) const = 0;
+    
+    /**
+     * Return the Game that use that board.
+     * 
+     * @return Game* game
+     */
+    virtual Game* getGame() = 0;
+    
+    /**
+     * Return the Game that use that board.
+     * 
+     * @return const Game* game
+     */
+    virtual const Game* getGame() const = 0;
+    
+    /**
+     * Change the Game that use that board.
+     * 
+     * @return Game* game
+     */
+    virtual void setGame(Game* game) = 0;
 
     /**
     * Check if a location is in the board.

@@ -202,6 +202,27 @@ class FixedBoard : public Board
       const int y,
       const TileInterface& tile
     ) override;
+    
+    /**
+     * Return the Game that use that board.
+     * 
+     * @return Game* game
+     */
+    Game* getGame() override;
+    
+    /**
+     * Return the Game that use that board.
+     * 
+     * @return const Game* game
+     */
+    const Game* getGame() const override;
+    
+    /**
+     * Change the Game that use that board.
+     * 
+     * @return Game* game
+     */
+    void setGame(Game* game) override;
 
     /**
     * Check if a location is in the board.
@@ -223,6 +244,7 @@ class FixedBoard : public Board
   protected:
     gsl::owner<TileInterface*>* tiles_;
     gsl::owner<Linearizer2D*> linearizer_;
+    Game* game_;
 };
 
 #endif

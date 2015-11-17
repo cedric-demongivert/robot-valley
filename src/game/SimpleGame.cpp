@@ -80,15 +80,29 @@ const BotManager* SimpleGame::getBotManager() const
  * The old BotManager will be destroyed.
  * 
  * @param gsl::owner<BotManager*> newManager
+ * 
+ * @return gsl::owner<BotManager*> oldManager
  */
-void SimpleGame::setBotManager(gsl::owner<BotManager*> newManager)
+gsl::owner<BotManager*> SimpleGame::setBotManager(gsl::owner<BotManager*> newManager)
 {
-  if(botManager_ != nullptr) {
-    delete botManager_;
+  gsl::owner<BotManager*> oldManager = nullptr;
+  
+  if(newManager != botManager_) {
+    oldManager = botManager_;
     botManager_ = nullptr;
+    
+    if(oldManager != nullptr) {
+      oldManager->setGame(nullptr);
+    }
+    
+    botManager_ = newManager;
+    
+    if(botManager_ != nullptr) {
+      botManager_->setGame(this);
+    }
   }
   
-  botManager_ = newManager;
+  return oldManager;
 }
 
 /**
@@ -112,20 +126,32 @@ const Board* SimpleGame::getBoard() const
 }
 
 /**
- * Change the GameBoard.
- * 
- * The old board will be destroyed.
- * 
- * @param gsl::owner<Board*> newBoard
- */
-void SimpleGame::setBoard(gsl::owner<Board*> newBoard)
+* Change the GameBoard.
+* 
+* @param gsl::owner<Board*> newBoard
+* 
+* @return gsl::owner<Board*> The old board.
+*/
+gsl::owner<Board*> SimpleGame::setBoard(gsl::owner<Board*> newBoard)
 {
-  if(board_ != nullptr) {
-    delete board_;
+  gsl::owner<Board*> oldBoard = nullptr;
+  
+  if(newBoard != board_) {
+    oldBoard = board_;
     board_ = nullptr;
+    
+    if(oldBoard != nullptr) {
+      oldBoard->setGame(nullptr);
+    }
+    
+    board_ = newBoard;
+    
+    if(board_ != nullptr) {
+      board_->setGame(this);
+    }
   }
   
-  board_ = newBoard;
+  return oldBoard;
 }
 
 /**

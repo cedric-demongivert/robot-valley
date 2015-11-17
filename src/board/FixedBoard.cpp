@@ -12,7 +12,8 @@
  */
 FixedBoard::FixedBoard(const size_t width, const size_t height)
  : tiles_(new gsl::owner<TileInterface*> [width*height]),
-   linearizer_(new HorizontalLinearizer2D(width, height))
+   linearizer_(new HorizontalLinearizer2D(width, height)),
+   game_(nullptr)
 { }
 
 /**
@@ -25,7 +26,8 @@ FixedBoard::FixedBoard(const size_t width, const size_t height)
 */
 FixedBoard::FixedBoard(const size_t width, const size_t height, const int x, const int y)
   : tiles_(new gsl::owner<TileInterface*>[width*height]),
-    linearizer_(new HorizontalLinearizer2D(width, height, x, y))
+    linearizer_(new HorizontalLinearizer2D(width, height, x, y)),
+    game_(nullptr)
 {}
 
 /**
@@ -44,7 +46,8 @@ FixedBoard::FixedBoard(
   const int y,
   gsl::owner<Linearizer2D*> linearizer
 ) : tiles_(new gsl::owner<TileInterface*>[width*height]),
-  linearizer_(linearizer)
+    linearizer_(linearizer),
+    game_(nullptr)
 {
   linearizer_->setHeight(height);
   linearizer_->setWidth(width);
@@ -64,7 +67,8 @@ FixedBoard::FixedBoard(
   const size_t height,
   gsl::owner<Linearizer2D*> linearizer
 ) : tiles_(new gsl::owner<TileInterface*> [width*height]),
-    linearizer_(linearizer)
+    linearizer_(linearizer),
+    game_(nullptr)
 {
   linearizer_->setHeight(height);
   linearizer_->setWidth(width);
@@ -77,7 +81,8 @@ FixedBoard::FixedBoard(
  */
 FixedBoard::FixedBoard(const Board& toCopy)
   : linearizer_(new HorizontalLinearizer2D(toCopy.getWidth(), toCopy.getHeight())),
-    tiles_(new TileInterface*[toCopy.getWidth()*toCopy.getHeight()])
+    tiles_(new TileInterface*[toCopy.getWidth()*toCopy.getHeight()]),
+    game_(nullptr)
 {
   for(const TileInterface* tile : toCopy) {
     if(tile != nullptr) {
@@ -295,5 +300,50 @@ void FixedBoard::nextTurn()
     if (tile != nullptr) {
       tile->nextTurn();
     }
+  }
+}
+
+/**
+ * Return the Game that use that board.
+ * 
+ * @return Game* game
+ */
+Game* FixedBoard::getGame()
+{
+  return game_;
+}
+
+/**
+ * Return the Game that use that board.
+ * 
+ * @return const Game* game
+ */
+const Game* FixedBoard::getGame() const
+{
+  return game_;
+}
+
+/**
+ * Change the Game that use that board.
+ * 
+ * @return Game* game
+ */
+void FixedBoard::setGame(Game* game)
+{
+  if(game != game_) {
+    
+    if(game_ != nullptr) {
+      Game* oldGame = game_;
+      game_ = nullptr;
+      oldGame->setBoard(nullptr);
+    }
+    
+    game_ = game;
+    
+    if(game_ != nullptr) {
+     gsl::owner<Board*> oldBoard = game_->setBoard(this);
+     if(oldBoard != nullptr) delete oldBoard; 
+    }
+    
   }
 }

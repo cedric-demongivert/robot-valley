@@ -46,8 +46,10 @@ class Game
      * The old BotManager will be destroyed.
      * 
      * @param gsl::owner<BotManager*> newManager
+     * 
+     * @return gsl::owner<BotManager*> oldManager
      */
-    virtual void setBotManager(gsl::owner<BotManager*> newManager) = 0;
+    virtual gsl::owner<BotManager*> setBotManager(gsl::owner<BotManager*> newManager) = 0;
     
     /**
      * Return the board.
@@ -66,11 +68,11 @@ class Game
     /**
      * Change the GameBoard.
      * 
-     * The old board will be destroyed.
-     * 
      * @param gsl::owner<Board*> newBoard
+     * 
+     * @return gsl::owner<Board*> The old board.
      */
-    virtual void setBoard(gsl::owner<Board*> newBoard) = 0;
+    virtual gsl::owner<Board*> setBoard(gsl::owner<Board*> newBoard) = 0;
     
     /**
      * Pass a turn.

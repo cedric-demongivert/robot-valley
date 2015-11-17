@@ -136,6 +136,13 @@ class BotManager
     virtual const Game* getGame() const = 0;
     
     /**
+    * Change the game that hold this BotManager.
+    *
+    * @param Game* game
+    */
+    virtual void setGame(Game* game) = 0;
+    
+    /**
      * Return an iterator at the end of the bot collection.
      * 
      * @return ConstBotIterator

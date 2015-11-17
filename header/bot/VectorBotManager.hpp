@@ -139,14 +139,21 @@ class VectorBotManager
     *
     * @return Game*
     */
-    virtual Game* getGame() override;
+    Game* getGame() override;
 
     /**
     * Get the game that hold this BotManager.
     *
     * @return const Game*
     */
-    virtual const Game* getGame() const override;
+    const Game* getGame() const override;
+    
+    /**
+    * Change the game that hold this BotManager.
+    *
+    * @param Game* game
+    */
+    void setGame(Game* game) override;
     
   protected:
     std::vector<gsl::owner<Bot*>> bots_;

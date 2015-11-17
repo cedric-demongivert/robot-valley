@@ -152,6 +152,34 @@ const Game* VectorBotManager::getGame() const
 }
 
 /**
+* Change the game that hold this BotManager.
+*
+* @param Game* game
+*/
+void VectorBotManager::setGame(Game* game) 
+{
+  if(game != game_) {
+    
+    if(game_ != nullptr) {
+      Game* oldGame = game_;
+      game_ = nullptr;
+      
+      oldGame->setBotManager(nullptr);
+    }
+    
+    game_ = game;
+    
+    if(game_ != nullptr) {
+      gsl::owner<BotManager*> oldManager = game_->setBotManager(this);
+      
+      if(oldManager != nullptr) {
+        delete oldManager;
+      }
+    }
+  }
+}
+
+/**
  * Return an iterator at the begining of the bot collection.
  * 
  * @return BotIterator
@@ -211,4 +239,3 @@ void VectorBotManager::nextTurn()
   }
 }
 
-#endif

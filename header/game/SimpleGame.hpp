@@ -49,21 +49,21 @@ class SimpleGame
     /**
      * Destructor.
      */
-    virtual ~SimpleGame();
+    virtual ~SimpleGame() override;
     
     /**
      * Return the BotManager.
      * 
      * @return BotManager*
      */
-    BotManager* getBotManager();
+    BotManager* getBotManager() override;
     
     /**
      * Return the BotManager.
      * 
      * @return const BotManager*
      */
-    const BotManager* getBotManager() const;
+    const BotManager* getBotManager() const override;
     
     /**
      * Change the BotManager.
@@ -71,36 +71,38 @@ class SimpleGame
      * The old BotManager will be destroyed.
      * 
      * @param gsl::owner<BotManager*> newManager
+     * 
+     * @return gsl::owner<BotManager*> oldManager
      */
-    void setBotManager(gsl::owner<BotManager*> newManager);
+    gsl::owner<BotManager*> setBotManager(gsl::owner<BotManager*> newManager) override;
     
     /**
      * Return the board.
      * 
      * @return Board*
      */
-    Board* getBoard();
+    Board* getBoard() override;
     
     /**
      * Return the board.
      * 
      * @return const Board*
      */
-    const Board* getBoard() const;
+    const Board* getBoard() const override;
     
     /**
      * Change the GameBoard.
-     * 
-     * The old board will be destroyed.
-     * 
+     *      * 
      * @param gsl::owner<Board*> newBoard
+     * 
+     * @return gsl::owner<Board*> The old board.
      */
-    void setBoard(gsl::owner<Board*> newBoard);
+    gsl::owner<Board*> setBoard(gsl::owner<Board*> newBoard) override;
     
     /**
      * Pass a turn.
      */
-    virtual void nextTurn();
+    virtual void nextTurn() override;
     
   protected:
     gsl::owner<BotManager*> botManager_;
