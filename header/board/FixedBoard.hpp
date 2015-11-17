@@ -23,7 +23,7 @@ class FixedBoard : public Board
     * @param const size_t width
     * @param const size_t height
     */
-    FixedBoard(const size_t width, const size_t height);
+    FixedBoard(const std::size_t width, const std::size_t height);
 
     /**
     * Create a simple empty board with location.
@@ -33,7 +33,7 @@ class FixedBoard : public Board
     * @param const int x
     * @param const int y
     */
-    FixedBoard(const size_t width, const size_t height, const int x, const int y);
+    FixedBoard(const std::size_t width, const std::size_t height, const int x, const int y);
 
     /**
     * Create a simple empty board with a specific storing way.
@@ -43,8 +43,8 @@ class FixedBoard : public Board
     * @param gsl::owner<Linearizer2D*> linearizer
     */
     FixedBoard(
-      const size_t width,
-      const size_t height,
+      const std::size_t width,
+      const std::size_t height,
       gsl::owner<Linearizer2D*> linearizer
     );
 
@@ -58,8 +58,8 @@ class FixedBoard : public Board
     * @param gsl::owner<Linearizer2D*> linearizer
     */
     FixedBoard(
-      const size_t width,
-      const size_t height,
+      const std::size_t width,
+      const std::size_t height,
       const int x, 
       const int y,
       gsl::owner<Linearizer2D*> linearizer

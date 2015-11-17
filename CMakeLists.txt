@@ -14,6 +14,11 @@ file(GLOB_RECURSE template_files ./header/*.hxx)
 
 file(GLOB_RECURSE test_files ./tests/*.cpp)
 
+file(GLOB_RECURSE test_source_files ./src/*.cpp)
+file(GLOB_RECURSE main_file ./src/main.cpp)
+
+list(REMOVE_ITEM test_source_files ${main_file})
+
 add_executable(
   robot-valley
   ${source_files}
@@ -23,7 +28,7 @@ add_executable(
 
 add_executable(
   robot-valley-tests
-  ${source_files}
+  ${test_source_files}
   ${header_files}
   ${template_files}
   ${test_files}

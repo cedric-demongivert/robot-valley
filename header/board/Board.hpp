@@ -281,7 +281,7 @@ class Board
     /**
      * Pass a turn.
      */
-    virtual void nextTurn();
+    virtual void nextTurn() = 0;
     
     /**
      * Allocate a new copy of this board.

@@ -10,7 +10,7 @@
  * @param const size_t width
  * @param const size_t height
  */
-FixedBoard::FixedBoard(const size_t width, const size_t height)
+FixedBoard::FixedBoard(const std::size_t width, const std::size_t height)
  : tiles_(new gsl::owner<TileInterface*> [width*height]),
    linearizer_(new HorizontalLinearizer2D(width, height)),
    game_(nullptr)
@@ -24,7 +24,7 @@ FixedBoard::FixedBoard(const size_t width, const size_t height)
 * @param const int x
 * @param const int y
 */
-FixedBoard::FixedBoard(const size_t width, const size_t height, const int x, const int y)
+FixedBoard::FixedBoard(const std::size_t width, const std::size_t height, const int x, const int y)
   : tiles_(new gsl::owner<TileInterface*>[width*height]),
     linearizer_(new HorizontalLinearizer2D(width, height, x, y)),
     game_(nullptr)
@@ -40,8 +40,8 @@ FixedBoard::FixedBoard(const size_t width, const size_t height, const int x, con
 * @param gsl::owner<Linearizer2D*> linearizer
 */
 FixedBoard::FixedBoard(
-  const size_t width,
-  const size_t height,
+  const std::size_t width,
+  const std::size_t height,
   const int x,
   const int y,
   gsl::owner<Linearizer2D*> linearizer
@@ -63,8 +63,8 @@ FixedBoard::FixedBoard(
  * @param gsl::owner<Linearizer2D*> linearizer
  */
 FixedBoard::FixedBoard(
-  const size_t width,
-  const size_t height,
+  const std::size_t width,
+  const std::size_t height,
   gsl::owner<Linearizer2D*> linearizer
 ) : tiles_(new gsl::owner<TileInterface*> [width*height]),
     linearizer_(linearizer),

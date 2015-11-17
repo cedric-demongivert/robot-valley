@@ -8,8 +8,8 @@
 * Create a simple preconfigured game.
 */
 SimpleGame::SimpleGame()
- : board_(gsl::owner<Board*> (new FixedBoard(25, 25))),
-   botManager_(gsl::owner<BotManager*> (new VectorBotManager()))
+ : board_(nullptr),
+   botManager_(nullptr)
 { }
     
 /**
