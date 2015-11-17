@@ -1,6 +1,6 @@
 #define BOOST_TEST_MODULE ROBOT VALLEY TEST MODULE
 #define BOOST_TEST_DYN_LINK
-#include "boost/test/unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include "utils/HorizontalLinearizer2D.hpp"
 #include <cstdlib>
 
@@ -12,9 +12,9 @@ void horizontalLinearizer2D_test_array(const std::size_t width, const std::size_
 
   for(int x = -10; x < width; ++x) {
     for(int y = -20; y < height; ++y) {
-      BOOST_TEST(linearizer.getX(linearized) == x);
-      BOOST_TEST(linearizer.getY(linearized) == y);
-      BOOST_TEST(linearizer.linearize(x, y) == linearized);
+      BOOST_REQUIRE(linearizer.getX(linearized) == x);
+      BOOST_REQUIRE(linearizer.getY(linearized) == y);
+      BOOST_REQUIRE(linearizer.linearize(x, y) == linearized);
       linearized += 1;
     }
   }

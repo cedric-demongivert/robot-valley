@@ -14,7 +14,9 @@ FixedBoard::FixedBoard(const std::size_t width, const std::size_t height)
  : tiles_(new gsl::owner<TileInterface*> [width*height]),
    linearizer_(new HorizontalLinearizer2D(width, height)),
    game_(nullptr)
-{ }
+{
+  std::fill(tiles_, tiles_ + (width*height), nullptr);
+}
 
 /**
 * Create a simple empty board with location.
@@ -28,7 +30,9 @@ FixedBoard::FixedBoard(const std::size_t width, const std::size_t height, const 
   : tiles_(new gsl::owner<TileInterface*>[width*height]),
     linearizer_(new HorizontalLinearizer2D(width, height, x, y)),
     game_(nullptr)
-{}
+{
+  std::fill(tiles_, tiles_ + (width*height), nullptr);
+}
 
 /**
 * Create a simple empty board with a specific storing way and a location.
@@ -49,6 +53,7 @@ FixedBoard::FixedBoard(
     linearizer_(linearizer),
     game_(nullptr)
 {
+  std::fill(tiles_, tiles_ + (width*height), nullptr);
   linearizer_->setHeight(height);
   linearizer_->setWidth(width);
   linearizer_->setOffsetX(x);
@@ -70,6 +75,7 @@ FixedBoard::FixedBoard(
     linearizer_(linearizer),
     game_(nullptr)
 {
+  std::fill(tiles_, tiles_ + (width*height), nullptr);
   linearizer_->setHeight(height);
   linearizer_->setWidth(width);
 }
@@ -84,6 +90,7 @@ FixedBoard::FixedBoard(const Board& toCopy)
     tiles_(new TileInterface*[toCopy.getWidth()*toCopy.getHeight()]),
     game_(nullptr)
 {
+  std::fill(tiles_, tiles_ + (toCopy.getWidth()*toCopy.getHeight()), nullptr);
   for(const TileInterface* tile : toCopy) {
     if(tile != nullptr) {
       tile->copy(this);
@@ -96,9 +103,7 @@ FixedBoard::FixedBoard(const Board& toCopy)
  */
 FixedBoard::~FixedBoard()
 {
-  int i = 0;
   for (TileInterface* tile : *this) {
-    ++i;
     if(tile != nullptr) {
       delete tile;
     }

@@ -48,10 +48,15 @@ SimpleGame::SimpleGame(const Game& toCopy)
  */
 SimpleGame::~SimpleGame()
 {
-  delete board_;
-  board_ = nullptr;
-  delete botManager_;
-  botManager_ = nullptr;
+  if (board_ != nullptr) {
+    delete board_;
+    board_ = nullptr;
+  }
+
+  if (botManager_ != nullptr) {
+    delete botManager_;
+    botManager_ = nullptr;
+  }
 }
 
 /**

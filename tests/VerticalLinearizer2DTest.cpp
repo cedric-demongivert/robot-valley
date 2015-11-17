@@ -1,5 +1,5 @@
 #define BOOST_TEST_DYN_LINK
-#include "boost/test/unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include "utils/VerticalLinearizer2D.hpp"
 #include <cstdlib>
 
@@ -11,9 +11,9 @@ void verticalLinearizer2D_test_array(const std::size_t width, const std::size_t 
 
   for(int y = -20; y < height; ++y) {
     for(int x = -10; x < width; ++x) {
-      BOOST_TEST(linearizer.getX(linearized) == x);
-      BOOST_TEST(linearizer.getY(linearized) == y);
-      BOOST_TEST(linearizer.linearize(x, y) == linearized);
+      BOOST_REQUIRE(linearizer.getX(linearized) == x);
+      BOOST_REQUIRE(linearizer.getY(linearized) == y);
+      BOOST_REQUIRE(linearizer.linearize(x, y) == linearized);
       linearized += 1;
     }
   }

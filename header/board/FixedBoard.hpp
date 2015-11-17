@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <stdexcept>
 #include <iostream>
+#include <algorithm>
 #include "board/Board.hpp"
 #include "utils/HorizontalLinearizer2D.hpp"
 
