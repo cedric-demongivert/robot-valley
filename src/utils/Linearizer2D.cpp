@@ -164,5 +164,5 @@ bool Linearizer2D::contains(const int x, const int y) const
 */
 bool Linearizer2D::contains(const std::size_t linearized) const
 {
-  return linearized >= 0 && linearized < getMaxLinearizedValue();
+  return linearized >= 0 && linearized <= getMaxLinearizedValue();
 }

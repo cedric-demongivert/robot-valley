@@ -88,7 +88,7 @@ Board* BoardIterator::getBoard() const
 */
 BoardIterator& BoardIterator::operator++(void)
 {
-  if(i_ + 1 < linearizer_.getMaxLinearizedValue()) {
+  if(i_ + 1 <= linearizer_.getMaxLinearizedValue()) {
     i_ += 1;
   }
 
@@ -102,7 +102,7 @@ BoardIterator BoardIterator::operator++(const int other)
 {
   BoardIterator notModified (*this);
 
-  if (i_ + 1 < linearizer_.getMaxLinearizedValue()) {
+  if (i_ + 1 <= linearizer_.getMaxLinearizedValue()) {
     i_ += 1;
   }
 
@@ -272,7 +272,7 @@ const Board* ConstBoardIterator::getBoard() const
 */
 ConstBoardIterator& ConstBoardIterator::operator++()
 {
-  if (i_ + 1 < linearizer_.getMaxLinearizedValue()) {
+  if (i_ + 1 <= linearizer_.getMaxLinearizedValue()) {
     i_ += 1;
   }
 
@@ -286,7 +286,7 @@ ConstBoardIterator ConstBoardIterator::operator++(const int other)
 {
   ConstBoardIterator notModified (*this);
 
-  if(i_ + 1 < linearizer_.getMaxLinearizedValue()) {
+  if(i_ + 1 <= linearizer_.getMaxLinearizedValue()) {
     i_ += 1;
   }
 

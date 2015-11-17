@@ -96,7 +96,9 @@ FixedBoard::FixedBoard(const Board& toCopy)
  */
 FixedBoard::~FixedBoard()
 {
+  int i = 0;
   for (TileInterface* tile : *this) {
+    ++i;
     if(tile != nullptr) {
       delete tile;
     }

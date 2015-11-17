@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <stdexcept>
+#include <iostream>
 #include "board/Board.hpp"
 #include "utils/HorizontalLinearizer2D.hpp"
 
