@@ -60,13 +60,6 @@ class Bot
     ) override = 0;
     
     /**
-     * Change the position of that bot to another localizable object.
-     * 
-     * @param const Localizable2D& other
-     */
-    virtual void setLocation(const Localizable2D& other) override = 0;
-    
-    /**
     * Return the BotManager that manage this robot.
     *
     * @return BotManager*

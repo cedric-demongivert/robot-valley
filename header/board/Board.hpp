@@ -165,31 +165,12 @@ class Board
     *
     * @throws std::out_of_range If the location (x,y) do not exist.
     *
-    * @return void
+    * @return gsl::owner<TileInterface*> Old tile
     */
-    virtual void setTile(
+    virtual gsl::owner<TileInterface*> setTile(
       const int x,
       const int y,
       gsl::owner<TileInterface*> tile
-    ) = 0;
-    
-    /**
-    * Copy a tile in a specific location.
-    *
-    * If a tile already exist at the location, the board will destroy it.
-    *
-    * @param const int x
-    * @param const int y
-    * @param const TileInterface& tile Tile to set.
-    *
-    * @throws std::out_of_range If the location (x,y) do not exist.
-    *
-    * @return void
-    */
-    virtual void setTile(
-      const int x,
-      const int y,
-      const TileInterface& tile
     ) = 0;
 
     /**
@@ -207,25 +188,6 @@ class Board
     inline void setTile(
       const Localizable2D& location,
       gsl::owner<TileInterface*> tile
-    ) {
-      setTile(location.getX(), location.getY(), tile);
-    }
-
-    /**
-    * Copy a tile in a specific location.
-    *
-    * If a tile already exist at the location, the board will destroy it.
-    *
-    * @param const Localizable2D& location
-    * @param const TileInterface& tile Tile to set.
-    *
-    * @throws std::out_of_range If the location (x,y) do not exist.
-    *
-    * @return void
-    */
-    inline void setTile(
-      const Localizable2D& location,
-      const TileInterface& tile
     ) {
       setTile(location.getX(), location.getY(), tile);
     }

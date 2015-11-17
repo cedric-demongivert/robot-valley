@@ -93,7 +93,7 @@ FixedBoard::FixedBoard(const Board& toCopy)
   std::fill(tiles_, tiles_ + (toCopy.getWidth()*toCopy.getHeight()), nullptr);
   for(const TileInterface* tile : toCopy) {
     if(tile != nullptr) {
-      tile->copy(this);
+      FixedBoard::setTile(tile->getX(), tile->getY(), tile->copy());
     }
   }
 }
@@ -244,45 +244,38 @@ const TileInterface* FixedBoard::getTile(
 *
 * @throws std::out_of_range If the location (x,y) do not exist.
 *
-* @return void
+* @return gsl::owner<TileInterface*> Old tile
 */
-void FixedBoard::setTile(
+gsl::owner<TileInterface*> FixedBoard::setTile(
   const int x,
   const int y,
   gsl::owner<TileInterface*> tile
 )
 {
   const std::size_t location = linearizer_->linearize(x,y);
+  gsl::owner<TileInterface*> oldTile = nullptr;
 
-  gsl::owner<TileInterface*> oldTile = tiles_[location];
-  tiles_[location] = tile;
+  if (tiles_[location] != tile)
+  {
+    oldTile = tiles_[location];
+    tiles_[location] = nullptr;
 
-  if(oldTile != nullptr) {
-    delete oldTile;
-    oldTile = nullptr;
+    if (oldTile != nullptr) {
+      oldTile->setBoard(nullptr);
+    }
+
+    tiles_[location] = tile;
+
+    if (tile != nullptr) {
+      if (tile->getX() != x || tile->getY() != y) {
+        tile->setBoard(nullptr);
+        tile->setLocation(x, y);
+      }
+      tile->setBoard(this);
+    }
   }
-}
-
-/**
-* Copy a tile in a specific location.
-*
-* If a tile already exist at the location, the board will destroy it.
-*
-* @param const int x
-* @param const int y
-* @param const TileInterface& tile Tile to set.
-*
-* @throws std::out_of_range If the location (x,y) do not exist.
-*
-* @return void
-*/
-void FixedBoard::setTile(
-  const int x,
-  const int y,
-  const TileInterface& tile
-)
-{
-  tile.copy(this, x, y);
+  
+  return oldTile;
 }
 
 /**

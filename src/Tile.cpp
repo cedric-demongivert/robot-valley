@@ -3,6 +3,7 @@
 // Constructors
 Tile::Tile() {
   board_ = nullptr;
+  x_ = y_ = 0;
 }
 
 Tile::Tile(Board* board){
@@ -11,10 +12,14 @@ Tile::Tile(Board* board){
 
 Tile::Tile(const TileInterface& toCopy){
   board_ = nullptr;
+  x_ = toCopy.getX();
+  y_ = toCopy.getY();
 }
 
 Tile::Tile(const TileInterface& toCopy, Board* board){
 	board_ = board;
+  x_ = toCopy.getX();
+  y_ = toCopy.getY();
 }
 
 Tile::Tile(const TileInterface& toCopy, Board* board, const int x, const int y){
@@ -37,6 +42,25 @@ Board* Tile::getBoard(){
   return board_;
 }
 
+void Tile::setBoard(Board* board)
+{
+  if (board != board_) {
+    Board* oldBoard = board_;
+    board_ = nullptr;
+
+    if (oldBoard != nullptr) {
+      oldBoard->setTile(x_, y_, nullptr);
+    }
+
+    board_ = board;
+
+    if (board_ != nullptr) {
+      gsl::owner<TileInterface*> oldTile = board_->setTile(x_, y_, this);
+      if (oldTile != nullptr) delete oldTile;
+    }
+
+  }
+}
 
 // Get Bot
 const Bot* Tile::getBot() const{
@@ -66,21 +90,6 @@ gsl::owner<TileInterface*> Tile::copy() const{
 	return gsl::owner<Tile*>(new Tile(*this));
 }
 
-gsl::owner<TileInterface*> Tile::copy(Board* newParent) const {
-  return gsl::owner<Tile* >(new Tile(*this, newParent));
-}
-
-gsl::owner<TileInterface*> Tile::copy(
-		Board* newParent, 
-		const int x, 
-		const int y
-	  ) const{
-
-	return gsl::owner<Tile*>( new Tile(*this, newParent, x, y));
-		  
-}
-
-
 // GET position
 int Tile::getX() const{
   return x_;
@@ -89,5 +98,25 @@ int Tile::getX() const{
 int Tile::getY() const{
   return y_;
 }
+
+// Change location
+void Tile::setLocation(const int x, const int y) {
+  if (x_ != x || y_ != y) {
+    
+    int oldX = x_;
+    int oldY = y_;
+
+    x_ = x;
+    y_ = y;
+
+    if (board_ != nullptr) {
+      board_->setTile(oldX, oldY, nullptr);
+
+      gsl::owner<TileInterface*> oldTile = board_->setTile(x_, y_, this);
+      if (oldTile != nullptr) delete oldTile;
+    }
+  }
+}
+
 
 void Tile::nextTurn(){}

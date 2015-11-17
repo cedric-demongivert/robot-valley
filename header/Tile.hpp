@@ -28,6 +28,8 @@ class Tile: public TileInterface
     const Board* getBoard() const override;
     Board* getBoard() override;
 
+    void setBoard(Board* newBoard) override;
+
     const Bot* getBot() const override;
     Bot* getBot() override;
 
@@ -36,26 +38,29 @@ class Tile: public TileInterface
     void onEnter(Bot& bot) override;
     void onExit(Bot& bot) override;
 
-    gsl::owner<TileInterface*> copy() const override;
-    gsl::owner<TileInterface*> copy(Board* newParent) const override; 
-    gsl::owner<TileInterface*> copy(
-		Board* newParent, 
-		const int x, 
-		const int y
-	  ) const override; 
+    gsl::owner<TileInterface*> copy() const override;  
 	  
-	  
-	int getX() const override;
-	int getY() const override;
+	  int getX() const override;
+	  int getY() const override;
+
+    inline void setX(const int x) override {
+      setLocation(x, getY());
+    }
+
+    inline void setY(const int y) override {
+      setLocation(getX(), y);
+    }
+
+    void setLocation(const int x, const int y) override;
 	
-	virtual void nextTurn() override;
+	  virtual void nextTurn() override;
 
   private:
     Board* board_;
     Bot* bot_;
     
-	int x_;
-	int y_;
+	  int x_;
+	  int y_;
 };
 
 #endif

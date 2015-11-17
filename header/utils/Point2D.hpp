@@ -91,18 +91,6 @@ class Point2D
     }
     
     /**
-     * Change the position of the point to another localizable object
-     * position.
-     * 
-     * @param const Localizable2D& other
-     */
-    inline void setLocation(const Localizable2D& other) override
-    {
-      x_ = other.getX();
-      y_ = other.getY();
-    }
-    
-    /**
      * Allocate a copy of this point.
      * 
      * @return gsl::owner<Point2D*>

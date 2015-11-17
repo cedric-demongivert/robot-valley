@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include "mixins/Localizable2D.hpp"
 #include "mixins/Copiable.hpp"
+#include "mixins/Movable2D.hpp"
 #include "GSL/gsl.h"
 
 /**
@@ -14,7 +15,7 @@ class Board;
 class Bot;
 
 
-class TileInterface : public Localizable2D, public Copiable<TileInterface>{
+class TileInterface : public Localizable2D, public Movable2D, public Copiable<TileInterface>{
 public:
   /**
    * Destructor.
@@ -35,6 +36,13 @@ public:
    *  @return Board*
    */
   virtual Board* getBoard() = 0;
+
+  /**
+  *  Change the board that contain this tile.
+  *
+  *  @return Board*
+  */
+  virtual void setBoard(Board* newBoard) = 0;
 
   /**
    *  Get the bot on the tile
@@ -83,33 +91,17 @@ public:
   virtual gsl::owner<TileInterface*> copy() const override =0;
   
   /**
-   * Return a copy of this tile on another board.
-   * 
-   * @param Board* newParent.
-   * @param int x New x location.
-   * @param int y New y location.
-   *
-   * @return TileInterface* - A real copy of the tile
-   */
-  virtual gsl::owner<TileInterface*> copy(
-    Board* newParent, 
-    const int x, 
-    const int y
-  ) const = 0;
-  
+  * Get the tile location in its board.
+  */
+  virtual int getX() const override = 0;
+  virtual int getY() const override = 0;
+
   /**
-   * Return a copy of this tile on another board.
-   * 
-   * @param Board* newParent
-   *
-   * @return TileInterface* - A real copy of the tile
-   */
-  virtual gsl::owner<TileInterface*> copy(
-    Board* newParent
-  ) const = 0;
-  
-  virtual int getX() const = 0;
-  virtual int getY() const = 0;
+  * Set the tile location in its board.
+  */
+  virtual void setX(const int x) override = 0;
+  virtual void setY(const int x) override = 0;
+  virtual void setLocation(const int x, const int y) override = 0;
 
   virtual void nextTurn() = 0;
   	

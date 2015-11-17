@@ -43,7 +43,10 @@ class Movable2D
      * 
      * @param const Localizable2D& location.
      */
-    virtual void setLocation(const Localizable2D& location) = 0;
+    inline void setLocation(const Localizable2D& location)
+    {
+      setLocation(location.getX(), location.getY());
+    }
 };
 
 #endif
