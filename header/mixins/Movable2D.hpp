@@ -13,21 +13,21 @@
 class Movable2D 
 {
   public:
-    virtual ~Movable2D() {};
+    virtual ~Movable2D() {}
     
     /**
      * Change the x coordinate of the object.
      * 
      * @param const int x
      */
-    virtual void setX(const int x);
+    virtual void setX(const int x) = 0;
     
     /**
      * Change the y coordinate of the object.
      * 
      * @param const int y
      */
-    virtual void setY(const int y);
+    virtual void setY(const int y) = 0;
     
     /**
      * Change the location of the object to a defined position.
@@ -35,7 +35,7 @@ class Movable2D
      * @param const int x
      * @param const int y
      */
-    virtual void setLocation(const int x, const int y);
+    virtual void setLocation(const int x, const int y) = 0;
     
     /**
      * Change the location of the object to another existent 
@@ -43,7 +43,7 @@ class Movable2D
      * 
      * @param const Localizable2D& location.
      */
-    virtual void setLocation(const Localizable2D& location);
+    virtual void setLocation(const Localizable2D& location) = 0;
 };
 
 #endif

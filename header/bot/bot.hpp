@@ -12,7 +12,6 @@
 /**
 * Circular inclusion
 */
-class Game;
 class BotManager;
 
 /**
@@ -108,6 +107,11 @@ class Bot
      * @return gsl::owner<Bot*> 
      */
     virtual gsl::owner<Bot*> copy() const override = 0;
+    
+    /**
+     * Pass a turn.
+     */
+    virtual void nextTurn() = 0;
 };
 
 #endif

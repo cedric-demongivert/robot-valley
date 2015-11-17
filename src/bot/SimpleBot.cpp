@@ -152,3 +152,8 @@ const TileInterface* SimpleBot::getTile() const
   }
 }
 
+/**
+* Pass a turn.
+*/
+void SimpleBot::nextTurn() {}
+

@@ -107,6 +107,6 @@ class SimpleGame
   protected:
     gsl::owner<BotManager*> botManager_;
     gsl::owner<Board*> board_;
-}
+};
 
 #endif

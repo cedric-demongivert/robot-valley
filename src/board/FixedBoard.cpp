@@ -102,7 +102,7 @@ FixedBoard::~FixedBoard()
     }
   }
 
-  delete tiles_;
+  delete[] tiles_;
   tiles_ = nullptr;
   delete linearizer_;
   linearizer_ = nullptr;
@@ -346,4 +346,13 @@ void FixedBoard::setGame(Game* game)
     }
     
   }
+}
+
+/**
+ * Allocate a new copy of this board.
+ */
+gsl::owner<Board*> FixedBoard::copy() const 
+{
+  return gsl::owner<Board*>(new FixedBoard(*this));
+  
 }

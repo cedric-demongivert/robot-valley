@@ -75,7 +75,7 @@ class FixedBoard : public Board
     /**
     * Board destructor.
     */
-    virtual ~FixedBoard();
+    virtual ~FixedBoard() override;
 
     /**
     * Return the board height
@@ -241,6 +241,11 @@ class FixedBoard : public Board
      * Pass a turn.
      */
     virtual void nextTurn() override;
+    
+    /**
+     * Allocate a new copy of this board.
+     */
+    virtual gsl::owner<Board*> copy() const override; 
   protected:
     gsl::owner<TileInterface*>* tiles_;
     gsl::owner<Linearizer2D*> linearizer_;

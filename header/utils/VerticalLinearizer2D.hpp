@@ -111,7 +111,7 @@ class VerticalLinearizer2D :
     *
     * @return gsl::owner<Linearizer2D*>
     */
-    virtual gsl::owner<Linearizer2D*> VerticalLinearizer2D::copy() const override;
+    virtual gsl::owner<Linearizer2D*> copy() const override;
 };
 
 #endif

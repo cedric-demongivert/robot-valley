@@ -13,12 +13,6 @@
 class Bot;
 class Game;
 
-typedef std::iterator<std::input_iterator_tag, Bot*> 
-        BotIterator;
-        
-typedef std::iterator<std::input_iterator_tag, const Bot*> 
-        ConstBotIterator;
-
 /**
  * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>
  * 
@@ -33,7 +27,7 @@ class BotManager
     /**
      * Destructor.
      */
-    virtual ~BotManager() { };
+    virtual ~BotManager() { }
     
     /**
      * Return a bot of the BotManager.
@@ -101,27 +95,6 @@ class BotManager
     virtual bool contains(const Bot* bot) const = 0;
 
     /**
-     * Return an iterator at the begining of the bot collection.
-     * 
-     * @return BotIterator
-     */
-    virtual BotIterator begin() = 0;
-    
-    /**
-     * Return an iterator at the begining of the bot collection.
-     * 
-     * @return ConstBotIterator
-     */
-    virtual ConstBotIterator begin() const = 0;
-    
-    /**
-     * Return an iterator at the end of the bot collection.
-     * 
-     * @return BotIterator
-     */
-    virtual BotIterator end() = 0;
-
-    /**
     * Get the game that hold this BotManager.
     *
     * @return Game*
@@ -141,13 +114,6 @@ class BotManager
     * @param Game* game
     */
     virtual void setGame(Game* game) = 0;
-    
-    /**
-     * Return an iterator at the end of the bot collection.
-     * 
-     * @return ConstBotIterator
-     */
-    virtual ConstBotIterator end() const = 0;
     
     /**
      * Return a deep-copy of this manager.

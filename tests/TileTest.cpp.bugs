@@ -10,11 +10,11 @@ class Board;
 void TileCreationTest(){
 	
 	
-	Board myBoard(50,50); 
+	Board* myBoard = new FixedBoard(50,50); 
 	Bot mybot();
 	
 	
-	Tile myTile(&myBoard);
+	Tile myTile(myBoard);
 	
 	
 	BOOST_TEST( myTile.getBoard() == &myBoard);
@@ -30,8 +30,8 @@ void TileCreationTest(){
 	BOOST_TEST( myTile.isFree() == true);
 	
 	
-	delete(myTile);
-	BOOST_TEST( myTile == nullptr);
+	delete myTile;
+      delete myBoard;
 }
 
 BOOST_AUTO_TEST_CASE( TileTest )

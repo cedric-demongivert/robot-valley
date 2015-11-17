@@ -4,6 +4,7 @@
 #include "GSL/gsl.h"
 #include <stdexcept>
 #include "utils/Linearizer2D.hpp"
+#include "mixins/Copiable.hpp"
 #include "TileInterface.hpp"
 #include "game/Game.hpp"
 #include "board/BoardIterator.hpp"
@@ -24,13 +25,13 @@ class Game;
 * @class Board
 */
 class Board
+  : public Copiable<Board>
 {
   public:
     /**
     * Board destructor.
     */
-    virtual ~Board()
-    { };
+    virtual ~Board() { }
 
     /**
     * Return the board height
@@ -134,7 +135,7 @@ class Board
       const Localizable2D& location
     ) {
       return getTile(location.getX(), location.getY());
-    };
+    }
 
     /**
     * Return a tile at a specific location.
@@ -281,6 +282,11 @@ class Board
      * Pass a turn.
      */
     virtual void nextTurn();
+    
+    /**
+     * Allocate a new copy of this board.
+     */
+    virtual gsl::owner<Board*> copy() const override = 0; 
 };
 
 #endif

@@ -24,7 +24,7 @@ class Game
      * Destructor
      */
     virtual ~Game()
-    { };
+    { }
   
     /**
      * Return the BotManager.

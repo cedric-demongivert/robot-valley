@@ -11,7 +11,7 @@
 class Localizable2D 
 {
   public:
-    virtual ~Localizable2D() {};
+    virtual ~Localizable2D() {}
     
     /**
      * Return the x coordinate of the object.

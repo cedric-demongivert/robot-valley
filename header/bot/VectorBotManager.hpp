@@ -86,34 +86,6 @@ class VectorBotManager
     gsl::owner<Bot*> removeBot(Bot* bot) override;
     
     /**
-     * Return an iterator at the begining of the bot collection.
-     * 
-     * @return BotIterator
-     */
-    BotIterator begin() override;
-    
-    /**
-     * Return an iterator at the begining of the bot collection.
-     * 
-     * @return ConstBotIterator
-     */
-    ConstBotIterator begin() const override;
-    
-    /**
-     * Return an iterator at the end of the bot collection.
-     * 
-     * @return BotIterator
-     */
-    BotIterator end() override;
-    
-    /**
-     * Return an iterator at the end of the bot collection.
-     * 
-     * @return ConstBotIterator
-     */
-    ConstBotIterator end() const override;
-    
-    /**
     * Return true if this manager already contains that bot.
     *
     * @param const Bot* bot Bot to test.

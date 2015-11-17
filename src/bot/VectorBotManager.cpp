@@ -18,9 +18,9 @@ VectorBotManager::VectorBotManager()
 VectorBotManager::VectorBotManager(const BotManager& manager)
   : game_(nullptr)
 {
-  for(Bot* bot : manager)
+  for(std::size_t index = 0; index < manager.size(); ++index)
   {
-    bots_.push_back(bot->copy());
+    addBot(manager.getBot(index)->copy());
   }
 }
 
@@ -28,7 +28,7 @@ VectorBotManager::VectorBotManager(const BotManager& manager)
  * Destructor.
  */
 VectorBotManager::~VectorBotManager()
-{ 
+{
   for (gsl::owner<Bot*> bot : bots_) {
     delete bot;
   }
@@ -81,7 +81,7 @@ void VectorBotManager::addBot(gsl::owner<Bot*> bot)
 {
   if (!this->contains(bot)) {
     bots_.push_back(bot);
-    bot->setGame(game_);
+    bot->setBotManager(this);
   }
 }
 
@@ -101,7 +101,7 @@ gsl::owner<Bot*> VectorBotManager::removeBot(const std::size_t index)
   bot = bots_[bots_.size() - 1]; 
   bots_.pop_back();
 
-  bot->setGame(nullptr);
+  bot->setBotManager(nullptr);
 
   return bot;
 }
@@ -119,7 +119,7 @@ gsl::owner<Bot*> VectorBotManager::removeBot(Bot* bot)
   if (it != std::end(bots_)) {
     removed = *it;
     bots_.erase(it);
-    removed->setGame(nullptr);
+    removed->setBotManager(nullptr);
   }
 
   return removed;
@@ -180,46 +180,6 @@ void VectorBotManager::setGame(Game* game)
 }
 
 /**
- * Return an iterator at the begining of the bot collection.
- * 
- * @return BotIterator
- */
-BotIterator VectorBotManager::begin()
-{
-  return bots_.begin();
-}
-
-/**
- * Return an iterator at the begining of the bot collection.
- * 
- * @return ConstBotIterator
- */
-ConstBotIterator VectorBotManager::begin() const
-{
-  return bots_.begin();
-}
-
-/**
- * Return an iterator at the end of the bot collection.
- * 
- * @return BotIterator
- */
-BotIterator VectorBotManager::end()
-{
-  return bots_.end();
-}
-
-/**
- * Return an iterator at the end of the bot collection.
- * 
- * @return ConstBotIterator
- */
-ConstBotIterator VectorBotManager::end() const
-{
-  return bots_.end();
-}
-
-/**
  * Return a deep-copy of this manager.
  * 
  * @return gsl::owner<BotManager*>
@@ -234,7 +194,7 @@ gsl::owner<BotManager*> VectorBotManager::copy() const
  */
 void VectorBotManager::nextTurn()
 {
-  for(Bot* bot : *this) {
+  for(Bot* bot : bots_) {
     bot->nextTurn();
   }
 }

@@ -114,6 +114,11 @@ class SimpleBot
     */
     const TileInterface* getTile() const override;
     
+    /**
+     * Pass a turn.
+     */
+    virtual void nextTurn() override;
+    
   protected:
     Point2D location_;
     BotManager* manager_;
