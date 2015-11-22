@@ -1,41 +1,29 @@
-cmake_minimum_required (VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-project(robot-valley)
+# Project & project configuration
+PROJECT(robot-valley)
 
-include_directories(./header)
-include_directories(./src)
-include_directories(./libs)
+#LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/lib/SDL2)
+#INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include/SDL2)
 
-link_directories(${PROJECT_SOURCE_DIR}/libs)
+SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
+SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
+SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 
-file(GLOB_RECURSE source_files ./src/*.cpp)
-file(GLOB_RECURSE header_files ./header/*.hpp)
-file(GLOB_RECURSE template_files ./header/*.hxx)
+# Macro for listing subdirs 
+# See http://stackoverflow.com/questions/7787823/cmake-how-to-get-the-name-of-all-subdirectories-of-a-directory
+MACRO(SUBDIRLIST result curdir)
+  FILE(GLOB children RELATIVE ${curdir} ${curdir}/*)
+  SET(dirlist "")
+  FOREACH(child ${children})
+    IF(IS_DIRECTORY ${curdir}/${child})
+        LIST(APPEND dirlist ${child})
+    ENDIF()
+  ENDFOREACH()
+  SET(${result} ${dirlist})
+ENDMACRO()
 
-file(GLOB_RECURSE test_files ./tests/*.cpp)
-
-file(GLOB_RECURSE test_source_files ./src/*.cpp)
-file(GLOB_RECURSE main_file ./src/main.cpp)
-
-list(REMOVE_ITEM test_source_files ${main_file})
-
-add_executable(
-  robot-valley
-  ${source_files}
-  ${header_files}
-  ${template_files}
-)
-
-add_executable(
-  robot-valley-tests
-  ${test_source_files}
-  ${header_files}
-  ${template_files}
-  ${test_files}
-)
-
-set_property(TARGET robot-valley PROPERTY CXX_STANDARD 14)
-set_property(TARGET robot-valley PROPERTY CXX_STANDARD_REQUIRED ON)
-
-set_property(TARGET robot-valley-tests PROPERTY CXX_STANDARD 14)
-set_property(TARGET robot-valley-tests PROPERTY CXX_STANDARD_REQUIRED ON)
+# Subdirectories
+ADD_SUBDIRECTORY(robot-valley)
+ADD_SUBDIRECTORY(robot-valley-tests)
