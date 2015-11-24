@@ -110,16 +110,54 @@ void SimpleBot::setBotManager(BotManager* botManager)
 /**
 * Change the location of that bot on the board.
 *
-* Call that function only if you are a kind of BotManager.
-*
 * @param const int x New x coordinate of the bot.
+*
+* @return void
+*/
+void SimpleBot::setX(const int x)
+{
+  TileInterface* oldTile = getTile(location_.getX(), location_.getY());
+  TileInterface* newTile = getTile(x, location_.getY());
+
+  if (canMove(oldTile, newTile)) {
+    location_.setX(x);
+    doMove(oldTile, newTile);
+  }
+}
+
+/**
+* Change the location of that bot on the board.
+*
 * @param const int y New y coordinate of the bot.
 *
 * @return void
 */
+void SimpleBot::setY(const int y)
+{
+  TileInterface* oldTile = getTile(location_.getX(), location_.getY());
+  TileInterface* newTile = getTile(location_.getX(), y);
+
+  if (canMove(oldTile, newTile)) {
+    location_.setY(y);
+    doMove(oldTile, newTile);
+  }
+}
+
+/**
+* Change the location of the object to a defined position.
+*
+* @param const int x
+* @param const int y
+*/
 void SimpleBot::setLocation(const int x, const int y)
 {
-  location_.setLocation(x, y);
+  TileInterface* oldTile = getTile(location_.getX(), location_.getY());
+  TileInterface* newTile = getTile(x, y);
+
+  if (canMove(oldTile, newTile)) {
+    location_.setLocation(x, y);
+    doMove(oldTile, newTile);
+  }
 }
 
 /**
@@ -129,7 +167,7 @@ void SimpleBot::setLocation(const int x, const int y)
 */
 TileInterface* SimpleBot::getTile()
 {
-  if (manager_ != nullptr && manager_->getGame() != nullptr) {
+  if (manager_ != nullptr && manager_->getGame() != nullptr && manager_->getGame()->getBoard() != nullptr) {
     return manager_->getGame()->getBoard()->getTile(*this);
   }
   else {
@@ -144,16 +182,56 @@ TileInterface* SimpleBot::getTile()
 */
 const TileInterface* SimpleBot::getTile() const
 {
-  if (manager_ != nullptr && manager_->getGame() != nullptr) {
-    return manager_->getGame()->getBoard()->getTile(*this);
+  if (manager_ != nullptr && manager_->getGame() != nullptr && manager_->getGame()->getBoard() != nullptr) {
+    if (manager_->getGame()->getBoard()->contains(*this)) {
+      return manager_->getGame()->getBoard()->getTile(*this);
+    }
   }
-  else {
-    return nullptr;
+  
+  return nullptr;
+}
+
+/**
+* Get a tile.
+*
+* @return const TileInterface*
+*/
+TileInterface* SimpleBot::getTile(int x, int y)
+{
+  if (manager_ != nullptr && manager_->getGame() != nullptr && manager_->getGame()->getBoard() != nullptr) {
+    if (manager_->getGame()->getBoard()->contains(x, y)) {
+      return manager_->getGame()->getBoard()->getTile(x, y);
+    }
   }
+
+  return nullptr;
 }
 
 /**
 * Pass a turn.
 */
-void SimpleBot::nextTurn() {}
+void SimpleBot::nextTurn()
+{
+ 
+}
 
+/**
+* Allocate a copy of that bot.
+*
+* @return gsl::owner<Bot*>
+*/
+gsl::owner<Bot*> SimpleBot::copy() const
+{
+  return new SimpleBot(this);
+}
+
+bool SimpleBot::canMove(const TileInterface* start, const TileInterface* end) const
+{
+  return (end == nullptr || end->accept(*this));
+}
+
+void SimpleBot::doMove(TileInterface* start, TileInterface* end)
+{
+  if (start != nullptr) start->onExit(*this);
+  if (end != nullptr) end->onEnter(*this);
+}

@@ -63,27 +63,55 @@ void Tile::setBoard(Board* board)
 }
 
 // Get Bot
-const Bot* Tile::getBot() const{
-  return bot_;
+const Bot* Tile::getBot() const
+{
+  if (this->getBoard() != nullptr && this->getBoard()->getGame() != nullptr) {
+    const BotManager* manager = this->getBoard()->getGame()->getBotManager();
+
+    if (manager != nullptr) {
+      for (std::size_t index = 0; index < manager->size(); ++index) {
+        if (manager->getBot(index)->getX() == getX() && manager->getBot(index)->getY() == getY()) {
+          return manager->getBot(index);
+        }
+      }
+    }
+  }
+
+  return nullptr;
 }
   
 Bot* Tile::getBot(){
-  return bot_;
+  if (this->getBoard() != nullptr && this->getBoard()->getGame() != nullptr) {
+    BotManager* manager = this->getBoard()->getGame()->getBotManager();
+
+    if (manager != nullptr) {
+      for (std::size_t index = 0; index < manager->size(); ++index) {
+        if (manager->getBot(index)->getX() == getX() && manager->getBot(index)->getY() == getY()) {
+          return manager->getBot(index);
+        }
+      }
+    }
+  }
+
+  return nullptr;
 }
 
 //
 bool Tile::isFree() const{
-  return (bot_ == nullptr);
+  return (getBot() == nullptr);
 }
-  
+
+bool Tile::accept(const Bot& bot) const {
+  return true;
+}
+
 void Tile::onEnter(Bot& bot) {
-  bot_ = &bot;
+
 }
 
 void Tile::onExit(Bot& bot) {
-  bot_= nullptr;
-}
 
+}
 
 // COPY
 gsl::owner<TileInterface*> Tile::copy() const{
@@ -118,5 +146,9 @@ void Tile::setLocation(const int x, const int y) {
   }
 }
 
+int Tile::getID() const
+{
+  return TILE_ID;
+}
 
 void Tile::nextTurn(){}

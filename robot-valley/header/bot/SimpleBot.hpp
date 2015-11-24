@@ -88,17 +88,28 @@ class SimpleBot
     /**
      * Change the location of that bot on the board.
      * 
-     * Call that function only if you are a kind of BotManager.
-     * 
      * @param const int x New x coordinate of the bot.
-     * @param const int y New y coordinate of the bot.
      * 
      * @return void
      */
-    virtual void setLocation(
-      const int x,
-      const int y
-    ) override;
+    virtual void setX(const int x) override;
+
+    /**
+    * Change the location of that bot on the board.
+    *
+    * @param const int y New y coordinate of the bot.
+    *
+    * @return void
+    */
+    virtual void setY(const int y) override;
+
+    /**
+    * Change the location of the object to a defined position.
+    *
+    * @param const int x
+    * @param const int y
+    */
+    virtual void setLocation(const int x, const int y) override;
     
     /**
      * Get the tile under the bot.
@@ -118,10 +129,27 @@ class SimpleBot
      * Pass a turn.
      */
     virtual void nextTurn() override;
+
+    /**
+    * Allocate a copy of that bot.
+    *
+    * @return gsl::owner<Bot*>
+    */
+    virtual gsl::owner<Bot*> copy() const override;
     
   protected:
     Point2D location_;
     BotManager* manager_;
+
+    bool canMove(const TileInterface* start, const TileInterface* end) const;
+    void doMove(TileInterface* start, TileInterface* end);
+
+    /**
+    * Get a tile.
+    *
+    * @return TileInterface*
+    */
+    TileInterface* getTile(int x, int y);
 };
 
 #endif

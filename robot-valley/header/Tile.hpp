@@ -5,6 +5,8 @@
 #include "board/Board.hpp"
 #include "bot/bot.hpp"
 
+#define TILE_ID 0
+
 
 /**
  *  @author K/OURIO Alexandre <kourio.alexandre@gmail.com>
@@ -23,7 +25,7 @@ class Tile: public TileInterface
     Tile(const TileInterface& toCopy, Board* board);
     Tile(const TileInterface& toCopy, Board* board, const int x, const int y);
 
-    ~Tile();
+    virtual ~Tile();
 
     const Board* getBoard() const override;
     Board* getBoard() override;
@@ -35,10 +37,11 @@ class Tile: public TileInterface
 
     bool isFree() const override;
 
-    void onEnter(Bot& bot) override;
-    void onExit(Bot& bot) override;
+    virtual bool accept(const Bot& bot) const override;
+    virtual void onEnter(Bot& bot) override;
+    virtual void onExit(Bot& bot) override;
 
-    gsl::owner<TileInterface*> copy() const override;  
+    virtual gsl::owner<TileInterface*> copy() const override;
 	  
 	  int getX() const override;
 	  int getY() const override;
@@ -55,9 +58,10 @@ class Tile: public TileInterface
 	
 	  virtual void nextTurn() override;
 
+    virtual int getID() const override;
+
   private:
     Board* board_;
-    Bot* bot_;
     
 	  int x_;
 	  int y_;

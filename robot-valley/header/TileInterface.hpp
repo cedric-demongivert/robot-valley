@@ -66,6 +66,13 @@ public:
   virtual bool isFree() const = 0;
 
   /**
+  * Called when a bot try to access to this tile.
+  *
+  * @param Bot& bot
+  */
+  virtual bool accept(const Bot& bot) const = 0;
+
+  /**
    *  Called when a bot enters the tile
    *
    *  @throws TileNotFreeException - the tile isn't free.
@@ -105,6 +112,7 @@ public:
 
   virtual void nextTurn() = 0;
   	
+  virtual int getID() const = 0;
   	  
 };
 

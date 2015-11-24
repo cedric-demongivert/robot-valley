@@ -45,19 +45,32 @@ class Bot
      * @return int y
      */
     virtual int getY() const override = 0;
-    
+   
     /**
-     * Change the location of that bot in the world.
-     * 
-     * @param const std::size_t x New x coordinate of the bot.
-     * @param const std::size_t y New y coordinate of the bot.
-     * 
-     * @return void
-     */
-    virtual void setLocation(
-      const int x,
-      const int y
-    ) override = 0;
+    * Change the location of that bot on the board.
+    *
+    * @param const int x New x coordinate of the bot.
+    *
+    * @return void
+    */
+    virtual void setX(const int x) override = 0;
+
+    /**
+    * Change the location of that bot on the board.
+    *
+    * @param const int y New y coordinate of the bot.
+    *
+    * @return void
+    */
+    virtual void setY(const int y) override = 0;
+
+    /**
+    * Change the location of the object to a defined position.
+    *
+    * @param const int x
+    * @param const int y
+    */
+    virtual void setLocation(const int x, const int y) override = 0;
     
     /**
     * Return the BotManager that manage this robot.
