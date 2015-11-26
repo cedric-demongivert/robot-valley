@@ -2,10 +2,8 @@
 Projet C++ ESIEE 2015
 
 # authors
-Cedric DEMONGIVERT:
-  cedric.demongivert@edu.esiee.fr
-Alexandre K/OURIO:
-  alexandre.kourio@edu.esiee.fr
+- Cedric DEMONGIVERT <cedric.demongivert@edu.esiee.fr>
+- Alexandre K/OURIO <alexandre.kourio@edu.esiee.fr>
 
 # Dependencies
 
@@ -17,8 +15,8 @@ Alexandre K/OURIO:
   - Download the development library for your os
   - Copy includes and libs to your SDL2 installation path
   
-Note : for Visual Studio 2015, recompile SDL2 library
-Note : for SDL2 libs, keep only libs files for your os (x64 / x86) in your lib folder.
+- Note : for Visual Studio 2015, recompile SDL2 library
+- Note : for SDL2 libs, keep only libs files for your os (x64 / x86) in your lib folder.
 
 ## Optional (for compiling tests)
 - Boost http://www.boost.org/
