@@ -16,7 +16,8 @@ Alexandre K/OURIO:
 - SDL2_ttf https://www.libsdl.org/projects/SDL_ttf/
   - Download the development library for your os
   - Copy includes and libs to your SDL2 installation path
-
+  
+Note : for Visual Studio 2015, recompile SDL2 library
 Note : for SDL2 libs, keep only libs files for your os (x64 / x86) in your lib folder.
 
 ## Optional (for compiling tests)
@@ -41,6 +42,6 @@ Note : Some computer architecture needs specifics settings set with the -G flag,
 cmake ../ -G "Visual studio 12 2013 Win64"
 ````
 
-- Copy shared libs to the bin directory
-- Copy data to the bin directory
-- Launch robot-valley.exe
+- Copy shared libs to the bin directory (SDL2 + SDL2_ttf + Boost for tests)
+- Copy the data directory into the executable directory
+- Launch robot-valley.exe (robot-valley-tests.exe)

@@ -1,5 +1,5 @@
 # Include cpp files
-FIND_PACKAGE(Boost)
+FIND_PACKAGE(Boost COMPONENTS unit_test_framework)
 FIND_PACKAGE(SDL2 REQUIRED)
 FIND_PACKAGE(SDL2_ttf REQUIRED)
 
@@ -19,6 +19,9 @@ TARGET_LINK_LIBRARIES(robot-valley-tests ${SDL2_LIBRARY})
 TARGET_LINK_LIBRARIES(robot-valley-tests ${SDL2_TTF_LIBRARY})
 TARGET_LINK_LIBRARIES(robot-valley-tests ${Boost_LIBRARIES})
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
+
+MESSAGE("${Boost_LIBRARIES}")
+MESSAGE("${Boost_LIBRARY_DIRS}")
 
 # c++ configuration
 SET_PROPERTY(TARGET robot-valley-tests PROPERTY CXX_STANDARD 14)
