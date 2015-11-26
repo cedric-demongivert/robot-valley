@@ -6,6 +6,7 @@
 #include "GSL/gsl.h"
 #include "tile/Tile.hpp"
 #include "tile/WallTile.hpp"
+#include "tile/FactoryTile.hpp"
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>

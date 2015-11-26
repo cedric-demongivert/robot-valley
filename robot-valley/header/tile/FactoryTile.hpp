@@ -35,7 +35,7 @@ class FactoryTile : public Tile
 
     virtual int getID() const override;
 
-	virtual void nextTurn() override;
+	  virtual void nextTurn() override;
 
 
 private:

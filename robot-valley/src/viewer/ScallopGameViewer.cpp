@@ -54,7 +54,7 @@ char ScallopGameViewer::getTileChar(const TileInterface& tile) const
   {
     case TILE_ID: return '.';
     case WALL_TILE_ID: return '#';
-	case FACTORY_TILE_ID: return 'F';
+	  case FACTORY_TILE_ID: return 'F';
     default: return '?';
   }
 }

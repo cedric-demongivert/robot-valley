@@ -3,7 +3,7 @@
 #include "game/SimpleGame.hpp"
 #include "board/FixedBoard.hpp"
 #include "utils/HorizontalLinearizer2D.hpp"
-#include "Tile.hpp"
+#include "tile/Tile.hpp"
 
 /**
 * Test case of SimpleGame class.
