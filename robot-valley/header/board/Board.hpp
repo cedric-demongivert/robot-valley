@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include "utils/Linearizer2D.hpp"
 #include "mixins/Copiable.hpp"
-#include "TileInterface.hpp"
+#include "tile/TileInterface.hpp"
 #include "game/Game.hpp"
 #include "board/BoardIterator.hpp"
 

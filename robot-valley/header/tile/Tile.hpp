@@ -1,7 +1,7 @@
 #ifndef __TILE_HPP
 #define __TILE_HPP
 
-#include "TileInterface.hpp"
+#include "tile/TileInterface.hpp"
 #include "board/Board.hpp"
 #include "bot/bot.hpp"
 

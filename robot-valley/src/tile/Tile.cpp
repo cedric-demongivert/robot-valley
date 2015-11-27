@@ -1,4 +1,4 @@
-#include "Tile.hpp"
+#include "tile/Tile.hpp"
 
 // Constructors
 Tile::Tile() {
@@ -102,7 +102,7 @@ bool Tile::isFree() const{
 }
 
 bool Tile::accept(const Bot& bot) const {
-  return true;
+  return isFree();
 }
 
 void Tile::onEnter(Bot& bot) {

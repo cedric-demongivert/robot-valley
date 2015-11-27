@@ -1,7 +1,7 @@
 #ifndef __WALL_TILE_HPP
 #define __WALL_TILE_HPP
 
-#include "Tile.hpp"
+#include "tile/Tile.hpp"
 
 #define WALL_TILE_ID 1
 

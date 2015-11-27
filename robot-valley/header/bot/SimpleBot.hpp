@@ -3,7 +3,7 @@
 
 #include "bot/Bot.hpp"
 #include "utils/Point2D.hpp"
-#include "TileInterface.hpp"
+#include "tile/TileInterface.hpp"
 #include "GSL/gsl.h"
 #include <cstdlib>
 

@@ -4,8 +4,8 @@
 #include "game/Game.hpp"
 #include "scallop/SDLScallopShell.hpp"
 #include "GSL/gsl.h"
-#include "Tile.hpp"
-#include "WallTile.hpp"
+#include "tile/Tile.hpp"
+#include "tile/WallTile.hpp"
 
 /**
 * @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>

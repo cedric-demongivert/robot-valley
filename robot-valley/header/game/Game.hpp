@@ -78,6 +78,17 @@ class Game
      * Pass a turn.
      */
     virtual void nextTurn() = 0;
+
+	int getNbTurn() {
+		return nbTurn_;
+	}
+	void setNbturn(int nbTurn) {
+		nbTurn_ = nbTurn;
+	}
+
+
+private:
+	int nbTurn_=20;
 };
 
 #endif

@@ -1,4 +1,4 @@
-#include "WallTile.hpp"
+#include "tile/WallTile.hpp"
 
 /**
 *  @author Cédric DEMONGIVERT <cedric.demongivert@gmail.com>

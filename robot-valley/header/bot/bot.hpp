@@ -2,7 +2,7 @@
 #define __BOT_HPP
 
 #include <cstdlib>
-#include "TileInterface.hpp"
+#include "tile/TileInterface.hpp"
 #include "bot/BotManager.hpp"
 
 #include "mixins/Copiable.hpp"

@@ -21,13 +21,13 @@ ScallopGameViewer::~ScallopGameViewer()
 
 void ScallopGameViewer::run()
 {
-  for (std::size_t index = 1; index < 20; ++index)
+  for (std::size_t index = 1; index < game_->getNbTurn(); ++index)
   {
     shell_->setCursor(0, 0);
     shell_->next("Press space for an extra turn ! ( ");
     shell_->next(std::to_string(index));
     shell_->next(" / ");
-    shell_->next(std::to_string(20));
+    shell_->next(std::to_string(game_->getNbTurn()));
     shell_->nextln(" )");
     printBoard();
     printBots();
@@ -54,6 +54,7 @@ char ScallopGameViewer::getTileChar(const TileInterface& tile) const
   {
     case TILE_ID: return '.';
     case WALL_TILE_ID: return '#';
+	case FACTORY_TILE_ID: return 'F';
     default: return '?';
   }
 }
@@ -64,6 +65,6 @@ void ScallopGameViewer::printBots()
 
   for (std::size_t index = 0; index < manager->size(); ++index) {
     Bot* bot = manager->getBot(index);
-    shell_->setChar(bot->getY() +1, bot->getX(), 'R');
+    shell_->setChar(bot->getY() +1, bot->getX(), 'B');
   }
 }

@@ -2,7 +2,7 @@
 #include "bot/BotManager.hpp"
 #include "board/Board.hpp"
 #include "board/BoardIterator.hpp"
-#include "Tile.hpp"
+#include "tile/Tile.hpp"
 #include <fstream>
 #include <iostream>
 

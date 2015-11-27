@@ -18,9 +18,12 @@ SimpleGame::SimpleGame()
  * @param gsl::owner<Board*> board
  */
 SimpleGame::SimpleGame(gsl::owner<Board*> board)
- : board_(board),
-   botManager_(gsl::owner<BotManager*> (new VectorBotManager()))
-{ }
+	: board_(nullptr),
+		botManager_(nullptr)
+{ 
+	SimpleGame::setBoard(board);
+	SimpleGame::setBotManager(gsl::owner<BotManager*>(new VectorBotManager()));
+}
 
 /**
  * Create a custom configured simple game.
@@ -29,9 +32,12 @@ SimpleGame::SimpleGame(gsl::owner<Board*> board)
  * @param gsl::owner<BotManager*> bots
  */
 SimpleGame::SimpleGame(gsl::owner<Board*> board, gsl::owner<BotManager*> bots)
- : board_(board),
-   botManager_(bots)
-{ }
+	: board_(nullptr),
+	  botManager_(nullptr)
+{ 
+	SimpleGame::setBoard(board);
+	SimpleGame::setBotManager(bots);
+}
     
 /**
  * Create a copy of another game.
@@ -39,9 +45,12 @@ SimpleGame::SimpleGame(gsl::owner<Board*> board, gsl::owner<BotManager*> bots)
  * @param const Game& toCopy
  */
 SimpleGame::SimpleGame(const Game& toCopy)
- : board_(toCopy.getBoard()->copy()),
-   botManager_(toCopy.getBotManager()->copy())
-{}
+	: board_(nullptr),
+	  botManager_(nullptr)
+{
+	SimpleGame::setBoard(toCopy.getBoard()->copy());
+	SimpleGame::setBotManager(toCopy.getBotManager()->copy());
+}
     
 /**
  * Destructor.
